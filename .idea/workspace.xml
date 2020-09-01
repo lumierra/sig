@@ -20,37 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Demand.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Detail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Head.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardPengadaan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Head/HeadController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Vendor/VendorController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Vendor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_142442_create_vendors_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_142453_create_heads_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_144802_create_demands_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_083901_create_details_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardPengadaan.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/detailBahan/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/head/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Tail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_084656_create_demand_detail_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_110649_create_tails_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_111453_create_receipt_tail_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_120639_add_status_to_demands_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_120707_add_status_to_receipts_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/test.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Food.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Food.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FoodMaterial.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/FoodMaterial.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Bahan/BahanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Bahan/BahanController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardMakanan.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardMakanan.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Type.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Demand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Demand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Receipt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Receipt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_01_083901_create_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_083901_create_details_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardPengadaan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardPengadaan.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +45,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -199,21 +186,21 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/penerimaan" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/permintaan" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\penerimaan" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\permintaan" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\vendor" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\head" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\detailBahan" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\sig\app\Http\Controllers\Admin" />
       <recent name="C:\xampp\htdocs\sig\database" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\permintaan" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\penerimaan" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\vendor" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\head" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\detailBahan" />
     </key>
   </component>
   <component name="RunManager">
@@ -231,6 +218,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598783511586</updated>
       <workItem from="1598783512771" duration="40933000" />
+      <workItem from="1598924659764" duration="12439000" />
     </task>
     <servers />
   </component>
@@ -247,6 +235,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -256,18 +245,18 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="137" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738@0.0.1366.738" timestamp="1598842879711" />
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598866788154">
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598934055640">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1598866788154" />
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1598934055640" />
     <state x="339" y="165" key="run.anything.popup" timestamp="1598862120506">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1598862120506" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598867470325">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598936943280">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598867470325" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598936943280" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -276,11 +265,6 @@
           <url>file://$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php</url>
           <line>28</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php</url>
-          <line>4</line>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

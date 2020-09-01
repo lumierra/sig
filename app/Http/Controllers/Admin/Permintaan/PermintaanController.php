@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Admin\Permintaan;
 
+use App\Detail;
 use App\Food;
 use App\Head;
 use App\Http\Controllers\Controller;
+use App\Material;
+use App\Receipt;
+use App\Tail;
+use App\Unit;
 use Illuminate\Http\Request;
 use App\Demand;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Yajra\DataTables\DataTables;
 use App\Vendor;
 use DateTime;
@@ -70,7 +76,17 @@ class PermintaanController extends Controller
      */
     public function create()
     {
-        //
+        $vendors = Vendor::all();
+        $heads = Head::all();
+        $materials = Material::all();
+        $units = Unit::all();
+
+        return view('admin.permintaan.create')->with([
+            'vendors' => $vendors,
+            'heads' => $heads,
+            'materials' => $materials,
+            'units' => $units,
+        ]);
     }
 
     /**
@@ -81,27 +97,87 @@ class PermintaanController extends Controller
      */
     public function store(Request $request)
     {
+        $counter = count($request->jumlah);
+
+        $today = new DateTime();
+        $month = $today->format('m');
+        $year = $today->format('Y');
+        $now = '2021';
+
         $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
-            $newID = 'P-0001';
+            $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
         }
         else{
-            $lastIncrement = substr($lastID->code, -4);
-            $newID = 'P-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
+            if ($year == $now){
+                $lastIncrement = substr($lastID->code, 16, 6);
+                $newIncrement = 'Permintaan-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                $newID = $newIncrement . '/' . $month . '/' . $year;
+            }
+            else {
+                $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
+            }
         }
 
-        Demand::updateOrCreate(
-            ['id' => $request->product_id],
-            [
-                'code' => $newID,
-                'date' => new DateTime(),
-                'vendor_id' => $request->vendors,
-                'head_id' => $request->heads,
-                'user_id' => Auth::user()->id,
-                'name' => 'Permintaan ' . $newID,
-            ]);
+        $demand = Demand::create([
+            'code' => $newID,
+            'date' => new DateTime(),
+            'vendor_id' => $request->vendors,
+            'head_id' => $request->heads,
+            'user_id' => Auth::user()->id,
+            'name' => $newID,
+        ]);
 
-        return response()->json(['success'=>'Demand saved successfully.']);
+        $find = Demand::where('code', 'Permintaan-RSGZ/000001/09/2020')->first();
+        dd($find);
+//        if ($counter > 1){
+//            for ($i=0; $i < $counter; $i++){
+//                Tail::create([
+//                    '' => $find->id,
+//                    'demand_core' => $newID,
+//                    'material_id' => $request->material[$i],
+//                    'unit_id' => $request->unit[$i],
+//                    'user_id' => Auth::user()->id,
+//                    'jumlah' => $request->jumlah[$i],
+//                    'keterangan' => $request->keterangan[$i],
+//                ]);
+//            }
+//        }
+//        else {
+//            Detail::create([
+//                'demand_id' => $find->id,
+//                'demand_core' => $newID,
+//                'material_id' => $request->material[0],
+//                'unit_id' => $request->unit[0],
+//                'user_id' => Auth::user()->id,
+//                'jumlah' => $request->jumlah[0],
+//                'keterangan' => $request->keterangan[0],
+//            ]);
+//        }
+//
+//        return redirect()->route('admin.permintaan.index');
+
+//        $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
+//        if (!$lastID){
+//            $newID = 'P-0001';
+//        }
+//        else{
+//            $lastIncrement = substr($lastID->code, -4);
+//            $newID = 'P-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
+//        }
+//
+//        Demand::updateOrCreate(
+//            ['id' => $request->product_id],
+//            [
+//                'code' => $newID,
+//                'date' => new DateTime(),
+//                'vendor_id' => $request->vendors,
+//                'head_id' => $request->heads,
+//                'user_id' => Auth::user()->id,
+//                'name' => 'Permintaan ' . $newID,
+//            ]);
+//
+//        return response()->json(['success'=>'Demand saved successfully.']);
     }
 
     /**

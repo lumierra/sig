@@ -43,12 +43,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
 
     Route::resource('dashboard-pengadaan', 'Dashboard\DashboardPengadaan')->only('index');
     Route::resource('vendor', 'Vendor\VendorController')->except('create', 'show', 'update');
-    Route::resource('permintaan', 'Permintaan\PermintaanController')->except('create', 'show', 'update');
-    Route::resource('penerimaan', 'Penerimaan\PenerimaanController')->except('create', 'show', 'update');
+    Route::resource('permintaan', 'Permintaan\PermintaanController');
+    Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
 
     Route::resource('products', 'ProductController');
 
-    Route::get('/test', 'Makanan\MakananController@test');
+//    Route::get('/test', 'Makanan\MakananController@test');
+    Route::get('/test', function (){
+       return view('admin.test');
+    });
 });
 
 //Route::resource('products', 'ProductController');

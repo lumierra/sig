@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetailsTable extends Migration
+class CreateTailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table) {
+        Schema::create('tails', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('demand_id');
-            $table->string('demand_code');
+            $table->unsignedInteger('receipt_id');
+            $table->string('receipt_code');
             $table->unsignedInteger('material_id');
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('user_id');
             $table->integer('jumlah')->nullable();
             $table->string('keterangan')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -33,6 +32,6 @@ class CreateDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('details');
+        Schema::dropIfExists('tails');
     }
 }

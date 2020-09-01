@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Demand extends Model
 {
-    protected $fillable = ['code', 'name', 'date', 'user_id', 'vendor_id', 'head_id'];
+    protected $fillable = ['code', 'name', 'date', 'user_id', 'vendor_id', 'head_id', 'status'];
 
     public function vendor()
     {

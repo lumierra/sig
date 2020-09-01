@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin\Penerimaan;
 use App\Demand;
 use App\Head;
 use App\Http\Controllers\Controller;
+use App\Material;
+use App\Tail;
+use App\Unit;
 use App\Vendor;
 use Illuminate\Http\Request;
 use App\Receipt;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use DateTime;
+use App\Detail;
 
 class PenerimaanController extends Controller
 {
@@ -68,7 +72,17 @@ class PenerimaanController extends Controller
      */
     public function create()
     {
-        //
+        $vendors = Vendor::all();
+        $heads = Head::all();
+        $materials = Material::all();
+        $units = Unit::all();
+
+        return view('admin.penerimaan.create')->with([
+            'vendors' => $vendors,
+            'heads' => $heads,
+            'materials' => $materials,
+            'units' => $units,
+        ]);
     }
 
     /**
@@ -79,6 +93,7 @@ class PenerimaanController extends Controller
      */
     public function store(Request $request)
     {
+        $counter = count($request->jumlah);
         $lastID = Receipt::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
             $newID = 'PN-0001';
@@ -88,18 +103,58 @@ class PenerimaanController extends Controller
             $newID = 'PN-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
         }
 
-        Receipt::updateOrCreate(
-            ['id' => $request->product_id],
-            [
-                'code' => $newID,
-                'date' => new DateTime(),
-                'vendor_id' => $request->vendors,
-                'head_id' => $request->heads,
-                'user_id' => Auth::user()->id,
-                'name' => 'Penerimaan ' . $newID,
-            ]);
+        $receipt = Receipt::create([
+            'code' => $newID,
+            'date' => new DateTime(),
+            'vendor_id' => $request->vendors,
+            'head_id' => $request->heads,
+            'user_id' => Auth::user()->id,
+            'name' => 'Penerimaan ' . $newID,
+        ]);
 
-        return response()->json(['success'=>'Receipt saved successfully.']);
+        $find = Receipt::where('code', $newID);
+        if ($counter > 1){
+            for ($i=0; $i < $counter; $i++){
+                Tail::create([
+                    '' => $find->id,
+                    'demand_core' => $newID,
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => $request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+        else {
+            Detail::create([
+                'demand_id' => $find->id,
+                'demand_core' => $newID,
+                'material_id' => $request->material[0],
+                'unit_id' => $request->unit[0],
+                'user_id' => Auth::user()->id,
+                'jumlah' => $request->jumlah[0],
+                'keterangan' => $request->keterangan[0],
+            ]);
+        }
+
+        return redirect()->route('admin.penerimaan.index');
+
+
+
+
+//        Receipt::updateOrCreate(
+//            ['id' => $request->product_id],
+//            [
+//                'code' => $newID,
+//                'date' => new DateTime(),
+//                'vendor_id' => $request->vendors,
+//                'head_id' => $request->heads,
+//                'user_id' => Auth::user()->id,
+//                'name' => 'Penerimaan ' . $newID,
+//            ]);
+
+//        return response()->json(['success'=>'Receipt saved successfully.']);
     }
 
     /**

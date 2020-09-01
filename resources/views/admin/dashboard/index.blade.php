@@ -30,7 +30,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-{{--                                <a href="{{ route('admin.dashboard-pengadaan.index') }}" class="text-info">Master Pengadaan</a>--}}
+                                <a href="{{ route('admin.dashboard-pengadaan.index') }}" class="text-info">Master Pengadaan</a>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">4 Fitur</div>
                         </div>
