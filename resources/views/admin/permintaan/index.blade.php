@@ -14,10 +14,14 @@
 @section('button')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
-        <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
+        <a href="{{ route('admin.permintaan.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i>
             Tambah Permintaan
-        </button>
+        </a>
+{{--        <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">--}}
+{{--            <i class="fas fa-plus-circle fa-sm text-white-50"></i>--}}
+{{--            Tambah Permintaan--}}
+{{--        </button>--}}
     </div>
 @endsection
 

@@ -43,8 +43,10 @@ class PermintaanController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
+
+
 
                     return $btn;
                 })
@@ -54,9 +56,6 @@ class PermintaanController extends Controller
                         'timestamp' => $row->created_at->timestamp
                     ];
                 })
-//                ->filterColumn('created_at', function ($query, $keyword) {
-//                    $query->whereRaw("DATE_FORMAT(created_at,'%d/%m/%Y') LIKE ?", ["%$keyword%"]);
-//                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -102,7 +101,7 @@ class PermintaanController extends Controller
         $today = new DateTime();
         $month = $today->format('m');
         $year = $today->format('Y');
-        $now = '2021';
+        $now = '2020';
 
         $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
@@ -128,34 +127,34 @@ class PermintaanController extends Controller
             'name' => $newID,
         ]);
 
-        $find = Demand::where('code', 'Permintaan-RSGZ/000001/09/2020')->first();
-        dd($find);
-//        if ($counter > 1){
-//            for ($i=0; $i < $counter; $i++){
-//                Tail::create([
-//                    '' => $find->id,
-//                    'demand_core' => $newID,
-//                    'material_id' => $request->material[$i],
-//                    'unit_id' => $request->unit[$i],
-//                    'user_id' => Auth::user()->id,
-//                    'jumlah' => $request->jumlah[$i],
-//                    'keterangan' => $request->keterangan[$i],
-//                ]);
-//            }
-//        }
-//        else {
-//            Detail::create([
-//                'demand_id' => $find->id,
-//                'demand_core' => $newID,
-//                'material_id' => $request->material[0],
-//                'unit_id' => $request->unit[0],
-//                'user_id' => Auth::user()->id,
-//                'jumlah' => $request->jumlah[0],
-//                'keterangan' => $request->keterangan[0],
-//            ]);
-//        }
-//
-//        return redirect()->route('admin.permintaan.index');
+        $find = Demand::where('code', $newID)->first();
+
+        if ($counter > 1){
+            for ($i=0; $i < $counter; $i++){
+                Detail::create([
+                    'demand_id' => $find->id,
+                    'demand_code' => $newID,
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => $request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+        else {
+            Detail::create([
+                'demand_id' => $find->id,
+                'demand_code' => $newID,
+                'material_id' => $request->material[0],
+                'unit_id' => $request->unit[0],
+                'user_id' => Auth::user()->id,
+                'jumlah' => $request->jumlah[0],
+                'keterangan' => $request->keterangan[0],
+            ]);
+        }
+
+        return redirect()->route('admin.permintaan.index');
 
 //        $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
 //        if (!$lastID){

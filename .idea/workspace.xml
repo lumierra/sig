@@ -20,25 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Tail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_084656_create_demand_detail_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_110649_create_tails_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_111453_create_receipt_tail_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_120639_add_status_to_demands_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_120707_add_status_to_receipts_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/test.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Demand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Demand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Receipt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Receipt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_01_083901_create_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_083901_create_details_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardPengadaan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardPengadaan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,7 +202,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598783511586</updated>
       <workItem from="1598783512771" duration="40933000" />
-      <workItem from="1598924659764" duration="12439000" />
+      <workItem from="1598924659764" duration="13549000" />
     </task>
     <servers />
   </component>
