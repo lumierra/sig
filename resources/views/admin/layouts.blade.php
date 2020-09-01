@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
 
     <!-- Important to work AJAX CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -461,6 +462,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('ext/js/sb-admin-2.min.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Page level plugins -->
 {{--<script src="{{ asset('ext/vendor/chart.js/Chart.min.js') }}"></script>--}}

@@ -20,9 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/images/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/bahan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/bahan/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +211,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598783511586</updated>
       <workItem from="1598783512771" duration="40933000" />
-      <workItem from="1598924659764" duration="13549000" />
+      <workItem from="1598924659764" duration="20746000" />
     </task>
     <servers />
   </component>
@@ -237,17 +246,17 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1598862120506" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598936943280">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598947004350">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598936943280" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598947004350" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php</url>
-          <line>28</line>
+          <line>24</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

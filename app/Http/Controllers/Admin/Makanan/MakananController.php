@@ -35,6 +35,9 @@ class MakananController extends Controller
                 ->addColumn('type', function (Food $food) {
                     return $food->type->name;
                 })
+                ->addColumn('type2', function (Food $food) {
+                    return $food->type->id;
+                })
 //                ->editColumn('user', function ($food){
 //                    return $food->user;
 //                })

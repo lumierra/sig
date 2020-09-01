@@ -11,26 +11,23 @@
     @section('button')
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
-            <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
-                <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-                Tambah Jenis
-            </button>
         </div>
     @endsection
 
     <div class="container-fluid">
-        <!-- Page Heading -->
-    {{--    <h1 class="h3 mb-2 text-gray-800">Users</h1>--}}
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+                <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-add float-right btn-icon-split">
+                    <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
+                    <span class="text">Tambah Jenis</span>
+                </button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
+                        <tr class="text-success">
                             <th>No</th>
                             <th>Nama Jenis Makanan</th>
                             <th>Action</th>
@@ -44,7 +41,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="modal fade" id="ajaxModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,6 +58,7 @@
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
                             </button>
                         </div>
@@ -112,7 +110,6 @@
 
         $('body').on('click', '.editProduct', function () {
             var product_id = $(this).data('id');
-            // console.log(product_id);
             $.get("{{ route('admin.jenis-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
                 $('#modelHeading').html("Edit Jenis Makanan");
                 $('#saveBtn').val("edit-jenis");
@@ -132,14 +129,23 @@
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-
+                    swal({
+                        type: 'success',
+                        icon: 'success',
+                        title: 'Tambah Jenis Makanan',
+                        text: 'Anda Berhasil Menambah Jenis Makanan'
+                    })
                     $('#productForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     table.draw();
 
                 },
                 error: function (data) {
-                    console.log('Error:', data);
+                    // console.log('Error:', data);
+                    swal({
+                        type: 'error',
+                        title: 'Data Belum Lengkap'
+                    })
                     $('#saveBtn').html('Save Changes');
                 }
             });
@@ -148,21 +154,32 @@
         $('body').on('click', '.deleteProduct', function () {
 
             var product_id = $(this).data("id");
-            confirm("Are You sure want to delete !");
 
-            $.ajax({
-                type: "DELETE",
-                url: "{{ route('admin.jenis-makanan.store') }}"+'/'+product_id,
-                success: function (data) {
-                    table.draw();
-                },
-                error: function (data) {
-                    console.log('Error:', data);
+            swal({
+                title: "Apakah Anda Yakin ?",
+                // text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data Jenis Makanan Berhasil di Hapus", {
+                        icon: "success",
+                    });
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('admin.jenis-makanan.store') }}"+'/'+product_id,
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
                 }
             });
         });
-
-
     });
 </script>
 @endsection

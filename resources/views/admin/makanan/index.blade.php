@@ -14,26 +14,24 @@
 @section('button')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
-        <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-            Tambah Makanan
-        </button>
     </div>
 @endsection
 
 <div class="container-fluid">
-    <!-- Page Heading -->
-{{--    <h1 class="h3 mb-2 text-gray-800">Users</h1>--}}
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+            <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-add float-right btn-icon-split">
+                <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
+                <span class="text">Tambah Makanan</span>
+            </button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                    <tr>
+                    <tr class="text-success">
                         <th>No</th>
                         <th>Nama Makanan</th>
                         <th>Jenis Makanan</th>
@@ -48,7 +46,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="ajaxModel" aria-hidden="true">
+<div class="modal fade" id="ajaxModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,23 +58,34 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Jenis Makanan</label>
                         <div class="col-sm-12">
-                            <select class="form-control" name="types" id="types">
+                            <select class="form-control @error('types') is-invalid @enderror" name="types" id="types" required>
                                 <option selected>Pilih Jenis</option>
                                 @foreach($types as $type)
                                     <option value="{{$type->id}}" name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>
                                 @endforeach
                             </select>
+                            @error('types')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Nama Makanan</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
                         </div>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
 
 
                     <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
                         </button>
                     </div>
@@ -135,8 +144,6 @@
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
                 $('#name').val(data.name);
-                $('#types option:selected').val(data.types);
-                console.log(data);
             })
         });
 
@@ -151,13 +158,23 @@
                 dataType: 'json',
 
                 success: function (data) {
+                    swal({
+                        type: 'success',
+                        icon: 'success',
+                        title: 'Tambah Makanan',
+                        text: 'Anda Berhasil Menambah Makanan'
+                    })
                     $('#productForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     table.draw();
 
                 },
                 error: function (data) {
-                    console.log('Error:', data);
+                    // console.log('Error:', data);
+                    swal({
+                        type: 'error',
+                        title: 'Data Belum Lengkap'
+                    })
                     $('#saveBtn').html('Save Changes');
                 }
             });
@@ -166,21 +183,32 @@
         $('body').on('click', '.deleteProduct', function () {
 
             var product_id = $(this).data("id");
-            confirm("Are You sure want to delete !");
-
-            $.ajax({
-                type: "DELETE",
-                url: "{{ route('admin.makanan.store') }}"+'/'+product_id,
-                success: function (data) {
-                    table.draw();
-                },
-                error: function (data) {
-                    console.log('Error:', data);
+            // confirm("Are You sure want to delete !");
+            swal({
+                title: "Apakah Anda Yakin ?",
+                // text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data Makanan Berhasil di Hapus", {
+                        icon: "success",
+                    });
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('admin.makanan.store') }}"+'/'+product_id,
+                        success: function (data) {
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
                 }
             });
         });
-
-
     });
 </script>
 @endsection
