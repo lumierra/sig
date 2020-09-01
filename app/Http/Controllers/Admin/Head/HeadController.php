@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Bahan;
+namespace App\Http\Controllers\Admin\Head;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use Illuminate\Http\Request;
 use App\Material;
+use Illuminate\Http\Request;
+use App\Head;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
-class BahanController extends Controller
+class HeadController extends Controller
 {
 
     public function __construct()
@@ -25,7 +24,7 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Material::latest()->get();
+            $data = Head::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -39,7 +38,7 @@ class BahanController extends Controller
                 ->make(true);
         }
 
-        return view('admin.bahan.index');
+        return view('admin.head.index');
     }
 
     /**
@@ -60,10 +59,10 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
-        Material::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+        Head::updateOrCreate(['id' => $request->product_id],
+            ['name' => $request->name, 'status' => $request->status, 'user_id' => Auth::user()->id]);
 
-        return response()->json(['success'=>'Material saved successfully.']);
+        return response()->json(['success'=>'Head saved successfully.']);
     }
 
     /**
@@ -85,8 +84,8 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        $material = Material::find($id);
-        return response()->json($material);
+        $head = Head::find($id);
+        return response()->json($head);
     }
 
     /**
@@ -109,8 +108,8 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        Material::find($id)->delete();
+        Head::find($id)->delete();
 
-        return response()->json(['success'=>'Material deleted successfully.']);
+        return response()->json(['success'=>'Head deleted successfully.']);
     }
 }

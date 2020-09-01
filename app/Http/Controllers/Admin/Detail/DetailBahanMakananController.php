@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Bahan;
+namespace App\Http\Controllers\Admin\Detail;
 
+use App\Food;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Type;
 use Illuminate\Http\Request;
-use App\Material;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\FoodMaterial;
 use Yajra\DataTables\DataTables;
 
-class BahanController extends Controller
+class DetailBahanMakananController extends Controller
 {
 
     public function __construct()
@@ -25,9 +24,15 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Material::latest()->get();
+            $data = Food::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('user', function (Food $food) {
+                    return $food->user->name;
+                })
+                ->addColumn('type', function (Food $food) {
+                    return $food->type->name;
+                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -39,7 +44,8 @@ class BahanController extends Controller
                 ->make(true);
         }
 
-        return view('admin.bahan.index');
+        $types = Type::all();
+        return view('admin.detailBahan.index')->with('types', $types);
     }
 
     /**
@@ -60,10 +66,7 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
-        Material::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
-
-        return response()->json(['success'=>'Material saved successfully.']);
+        //
     }
 
     /**
@@ -85,8 +88,7 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        $material = Material::find($id);
-        return response()->json($material);
+        //
     }
 
     /**
@@ -109,8 +111,6 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        Material::find($id)->delete();
-
-        return response()->json(['success'=>'Material deleted successfully.']);
+        //
     }
 }

@@ -55,12 +55,12 @@
 {{--                <span>User</span></a>--}}
 {{--        </li>--}}
 
-{{--        <li class="nav-item active">--}}
-{{--            <a class="nav-link" href="{{ route('admin.kepala-gizi.index') }}">--}}
-{{--                <i class="fas fa-fw fa-users"></i>--}}
-{{--                <span>Kepala Gizi</span>--}}
-{{--            </a>--}}
-{{--        </li>--}}
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ route('admin.kepala-gizi.index') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Kepala Gizi</span>
+            </a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -78,10 +78,11 @@
             </a>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Components:</h6>
-{{--                    <a class="collapse-item" href="{{ route('admin.master.index') }}">Dashboard Pengadaan</a>--}}
-{{--                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>--}}
-{{--                    <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Data Vendor</a>--}}
+                    <h6 class="collapse-header">Master Pengadaan:</h6>
+                    <a class="collapse-item" href="{{ route('admin.dashboard-pengadaan.index') }}">Dashboard Pengadaan</a>
+                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>
+                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Data Penerimaan</a>
+                    <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Data Vendor</a>
                 </div>
             </div>
         </li>
@@ -102,13 +103,13 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Components:</h6>
+                    <h6 class="collapse-header">Master Makanan:</h6>
                     <a class="collapse-item" href="{{ route('admin.dashboard-makanan.index') }}">Dashboard Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Data Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Data Jenis Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Data Bahan Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Data Satuan Makanan</a>
-{{--                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Data Detail Bahan Makanan</a>--}}
+                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Data Detail Bahan Makanan</a>
                 </div>
             </div>
         </li>

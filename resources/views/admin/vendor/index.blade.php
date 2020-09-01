@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Makanan')
+@section('title', 'Data Vendor')
 
-@section('subtitle', 'Data Makanan')
+@section('subtitle', 'Data Vendor')
 
 @section('content')
     {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>--}}
@@ -16,7 +16,7 @@
         <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
         <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-            Tambah Makanan
+            Tambah Vendor
         </button>
     </div>
 @endsection
@@ -35,8 +35,8 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Makanan</th>
-                        <th>Jenis Makanan</th>
+                        <th>Nama Vendor</th>
+                        <th>Keterangan</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -58,23 +58,17 @@
                 <form id="productForm" name="productForm" class="form-horizontal">
                     <input type="hidden" name="product_id" id="product_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Jenis Makanan</label>
-                        <div class="col-sm-12">
-                            <select class="form-control" name="types" id="types">
-                                <option selected>Pilih Jenis</option>
-                                @foreach($types as $type)
-                                    <option value="{{$type->id}}" name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Nama Makanan</label>
+                        <label for="name" class="col-sm-5 control-label">Nama</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Keterangan</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="status" name="status" value="" maxlength="50" required="" autocomplete="off">
+                        </div>
+                    </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
@@ -105,11 +99,11 @@
         var table = $('.yajra-datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.makanan.index') }}",
+            ajax: "{{ route('admin.vendor.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
-                {data: 'type', name: 'type'},
+                {data: 'description', name: 'description'},
                 {
                     data: 'action',
                     name: 'action',
@@ -123,20 +117,19 @@
             $('#saveBtn').val("create-product");
             $('#product_id').val('');
             $('#productForm').trigger("reset");
-            $('#modelHeading').html("Form Makanan");
+            $('#modelHeading').html("Form Vendor");
             $('#ajaxModel').modal('show');
         });
 
         $('body').on('click', '.editProduct', function () {
             var product_id = $(this).data('id');
-            $.get("{{ route('admin.makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                $('#modelHeading').html("Edit Makanan");
+            $.get("{{ route('admin.vendor.index') }}" +'/' + product_id +'/edit', function (data) {
+                $('#modelHeading').html("Edit Data");
                 $('#saveBtn').val("edit-user");
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
                 $('#name').val(data.name);
-                $('#types option:selected').val(data.types);
-                console.log(data);
+                $('#status').val(data.description);
             })
         });
 
@@ -146,11 +139,11 @@
 
             $.ajax({
                 data: $('#productForm').serialize(),
-                url: "{{ route('admin.makanan.store') }}",
+                url: "{{ route('admin.vendor.store') }}",
                 type: "POST",
                 dataType: 'json',
-
                 success: function (data) {
+
                     $('#productForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     table.draw();
@@ -170,7 +163,7 @@
 
             $.ajax({
                 type: "DELETE",
-                url: "{{ route('admin.makanan.store') }}"+'/'+product_id,
+                url: "{{ route('admin.vendor.store') }}"+'/'+product_id,
                 success: function (data) {
                     table.draw();
                 },

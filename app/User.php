@@ -59,4 +59,11 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function food()
+    {
+        return $this->hasOne(Food::class);
+    }
+
+
 }

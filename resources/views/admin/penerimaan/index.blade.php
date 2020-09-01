@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Makanan')
+@section('title', 'Data Penerimaan')
 
-@section('subtitle', 'Data Makanan')
+@section('subtitle', 'Data Penerimaan')
 
 @section('content')
     {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>--}}
@@ -16,7 +16,7 @@
         <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
         <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-            Tambah Makanan
+            Tambah Penerimaan
         </button>
     </div>
 @endsection
@@ -34,10 +34,11 @@
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama Makanan</th>
-                        <th>Jenis Makanan</th>
-                        <th>Action</th>
+                        <th>No. Penerimaan</th>
+                        <th>Tgl. Penerimaan</th>
+                        <th>Vendor</th>
+                        <th>Mengetahui Ka. Inst. Gizi</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="text-capitalize">
@@ -58,23 +59,39 @@
                 <form id="productForm" name="productForm" class="form-horizontal">
                     <input type="hidden" name="product_id" id="product_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Jenis Makanan</label>
+                        <label for="name" class="col-sm-5 control-label">Vendor</label>
                         <div class="col-sm-12">
-                            <select class="form-control" name="types" id="types">
-                                <option selected>Pilih Jenis</option>
-                                @foreach($types as $type)
-                                    <option value="{{$type->id}}" name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>
+                            <select class="form-control" id="vendors" name="vendors" >
+                                <option selected>Pilih Vendor</option>
+                                @foreach($vendors as $vendor)
+                                    <option value="{{$vendor->id}}" name="{{$vendor->id}}">{{ Str::ucfirst($vendor->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Nama Makanan</label>
+                        <label for="name" class="col-sm-5 control-label">Kepala Gizi</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
+                            <select class="form-control" name="heads" id="heads">
+                                <option selected>Pilih Vendor</option>
+                                @foreach($heads as $head)
+                                    <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
+{{--                    <div class="form-group">--}}
+{{--                        <label for="name" class="col-sm-5 control-label">Nama</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="name" class="col-sm-5 control-label">Keterangan</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <input type="text" class="form-control" id="status" name="status" value="" maxlength="50" required="" autocomplete="off">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
@@ -105,38 +122,48 @@
         var table = $('.yajra-datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.makanan.index') }}",
+            ajax: "{{ route('admin.penerimaan.index') }}",
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {data: 'type', name: 'type'},
+                // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'code', name: 'code'},
+                {
+                    data: 'date',
+                    type: 'num',
+                    render: {
+                        _: 'display',
+                        sort: 'timestamp'
+                    }
+                },
+                {data: 'vendor', name: 'vendor'},
+                {data: 'head', name: 'head'},
                 {
                     data: 'action',
                     name: 'action',
                     orderable: true,
                     searchable: true
                 },
-            ]
+            ],
+            select: true,
         })
 
         $('#createNewProduct').click(function () {
             $('#saveBtn').val("create-product");
             $('#product_id').val('');
             $('#productForm').trigger("reset");
-            $('#modelHeading').html("Form Makanan");
+            $('#modelHeading').html("Form Penerimaan");
             $('#ajaxModel').modal('show');
         });
 
         $('body').on('click', '.editProduct', function () {
             var product_id = $(this).data('id');
-            $.get("{{ route('admin.makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                $('#modelHeading').html("Edit Makanan");
+            $.get("{{ route('admin.penerimaan.index') }}" +'/' + product_id +'/edit', function (data) {
+                $('#modelHeading').html("Edit Data");
                 $('#saveBtn').val("edit-user");
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
-                $('#name').val(data.name);
-                $('#types option:selected').val(data.types);
-                console.log(data);
+                $('#vendors option:selected').val(data.vendors);
+                // $('#vendors').val(data.vendor);
+                // $('#heads').val(data.head);
             })
         });
 
@@ -146,11 +173,11 @@
 
             $.ajax({
                 data: $('#productForm').serialize(),
-                url: "{{ route('admin.makanan.store') }}",
+                url: "{{ route('admin.penerimaan.store') }}",
                 type: "POST",
                 dataType: 'json',
-
                 success: function (data) {
+
                     $('#productForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     table.draw();
@@ -170,7 +197,7 @@
 
             $.ajax({
                 type: "DELETE",
-                url: "{{ route('admin.makanan.store') }}"+'/'+product_id,
+                url: "{{ route('admin.penerimaan.store') }}"+'/'+product_id,
                 success: function (data) {
                     table.draw();
                 },

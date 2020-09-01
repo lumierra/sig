@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Makanan;
 use App\Http\Controllers\Controller;
 use App\Food;
 use App\Type;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -25,8 +26,18 @@ class MakananController extends Controller
     {
         if ($request->ajax()) {
             $data = Food::latest()->get();
+//            $data = Food::with('users');
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('user', function (Food $food) {
+                    return $food->user->name;
+                })
+                ->addColumn('type', function (Food $food) {
+                    return $food->type->name;
+                })
+//                ->editColumn('user', function ($food){
+//                    return $food->user;
+//                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -37,6 +48,7 @@ class MakananController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         $types = Type::all();
         return view('admin.makanan.index')->with('types', $types);
     }
@@ -59,8 +71,8 @@ class MakananController extends Controller
      */
     public function store(Request $request)
     {
-        Food::updateOrCreate(['id' => $request->id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+        Food::updateOrCreate(['id' => $request->product_id],
+            ['name' => $request->name, 'user_id' => Auth::user()->id, 'type_id' => $request->types]);
 
         return response()->json(['success'=>'Food saved successfully.']);
     }
@@ -111,5 +123,15 @@ class MakananController extends Controller
         Food::find($id)->delete();
 
         return response()->json(['success'=>'Food deleted successfully.']);
+    }
+
+    public function test()
+    {
+        $food = Food::all();
+//        $asd = User::all();
+//        dd($food[0]->type);
+        foreach ($food as $item){
+            echo $item->type . ' ';
+        }
     }
 }

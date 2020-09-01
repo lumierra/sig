@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Bahan;
+namespace App\Http\Controllers\Admin\Penerimaan;
 
+use App\Demand;
+use App\Head;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Vendor;
 use Illuminate\Http\Request;
-use App\Material;
+use App\Receipt;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
+use DateTime;
 
-class BahanController extends Controller
+class PenerimaanController extends Controller
 {
 
     public function __construct()
@@ -25,9 +27,15 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Material::latest()->get();
+            $data = Receipt::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('vendor', function (Receipt $receipt) {
+                    return $receipt->vendor->name;
+                })
+                ->addColumn('head', function (Receipt $receipt) {
+                    return $receipt->head->name;
+                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -35,11 +43,22 @@ class BahanController extends Controller
 
                     return $btn;
                 })
+                ->editColumn('date', function ($row) {
+                    return [
+                        'display' => e($row->created_at->format('d/m/Y')),
+                        'timestamp' => $row->created_at->timestamp
+                    ];
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('admin.bahan.index');
+        $heads = Head::all();
+        $vendors = Vendor::all();
+        return view('admin.penerimaan.index')->with([
+            'heads' => $heads,
+            'vendors' => $vendors,
+        ]);
     }
 
     /**
@@ -60,10 +79,27 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
-        Material::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+        $lastID = Receipt::select('code')->orderBy('id', 'desc')->first();
+        if (!$lastID){
+            $newID = 'PN-0001';
+        }
+        else{
+            $lastIncrement = substr($lastID->code, -4);
+            $newID = 'PN-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
+        }
 
-        return response()->json(['success'=>'Material saved successfully.']);
+        Receipt::updateOrCreate(
+            ['id' => $request->product_id],
+            [
+                'code' => $newID,
+                'date' => new DateTime(),
+                'vendor_id' => $request->vendors,
+                'head_id' => $request->heads,
+                'user_id' => Auth::user()->id,
+                'name' => 'Penerimaan ' . $newID,
+            ]);
+
+        return response()->json(['success'=>'Receipt saved successfully.']);
     }
 
     /**
@@ -85,8 +121,8 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        $material = Material::find($id);
-        return response()->json($material);
+//        $head = Head::find($id);
+//        return response()->json($head);
     }
 
     /**
@@ -109,8 +145,8 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        Material::find($id)->delete();
-
-        return response()->json(['success'=>'Material deleted successfully.']);
+//        Head::find($id)->delete();
+//
+//        return response()->json(['success'=>'Head deleted successfully.']);
     }
 }

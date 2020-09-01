@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Bahan;
+namespace App\Http\Controllers\Admin\Vendor;
 
+use App\Vendor;
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
-use App\Material;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
-class BahanController extends Controller
+class VendorController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,7 +22,7 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Material::latest()->get();
+            $data = Vendor::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -39,7 +36,7 @@ class BahanController extends Controller
                 ->make(true);
         }
 
-        return view('admin.bahan.index');
+        return view('admin.vendor.index');
     }
 
     /**
@@ -60,10 +57,10 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
-        Material::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+        Vendor::updateOrCreate(['id' => $request->product_id],
+            ['name' => $request->name, 'description' => $request->status, 'user_id' => Auth::user()->id]);
 
-        return response()->json(['success'=>'Material saved successfully.']);
+        return response()->json(['success'=>'Vendor saved successfully.']);
     }
 
     /**
@@ -85,8 +82,8 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        $material = Material::find($id);
-        return response()->json($material);
+        $vendor = Vendor::find($id);
+        return response()->json($vendor);
     }
 
     /**
@@ -109,8 +106,8 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        Material::find($id)->delete();
+        Vendor::find($id)->delete();
 
-        return response()->json(['success'=>'Material deleted successfully.']);
+        return response()->json(['success'=>'Vendor deleted successfully.']);
     }
 }

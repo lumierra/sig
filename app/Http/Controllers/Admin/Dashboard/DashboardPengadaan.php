@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\FoodMaterial;
-use App\Material;
-use App\Type;
-use App\Food;
-use App\Unit;
+use App\Vendor;
+use App\Demand;
 
-class DashboardMakanan extends Controller
+class DashboardPengadaan extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,18 +21,12 @@ class DashboardMakanan extends Controller
      */
     public function index()
     {
-        $materials = Material::count();
-        $types = Type::count();
-        $units = Unit::count();
-        $foods = Food::count();
-        $details = FoodMaterial::count();
+        $vendors = Vendor::count();
+        $demands = Demand::count();
 
-        return view('admin.dashboard.dashboardMakanan')->with([
-            'materials' => $materials,
-            'types' => $types,
-            'units' => $units,
-            'foods' => $foods,
-            'details' => $details,
+        return view('admin.dashboard.dashboardPengadaan')->with([
+           'vendors' => $vendors,
+            'demands' => $demands,
         ]);
     }
 
