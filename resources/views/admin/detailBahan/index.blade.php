@@ -5,21 +5,14 @@
 @section('subtitle', 'Data Detail Bahan Makanan')
 
 @section('content')
-    {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">--}}
 
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
-@section('button')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
-        <button id="createNewProduct" name="btn_add" type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-add">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-            Tambah Detail
-        </button>
-    </div>
-@endsection
+    @section('button')
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
+        </div>
+    @endsection
 
 <div class="container-fluid">
     <!-- Page Heading -->
@@ -27,7 +20,10 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+            <a href="{{ route('admin.detail-makanan.create') }}" class="btn btn-success btn-add float-right btn-icon-split">
+                <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
+                <span class="text">Tambah Detail Bahan</span>
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

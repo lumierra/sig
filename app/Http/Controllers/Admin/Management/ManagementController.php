@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Detail;
+namespace App\Http\Controllers\Admin\Management;
 
-use App\Food;
-use App\Http\Controllers\Controller;
-use App\Material;
-use App\Type;
-use App\Unit;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
-use App\FoodMaterial;
 use Yajra\DataTables\DataTables;
+use App\Http\Controllers\Controller;
 
-class DetailBahanMakananController extends Controller
+class ManagementController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,15 +23,12 @@ class DetailBahanMakananController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Food::latest()->get();
+            $data = User::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('user', function (Food $food) {
-                    return $food->user->name;
-                })
-                ->addColumn('type', function (Food $food) {
-                    return $food->type->name;
-                })
+//                ->addColumn('role', function (Food $food) {
+//                    return $food->user->name;
+//                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -46,8 +40,8 @@ class DetailBahanMakananController extends Controller
                 ->make(true);
         }
 
-        $types = Type::all();
-        return view('admin.detailBahan.index')->with('types', $types);
+        $roles = Role::all();
+        return view('admin.management.index')->with('roles', $roles);
     }
 
     /**
@@ -57,18 +51,7 @@ class DetailBahanMakananController extends Controller
      */
     public function create()
     {
-        $types = Type::all();
-        $foods = Food::all();
-        $materials = Material::all();
-        $units = Unit::all();
-
-
-        return view('admin.detailBahan.create')->with([
-            'types' => $types,
-            'foods' => $foods,
-            'materials' => $materials,
-            'units' => $units,
-        ]);
+        //
     }
 
     /**

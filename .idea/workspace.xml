@@ -20,18 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Management/ManagementController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/detailBahan/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/management/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/bahan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/bahan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardMakanan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/detailBahan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/detailBahan/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/makanan/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +52,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardPengadaan.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Makanan/MakananController.php" root0="SKIP_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Management/ManagementController.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardMakanan.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -179,7 +177,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/permintaan" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/detailBahan" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -189,11 +187,11 @@
       <recent name="C:\xampp\htdocs\sig\database" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\detailBahan" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\management" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\permintaan" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\penerimaan" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\vendor" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\head" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\detailBahan" />
     </key>
   </component>
   <component name="RunManager">
@@ -211,7 +209,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598783511586</updated>
       <workItem from="1598783512771" duration="40933000" />
-      <workItem from="1598924659764" duration="20746000" />
+      <workItem from="1598924659764" duration="23284000" />
     </task>
     <servers />
   </component>
@@ -238,18 +236,18 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="137" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738@0.0.1366.738" timestamp="1598842879711" />
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598934055640">
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598948024890">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1598934055640" />
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1598948024890" />
     <state x="339" y="165" key="run.anything.popup" timestamp="1598862120506">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1598862120506" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598947004350">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598948616507">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598947004350" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598948616507" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
