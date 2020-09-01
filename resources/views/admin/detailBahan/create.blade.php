@@ -23,24 +23,30 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.detail-makanan.store') }}" method="POST">
+                                    <form action="{{ route('admin.detail-makanan.store') }}" method="POST" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="jenis">Jenis Makanan</label>
-                                                    <select class="form-control" id="types" name="types" required>
+                                                    <select class="form-control custom-select" id="types" name="types" required>
                                                         <option selected>Pilih Jenis</option>
                                                         @foreach ($types as $type)
                                                             <option value="{{$type->id}}" name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>
                                                         @endforeach
                                                     </select>
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Please choose a username.
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="makanan">Makanan</label>
-                                                    <select class="form-control" id="heads" name="heads" required>
+                                                    <select class="form-control custom-select" id="heads" name="heads" required>
                                                         <option selected>Pilih Makanan</option>
                                                         @foreach ($foods as $food)
                                                             <option value="{{$food->id}}" name="{{$food->name}}">{{ Str::ucfirst($food->name) }}</option>
@@ -74,7 +80,7 @@
                                                             <div class="form-group">
                                                                 <label for="nama_satuan">Nama Satuan</label>
                                                                 <select class="form-control" name="nama_satuan[]" id="">
-                                                                    <option selected>Pilih Bahan</option>
+                                                                    <option selected>Pilih Satuan</option>
                                                                     @foreach ($units as $unit)
                                                                         <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
                                                                     @endforeach
@@ -96,29 +102,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-{{--                                            <div class="input-group mb-12">--}}
-{{--                                                <select class="form-control" id="material" name="material[]" required>--}}
-{{--                                                    <option selected>Pilih Bahan</option>--}}
-{{--                                                    @foreach ($materials as $material)--}}
-{{--                                                        <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </select>--}}
-{{--                                                <input type="text" name="jumlah[]" class="form-control m-input" placeholder="Jumlah" autocomplete="off">--}}
-{{--                                                <select class="form-control" name="unit[]" id="unit">--}}
-{{--                                                    <option selected>Pilih Satuan</option>--}}
-{{--                                                    @foreach ($units as $unit)--}}
-{{--                                                        <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </select>--}}
-{{--                                                <input type="text" name="keterangan[]" class="form-control m-input" placeholder="Keterangan" autocomplete="off">--}}
-{{--                                                <div class="input-group-append">--}}
-{{--                                                    <button id="removeRow" type="button" class="btn btn-danger rounded">--}}
-{{--                                                        <i class="fas fa-trash fa-sm"></i>--}}
-{{--                                                    </button>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                         </div>
                                         <div id="newRow"></div>
                                         <button id="addRow" type="button" class="btn btn-primary">
@@ -138,28 +121,78 @@
     </div>
 
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function()
+        {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            },false);
+        })
+        ();
+    </script>
     <script type="text/javascript">
         // add row
         $("#addRow").click(function () {
-            var html = '<br>';
+            var html = '';
             html += '<div id="inputFormRow">';
-            html += '<div class="input-group mb-12">';
-            html += '<select class="form-control m-input" id="material" name="material[]" required>';
+            html += '<div class="row">';
+            html += '<div class="col-md-12">';
+            html += '<div class="row">';
+            html += '<div class="col-md-3">';
+            html += '<div class="form-group">';
+            html += '<label for="material">Bahan</label>';
+            html += '<select class="form-control" id="material" name="material[]" required>';
             html += '<option selected>Pilih Bahan</option>';
             html += '@foreach ($materials as $material)';
             html += '<option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>';
             html += '@endforeach';
             html += '</select>';
-            html += '<input type="text" name="jumlah[]" class="form-control m-input" placeholder="Jumlah" autocomplete="off">';
-            html += '<select class="form-control" name="unit[]" id="unit">';
-            html += '<option selected>Pilih Satuan</option>';
-            html += '@foreach ($units as $unit)';
-            html += '<option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>';
-            html += '@endforeach'
-            html += '</select>';
-            html += '<input type="text" name="keterangan[]" class="form-control m-input" placeholder="Keterangan" autocomplete="off">';
-            html += '<div class="input-group-append">';
-            html += '<button id="removeRow" type="button" class="btn btn-danger rounded"><i class="fa fa-trash fa-sm"></i></button>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="col-md-1">';
+            html += '<div class="form-group">';
+            html += '<label for="unit">Satuan</label>';
+            html += '<input type="text" class="form-control" id="unit" name="unit[]" autocomplete="off">';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="col-md-2">\n' +
+                '<div class="form-group">\n' +
+                '<label for="nama_satuan">Nama Satuan</label>\n' +
+                '<select class="form-control" name="nama_satuan[]" id="">\n' +
+                '<option selected>Pilih Satuan</option>\n' +
+                '@foreach ($units as $unit)\n' +
+                '<option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\n' +
+                '@endforeach\n' +
+                '</select>\n' +
+                '</div>\n' +
+                '</div>';
+            html += '<div class="col-md-4">\n' +
+                '<div class="form-group">\n' +
+                '<label for="deskripsi">Keterangan</label>\n' +
+                '<input type="text" class="form-control" id="keterangan" name="keterangan[]" autocomplete="off">\n' +
+                '</div>\n' +
+                '</div>\n' +
+                '<div class="col-md-1">\n' +
+                '<label for="deskripsi">Action</label>\n' +
+                '<button id="removeRow" type="button" class="btn btn-danger rounded">\n' +
+                '<i class="fas fa-trash fa-sm"></i>\n' +
+                '</button>\n' +
+                '</div>';
+            html += '</div>';
+            html += '</div>';
             html += '</div>';
             html += '</div>';
 

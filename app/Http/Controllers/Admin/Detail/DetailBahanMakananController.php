@@ -79,7 +79,10 @@ class DetailBahanMakananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->all())
+        {
+            alert('erorr');
+        }
     }
 
     /**
