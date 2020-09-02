@@ -4,13 +4,13 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <a href="{{ route('admin.makanan.index') }}" class="sidebar-brand text-success">Data Vendor</a>
+                                <a href="{{ route('admin.makanan.index') }}" class="sidebar-brand text-success text-lg">Data Vendor</a>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $vendors }}</div>
                         </div>
@@ -22,15 +22,15 @@
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                <a href="{{ route('admin.permintaan.index') }}" class="sidebar-brand text-info">Data Permintaan</a>
+                                <a href="{{ route('admin.permintaan.index') }}" class="sidebar-brand text-info text-lg">Data Permintaan</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $demands }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-bars fa-2x text-gray-300"></i>
@@ -104,13 +104,13 @@
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                <a href="{{ route('admin.penerimaan.index') }}" class="sidebar-brand text-danger">Data Penerimaan</a>
+                                <a href="{{ route('admin.penerimaan.index') }}" class="sidebar-brand text-danger text-lg">Data Penerimaan</a>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
                         </div>

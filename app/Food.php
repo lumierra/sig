@@ -22,4 +22,9 @@ class Food extends Model
     {
         return $this->belongsToMany(Material::class);
     }
+
+    public function detail()
+    {
+        return $this->hasMany(FoodMaterial::class);
+    }
 }

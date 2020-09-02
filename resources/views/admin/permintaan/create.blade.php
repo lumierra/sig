@@ -14,7 +14,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-            <!-- Content Row -->
+                <!-- Content Row -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card shadow mb-4">
@@ -23,13 +23,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.permintaan.store') }}" method="POST">
+                                    <form action="{{ route('admin.permintaan.store') }}" method="POST" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="jenis">Vendor</label>
-                                                    <select class="form-control" id="vendors" name="vendors" required>
+                                                    <select class="form-control custom-select" id="vendors" name="vendors" required>
                                                         <option selected>Pilih Vendor</option>
                                                         @foreach ($vendors as $vendor)
                                                             <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
@@ -40,8 +40,8 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="makanan">Penanggung Jawab</label>
-                                                    <select class="form-control" id="heads" name="heads" required>
-                                                        <option selected>Pilih Kepala Gizi</option>
+                                                    <select class="form-control custom-select" id="heads" name="heads" required>
+                                                        <option selected>Pilih</option>
                                                         @foreach ($heads as $head)
                                                             <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
                                                         @endforeach
@@ -50,25 +50,60 @@
                                             </div>
                                         </div>
                                         <div id="inputFormRow">
-                                            <div class="input-group mb-12">
-                                                <select class="form-control" id="material" name="material[]" required>
-                                                    <option selected>Pilih Bahan</option>
-                                                    @foreach ($materials as $material)
-                                                        <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="text" name="jumlah[]" class="form-control m-input" placeholder="Jumlah" autocomplete="off">
-                                                <select class="form-control" name="unit[]" id="unit">
-                                                    <option selected>Pilih Satuan</option>
-                                                    @foreach ($units as $unit)
-                                                        <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="text" name="keterangan[]" class="form-control m-input" placeholder="Keterangan" autocomplete="off">
-                                                <div class="input-group-append">
-                                                    <button id="removeRow" type="button" class="btn btn-danger rounded">
-                                                        <i class="fas fa-trash fa-sm"></i>
-                                                    </button>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Bahan</th>
+                                                                <th>Jumlah</th>
+                                                                <th>Nama Satuan</th>
+                                                                <th>Keterangan</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="200px">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>
+                                                                                <option selected>Bahan</option>
+                                                                                @foreach ($materials as $material)
+                                                                                    <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="100px">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="150px">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">
+                                                                                <option selected>Satuan</option>
+                                                                                @foreach ($units as $unit)
+                                                                                    <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="300px">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button id="removeRow" type="button" class="btn btn-danger rounded">
+                                                                            <i class="fas fa-trash fa-sm"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,27 +128,8 @@
     <script type="text/javascript">
         // add row
         $("#addRow").click(function () {
-            var html = '<br>';
-            html += '<div id="inputFormRow">';
-            html += '<div class="input-group mb-12">';
-            html += '<select class="form-control m-input" id="material" name="material[]" required>';
-            html += '<option selected>Pilih Bahan</option>';
-            html += '@foreach ($materials as $material)';
-            html += '<option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>';
-            html += '@endforeach';
-            html += '</select>';
-            html += '<input type="text" name="jumlah[]" class="form-control m-input" placeholder="Jumlah" autocomplete="off">';
-            html += '<select class="form-control" name="unit[]" id="unit">';
-            html += '<option selected>Pilih Satuan</option>';
-            html += '@foreach ($units as $unit)';
-            html += '<option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>';
-            html += '@endforeach'
-            html += '</select>';
-            html += '<input type="text" name="keterangan[]" class="form-control m-input" placeholder="Keterangan" autocomplete="off">';
-            html += '<div class="input-group-append">';
-            html += '<button id="removeRow" type="button" class="btn btn-danger rounded"><i class="fa fa-trash fa-sm"></i></button>';
-            html += '</div>';
-            html += '</div>';
+            var html = '';
+            html += '';
 
             $('#newRow').append(html);
         });

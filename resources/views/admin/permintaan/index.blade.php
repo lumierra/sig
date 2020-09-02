@@ -46,6 +46,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Detail Permintaan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="test">
+                <input type="hidden" name="product_id" id="product_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -159,9 +178,24 @@
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
                 $('#vendors option:selected').val(data.vendors);
-                // $('#vendors').val(data.vendor);
-                // $('#heads').val(data.head);
             })
+        });
+
+        $('body').on('click', '.showProduct', function () {
+            var product_id = $(this).data('id');
+            $.ajax({
+                url: "/admin/permintaan/" + product_id + '/' + 'showDemand',
+                type: 'GET',
+                dataType: 'html',
+                data: null,
+                success: function(msg) {
+                    // alert(segitiga);
+                    $('#test').html(msg);
+                },
+                error: function(msg) {
+                    alert('msg');
+                }
+            });
         });
 
         $('#saveBtn').click(function (e) {

@@ -62,7 +62,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="material">Bahan</label>
-                                                                <select class="form-control" id="material[]" name="material[]" required>
+                                                                <select class="form-control custom-select" id="material[]" name="material[]" required>
                                                                     <option selected>Pilih Bahan</option>
                                                                     @foreach ($materials as $material)
                                                                         <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
@@ -79,7 +79,7 @@
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="unit">Nama Satuan</label>
-                                                                <select class="form-control" name="unit[]" id="unit[]">
+                                                                <select class="form-control custom-select" name="unit[]" id="unit[]">
                                                                     <option selected>Pilih Satuan</option>
                                                                     @foreach ($units as $unit)
                                                                         <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>

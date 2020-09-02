@@ -43,10 +43,8 @@ class PermintaanController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
-
-
 
                     return $btn;
                 })
@@ -187,7 +185,14 @@ class PermintaanController extends Controller
      */
     public function show($id)
     {
-        //
+        return 'asd';
+//        $demand = Demand::find($id);
+//        return view('admin.permintaan.show')->with('demand', $demand);
+    }
+    public function showDemand($id)
+    {
+        $demand = Demand::find($id);
+        return view('admin.permintaan.show')->with('demand', $demand);
     }
 
     /**
@@ -198,8 +203,8 @@ class PermintaanController extends Controller
      */
     public function edit($id)
     {
-//        $head = Head::find($id);
-//        return response()->json($head);
+        $demand = Demand::find($id);
+        return view('admin.permintaan.edit')->with('demand', $demand);
     }
 
     /**

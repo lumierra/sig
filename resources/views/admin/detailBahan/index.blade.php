@@ -45,6 +45,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Detail Bahan Makanan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="test">
+                <input type="hidden" name="product_id" id="product_id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+{{--                <button type="button" class="btn btn-primary">Save changes</button>--}}
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -115,16 +135,31 @@
 
         $('body').on('click', '.editProduct', function () {
             var product_id = $(this).data('id');
-            $.get("{{ route('admin.bahan-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
+            $.get("{{ route('admin.detail-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
                 $('#modelHeading').html("Edit Product");
                 $('#saveBtn').val("edit-user");
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
-                $('#name').val(data.name);
-                $('#email').val(data.email);
-                $('#password').val(data.password);
-                // $('#formPassword').remove();
+                // $('#name').val(data.name);
+                // $('#type').val('asd');
             })
+        });
+
+        $('body').on('click', '.showProduct', function () {
+            var product_id = $(this).data('id');
+            $.ajax({
+                url: "/admin/detail-makanan/" + product_id + '/' + 'edit',
+                type: 'GET',
+                dataType: 'html',
+                data: null,
+                success: function(msg) {
+                    // alert(segitiga);
+                    $('#test').html(msg);
+                },
+                error: function(msg) {
+                    alert('msg');
+                }
+            });
         });
 
         $('#saveBtn').click(function (e) {
@@ -133,7 +168,7 @@
 
             $.ajax({
                 data: $('#productForm').serialize(),
-                url: "{{ route('admin.bahan-makanan.store') }}",
+                url: "{{ route('admin.detail-makanan.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
@@ -157,7 +192,7 @@
 
             $.ajax({
                 type: "DELETE",
-                url: "{{ route('admin.bahan-makanan.store') }}"+'/'+product_id,
+                url: "{{ route('admin.detail-makanan.store') }}"+'/'+product_id,
                 success: function (data) {
                     table.draw();
                 },

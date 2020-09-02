@@ -17,4 +17,9 @@ class Demand extends Model
     {
         return $this->belongsTo(Head::class);
     }
+
+    public function detail()
+    {
+        return $this->hasMany(Detail::class);
+    }
 }

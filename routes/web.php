@@ -46,6 +46,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('vendor', 'Vendor\VendorController')->except('create', 'show', 'update');
     Route::resource('permintaan', 'Permintaan\PermintaanController');
     Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
+//    Route::get('permintaan/test', 'Permintaan\PermintaanController@showDemand');
+    Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
 
     Route::resource('products', 'ProductController');
 

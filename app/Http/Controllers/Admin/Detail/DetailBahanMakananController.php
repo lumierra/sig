@@ -38,7 +38,7 @@ class DetailBahanMakananController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct" alt="edit"><i class="fas fa-edit"></i></a>';
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -48,7 +48,11 @@ class DetailBahanMakananController extends Controller
         }
 
         $types = Type::all();
-        return view('admin.detailBahan.index')->with('types', $types);
+        $foods = Food::all();
+        return view('admin.detailBahan.index')->with([
+            'types' => $types,
+            'foods' => $foods,
+        ]);
     }
 
     /**
@@ -118,8 +122,8 @@ class DetailBahanMakananController extends Controller
      */
     public function show($id)
     {
-//        $food = Food::find(17);
-//        dd($food->materials);
+        $food = Food::find($id);
+        return view('admin.detail-makanan.show')->with('food', $food);
     }
 
     /**
@@ -130,7 +134,10 @@ class DetailBahanMakananController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $food = Food::find($id);
+//        return response()->json($food);
+        $food = Food::find($id);
+        return view('admin.detailBahan.show')->with('food', $food);
     }
 
     /**

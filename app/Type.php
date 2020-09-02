@@ -12,4 +12,9 @@ class Type extends Model
     {
         return $this->hasOne(Food::class);
     }
+
+    public function detail()
+    {
+        return $this->hasOne(FoodMaterial::class);
+    }
 }

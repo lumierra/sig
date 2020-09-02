@@ -24,6 +24,7 @@ class DashboardPengadaan extends Controller
         $vendors = Vendor::count();
         $demands = Demand::count();
 
+
         return view('admin.dashboard.dashboardPengadaan')->with([
            'vendors' => $vendors,
             'demands' => $demands,
