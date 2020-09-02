@@ -34,7 +34,7 @@
                         <th>No. Permintaan</th>
                         <th>Tgl. Permintaan</th>
                         <th>Vendor</th>
-                        <th>Mengetahui Ka. Inst. Gizi</th>
+                        <th>Penanggung Jawab</th>
                         <th>Actions</th>
                     </tr>
                     </thead>

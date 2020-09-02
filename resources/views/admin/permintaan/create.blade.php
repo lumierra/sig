@@ -53,7 +53,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="table-responsive">
-                                                        <table class="table table-borderless">
+                                                        <table class="table table-borderless" id="inputFormRow2">
                                                             <thead>
                                                             <tr>
                                                                 <th>Bahan</th>
@@ -68,7 +68,7 @@
                                                                     <td width="200px">
                                                                         <div class="form-group">
                                                                             <select class="form-control custom-select" id="material[]" name="material[]" required>
-                                                                                <option selected>Bahan</option>
+                                                                                <option selected disabled>Bahan</option>
                                                                                 @foreach ($materials as $material)
                                                                                     <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
                                                                                 @endforeach
@@ -83,7 +83,7 @@
                                                                     <td width="150px">
                                                                         <div class="form-group">
                                                                             <select class="form-control custom-select" name="unit[]" id="unit[]">
-                                                                                <option selected>Satuan</option>
+                                                                                <option selected disabled>Satuan</option>
                                                                                 @foreach ($units as $unit)
                                                                                     <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
                                                                                 @endforeach
@@ -129,14 +129,54 @@
         // add row
         $("#addRow").click(function () {
             var html = '';
-            html += '';
+            html += '<table class="table table-borderless" id="inputFormRow2">\n' +
+                '                                                            <tbody>\n' +
+                '                                                                <tr>\n' +
+                '                                                                    <td width="200px">\n' +
+                '                                                                        <div class="form-group">\n' +
+                '                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>\n' +
+                '                                                                                <option selected disabled>Bahan</option>\n' +
+                '                                                                                @foreach ($materials as $material)\n' +
+                '                                                                                    <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\n' +
+                '                                                                                @endforeach\n' +
+                '                                                                            </select>\n' +
+                '                                                                        </div>\n' +
+                '                                                                    </td>\n' +
+                '                                                                    <td width="100px">\n' +
+                '                                                                        <div class="form-group">\n' +
+                '                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">\n' +
+                '                                                                        </div>\n' +
+                '                                                                    </td>\n' +
+                '                                                                    <td width="150px">\n' +
+                '                                                                        <div class="form-group">\n' +
+                '                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">\n' +
+                '                                                                                <option selected disabled>Satuan</option>\n' +
+                '                                                                                @foreach ($units as $unit)\n' +
+                '                                                                                    <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\n' +
+                '                                                                                @endforeach\n' +
+                '                                                                            </select>\n' +
+                '                                                                        </div>\n' +
+                '                                                                    </td>\n' +
+                '                                                                    <td width="300px">\n' +
+                '                                                                        <div class="form-group">\n' +
+                '                                                                            <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">\n' +
+                '                                                                        </div>\n' +
+                '                                                                    </td>\n' +
+                '                                                                    <td>\n' +
+                '                                                                        <button id="removeRow" type="button" class="btn btn-danger rounded">\n' +
+                '                                                                            <i class="fas fa-trash fa-sm"></i>\n' +
+                '                                                                        </button>\n' +
+                '                                                                    </td>\n' +
+                '                                                                </tr>\n' +
+                '                                                            </tbody>\n' +
+                '                                                        </table>';
 
             $('#newRow').append(html);
         });
 
         // remove row
         $(document).on('click', '#removeRow', function () {
-            $(this).closest('#inputFormRow').remove();
+            $(this).closest('#inputFormRow2').remove();
         });
     </script>
 
@@ -147,78 +187,6 @@
         $("#satuan").on('keyup', function(){
             var n = parseInt($(this).val().replace(/\D/g,''),10);
             $(this).val(n.toLocaleString());
-        });
-
-        $(document).ready(function(){
-            var i=1;
-            $('#add').click(function(){
-                i++;
-                $('#dynamic_field').append('\
-              <tr >\
-                <td>\
-                    <div class="row" id="row'+i+'">\
-                        <div class="col-md-12">\
-                            <div class="row">\
-                                <div class="col-md-3">\
-                                    <div class="form-group">\
-                                        <label for="makanan">Bahan</label>\
-                                        <select class="form-control" id="bahan" name="bahan[]" required>\
-                                            <option selected>Pilih Bahan</option>\
-                                            @foreach ($materials as $material)\
-                                                <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\
-                                            @endforeach\
-                                        </select>\
-                                    </div>\
-                                </div>\
-                                <div class="col-md-2">\
-                                    <div class="form-group">\
-                                        <label for="satuan">Satuan</label>\
-                                        <input type="number" class="form-control" id="satuan" name="satuan[]" autocomplete="off">\
-                                    </div>\
-                                </div>\
-                                <div class="col-md-3">\
-                                    <div class="form-group">\
-                                        <label for="nama_satuan">Nama Satuan</label>\
-                                        <select class="form-control" name="nama_satuan[]" id="">\
-                                            <option selected>Pilih Bahan</option>\
-                                            @foreach ($units as $unit)\
-                                                <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\
-                                            @endforeach\
-                                        </select>\
-                                    </div>\
-                                </div>\
-                                <div class="col">\
-                                    <div class="form-group">\
-                                        <label for="deskripsi">Keterangan</label>\
-                                        <input type="type" class="form-control" id="satuan" name="satuan[]" autocomplete="off">\
-                                    </div>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </div>\
-                </td>\
-                <td>\
-                    <button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button>\
-                </td>\
-            </tr>\
-            ');
-            });
-            $(document).on('click', '.btn_remove', function(){
-                var button_id = $(this).attr("id");
-                $('#row'+button_id+'').remove();
-            });
-            //  $('#submit').click(function(){
-            //       $.ajax({
-            //            url:"name.php",
-            //            method:"POST",
-            //            data:$('#add_name').serialize(),
-            //            success:function(data)
-            //            {
-            //                 alert(data);
-            //                 $('#add_name')[0].reset();
-            //            }
-            //       });
-            //  });
         });
     </script>
 

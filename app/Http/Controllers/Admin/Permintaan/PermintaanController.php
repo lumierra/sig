@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Permintaan;
 
-use App\Detail;
+use Alert;
 use App\Food;
 use App\Head;
-use App\Http\Controllers\Controller;
-use App\Material;
-use App\Receipt;
-use App\Tail;
 use App\Unit;
-use Illuminate\Http\Request;
+use DateTime;
+use App\Detail;
 use App\Demand;
+use App\Vendor;
+use App\Material;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
-use Yajra\DataTables\DataTables;
-use App\Vendor;
-use DateTime;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class PermintaanController extends Controller
 {
@@ -42,8 +42,11 @@ class PermintaanController extends Controller
                     return $demand->head->name;
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
+                    $route = 'permintaan/' . $row->id . '/' . 'edit';
+                    $btn = '';
+//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
+                    $btn = $btn.' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -113,6 +116,7 @@ class PermintaanController extends Controller
             }
             else {
                 $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
+//                if ()
             }
         }
 
@@ -151,30 +155,13 @@ class PermintaanController extends Controller
                 'keterangan' => $request->keterangan[0],
             ]);
         }
+        if (!$demand){
+            Alert::error('Gagal', 'Data Gagal Di Tambah');
+        } else {
+            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+        }
 
         return redirect()->route('admin.permintaan.index');
-
-//        $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
-//        if (!$lastID){
-//            $newID = 'P-0001';
-//        }
-//        else{
-//            $lastIncrement = substr($lastID->code, -4);
-//            $newID = 'P-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
-//        }
-//
-//        Demand::updateOrCreate(
-//            ['id' => $request->product_id],
-//            [
-//                'code' => $newID,
-//                'date' => new DateTime(),
-//                'vendor_id' => $request->vendors,
-//                'head_id' => $request->heads,
-//                'user_id' => Auth::user()->id,
-//                'name' => 'Permintaan ' . $newID,
-//            ]);
-//
-//        return response()->json(['success'=>'Demand saved successfully.']);
     }
 
     /**
@@ -186,9 +173,8 @@ class PermintaanController extends Controller
     public function show($id)
     {
         return 'asd';
-//        $demand = Demand::find($id);
-//        return view('admin.permintaan.show')->with('demand', $demand);
     }
+
     public function showDemand($id)
     {
         $demand = Demand::find($id);
@@ -204,7 +190,18 @@ class PermintaanController extends Controller
     public function edit($id)
     {
         $demand = Demand::find($id);
-        return view('admin.permintaan.edit')->with('demand', $demand);
+        $vendors = Vendor::all();
+        $heads = Head::all();
+        $materials = Material::all();
+        $units = Unit::all();
+
+        return view('admin.permintaan.edit')->with([
+            'demand' => $demand,
+            'vendors' => $vendors,
+            'heads' => $heads,
+            'materials' => $materials,
+            'units' => $units,
+        ]);
     }
 
     /**
@@ -216,7 +213,52 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $demand = Demand::find($id);
+        $counter = count($request->jumlah);
+        $counterDetail = count($demand->detail);
+
+        $demand->update([
+           'vendor_id' => $request->vendors,
+           'head_id' => $request->heads,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        if ($counter > $counterDetail){
+//            for($i=0; $i < ($counterDetail - $counter); $i++){
+//
+//            }
+            echo 'tambah';
+        }
+        else {
+            foreach ($demand->detail as $detail){
+                $item = Detail::find($detail->id);
+                $item->update([
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => $request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+
+            for($i=0; $i < $counterDetail; $i++){
+                foreach ($demand->detail as $detail){
+                    $item = Detail::find($detail->id);
+                        $item->update([
+                            'material_id' => $request->material[$i],
+                            'unit_id' => $request->unit[$i],
+                            'user_id' => Auth::user()->id,
+                            'jumlah' => $request->jumlah[$i],
+                            'keterangan' => $request->keterangan[$i],
+                    ]);
+                }
+            }
+        }
+
+        Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+        return redirect()->route('admin.permintaan.index');
+
     }
 
     /**
