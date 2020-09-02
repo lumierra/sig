@@ -29,11 +29,11 @@
             <div class="table-responsive">
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                    <tr>
+                    <tr class="text-success">
                         <th>No</th>
                         <th>Nama Makanan</th>
                         <th>Jenis Makanan</th>
-                        <th>Detail Bahan Makanan</th>
+{{--                        <th>Detail Bahan Makanan</th>--}}
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -90,10 +90,12 @@
         var table = $('.yajra-datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.bahan-makanan.index') }}",
+            ajax: "{{ route('admin.detail-makanan.index') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
+                {data: 'type', name: 'type'},
+                // {data: 'test', name: 'test'},
                 {
                     data: 'action',
                     name: 'action',

@@ -73,11 +73,11 @@
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Management</span>
             </a>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+            <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Master Pengadaan:</h6>
                     <a class="collapse-item" href="{{ route('admin.management-user.index') }}">Management User</a>
@@ -349,7 +349,7 @@
               <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
               <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div> --}}
-
+            @include('sweetalert::alert')
             @yield('content')
             <!-- Content Row -->
                 {{-- <div class="row">

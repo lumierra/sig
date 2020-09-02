@@ -8,7 +8,9 @@ class FoodMaterial extends Model
 {
     protected $table = 'food_material';
 
-    protected $fillable = ['food_id', 'material_id', 'type_id', 'unit_id', 'satuan', 'keterangan'];
+    protected $fillable = [
+        'food_id', 'material_id', 'type_id', 'unit_id', 'satuan', 'keterangan'
+    ];
 
 
 }

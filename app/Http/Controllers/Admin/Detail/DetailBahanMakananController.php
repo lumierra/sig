@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin\Detail;
 
 use App\Food;
-use App\Http\Controllers\Controller;
-use App\Material;
 use App\Type;
 use App\Unit;
-use Illuminate\Http\Request;
+use App\Material;
 use App\FoodMaterial;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DetailBahanMakananController extends Controller
 {
@@ -29,15 +30,15 @@ class DetailBahanMakananController extends Controller
             $data = Food::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('user', function (Food $food) {
-                    return $food->user->name;
-                })
+//                ->addColumn('user', function (Food $food) {
+//                    return $food->user->name;
+//                })
                 ->addColumn('type', function (Food $food) {
                     return $food->type->name;
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct" alt="edit"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -79,10 +80,34 @@ class DetailBahanMakananController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->all())
-        {
-            alert('erorr');
+        $counter = count($request->material);
+
+        if ($counter > 1){
+            for ($i = 0; $i < $counter; $i++){
+                FoodMaterial::create([
+                    'type_id' => $request->type,
+                    'food_id' => $request->food,
+                    'material_id' => $request->material[$i],
+                    'satuan' => (int)$request->jumlah[$i],
+                    'unit_id' => $request->unit[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
         }
+        else {
+            FoodMaterial::create([
+                'type_id' => $request->type,
+                'food_id' => $request->food,
+                'material_id' => $request->material[0],
+                'satuan' => (int)$request->jumlah[0],
+                'unit_id' => $request->unit[0],
+                'keterangan' => $request->keterangan[0],
+            ]);
+            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+        }
+
+        return redirect()->route('admin.detail-makanan.index');
     }
 
     /**
@@ -93,7 +118,8 @@ class DetailBahanMakananController extends Controller
      */
     public function show($id)
     {
-        //
+//        $food = Food::find(17);
+//        dd($food->materials);
     }
 
     /**
