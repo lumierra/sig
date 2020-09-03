@@ -6,15 +6,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-lg font-weight-bold" width="150px">Tujuan</td>
+                        <td class="text-lg font-weight-bold" width="150px">Dari</td>
                         <td width="10px">:</td>
-                        <td class="font-weight-bold">{{ ucfirst($spend->tujuan) }}</td>
+                        <td class="font-weight-bold">{{ ucfirst($retur->dari) }}</td>
                     </tr>
-{{--                    <tr>--}}
-{{--                        <td class="text-lg font-weight-bold" width="150px">Penanggung Jawab</td>--}}
-{{--                        <td width="10px">:</td>--}}
-{{--                        <td class="font-weight-bold">{{ ucfirst($demand->head->name) }}</td>--}}
-{{--                    </tr>--}}
                 </tbody>
             </table>
             <table class="table table-hover">
@@ -28,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($spend->detail as $detail)
+                    @foreach($retur->detail as $detail)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ ucfirst($detail->material->name) }}</td>

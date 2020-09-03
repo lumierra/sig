@@ -27,4 +27,9 @@ class Unit extends Model
     {
         return $this->hasOne(One::class);
     }
+
+    public function two()
+    {
+        return $this->hasOne(Two::class);
+    }
 }
