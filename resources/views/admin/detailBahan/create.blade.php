@@ -72,7 +72,7 @@
                                                         </div>
                                                         <div class="col-md-1">
                                                             <div class="form-group">
-                                                                <label for="unit">Satuan</label>
+                                                                <label for="unit">Jumlah</label>
                                                                 <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
                                                             </div>
                                                         </div>
@@ -142,7 +142,7 @@
             html += '</div>';
             html += '<div class="col-md-1">';
             html += '<div class="form-group">';
-            html += '<label for="unit">Satuan</label>';
+            html += '<label for="unit">Jumlah</label>';
             html += '<input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">';
             html += '</div>';
             html += '</div>';

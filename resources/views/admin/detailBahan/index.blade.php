@@ -20,7 +20,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="{{ route('admin.detail-makanan.create') }}" class="btn btn-success btn-add float-right btn-icon-split">
+            <a href="{{ route('admin.detail-makanan.create') }}" class="btn btn-success btn-sm btn-add float-right btn-icon-split">
                 <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
                 <span class="text">Tambah Detail Bahan</span>
             </a>
@@ -33,7 +33,6 @@
                         <th>No</th>
                         <th>Nama Makanan</th>
                         <th>Jenis Makanan</th>
-{{--                        <th>Detail Bahan Makanan</th>--}}
                         <th>Action</th>
                     </tr>
                     </thead>

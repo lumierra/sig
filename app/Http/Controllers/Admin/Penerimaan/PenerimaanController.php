@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin\Penerimaan;
 
-use App\Demand;
+use Alert;
 use App\Head;
-use App\Http\Controllers\Controller;
-use App\Material;
 use App\Tail;
 use App\Unit;
-use App\Vendor;
-use Illuminate\Http\Request;
-use App\Receipt;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
 use DateTime;
+use App\Demand;
+use App\Vendor;
 use App\Detail;
+use App\Receipt;
+use App\Material;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class PenerimaanController extends Controller
 {
@@ -41,8 +42,11 @@ class PenerimaanController extends Controller
                     return $receipt->head->name;
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-
+                    $route = 'penerimaan/' . $row->id . '/' . 'edit';
+                    $btn = '';
+//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
+                    $btn = $btn.' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -94,13 +98,26 @@ class PenerimaanController extends Controller
     public function store(Request $request)
     {
         $counter = count($request->jumlah);
+
+        $today = new DateTime();
+        $month = $today->format('m');
+        $year = $today->format('Y');
+        $now = '2020';
+
         $lastID = Receipt::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
-            $newID = 'PN-0001';
+            $newID = 'Penerimaan-RSGZ/000001/' . $month . '/' . $year;
         }
         else{
-            $lastIncrement = substr($lastID->code, -4);
-            $newID = 'PN-' . str_pad($lastIncrement + 1, 4, 0, STR_PAD_LEFT);
+            if ($year == $now){
+                $lastIncrement = substr($lastID->code, 16, 6);
+                $newIncrement = 'Penerimaan-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                $newID = $newIncrement . '/' . $month . '/' . $year;
+            }
+            else {
+                $newID = 'Penerimaan-RSGZ/000001/' . $month . '/' . $year;
+//                if ()
+            }
         }
 
         $receipt = Receipt::create([
@@ -109,52 +126,42 @@ class PenerimaanController extends Controller
             'vendor_id' => $request->vendors,
             'head_id' => $request->heads,
             'user_id' => Auth::user()->id,
-            'name' => 'Penerimaan ' . $newID,
+            'name' => $newID,
         ]);
 
-        $find = Receipt::where('code', $newID);
+        $find = Receipt::where('code', $newID)->first();
+
         if ($counter > 1){
             for ($i=0; $i < $counter; $i++){
                 Tail::create([
-                    '' => $find->id,
-                    'demand_core' => $newID,
+                    'receipt_id' => $find->id,
+                    'receipt_code' => $find->code,
                     'material_id' => $request->material[$i],
                     'unit_id' => $request->unit[$i],
                     'user_id' => Auth::user()->id,
-                    'jumlah' => $request->jumlah[$i],
+                    'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
             }
         }
         else {
-            Detail::create([
-                'demand_id' => $find->id,
-                'demand_core' => $newID,
+            Tail::create([
+                'receipt_id' => $find->id,
+                'receipt_code' => $find->code,
                 'material_id' => $request->material[0],
                 'unit_id' => $request->unit[0],
                 'user_id' => Auth::user()->id,
-                'jumlah' => $request->jumlah[0],
+                'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
         }
+        if (!$receipt){
+            Alert::error('Gagal', 'Data Gagal Di Tambah');
+        } else {
+            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+        }
 
         return redirect()->route('admin.penerimaan.index');
-
-
-
-
-//        Receipt::updateOrCreate(
-//            ['id' => $request->product_id],
-//            [
-//                'code' => $newID,
-//                'date' => new DateTime(),
-//                'vendor_id' => $request->vendors,
-//                'head_id' => $request->heads,
-//                'user_id' => Auth::user()->id,
-//                'name' => 'Penerimaan ' . $newID,
-//            ]);
-
-//        return response()->json(['success'=>'Receipt saved successfully.']);
     }
 
     /**
@@ -165,7 +172,14 @@ class PenerimaanController extends Controller
      */
     public function show($id)
     {
-        //
+        $receipt = Receipt::find($id);
+        return view('admin.penerimaan.show')->with('receipt', $receipt);
+    }
+
+    public function showReceipt($id)
+    {
+        $receipt = Receipt::find($id);
+        return view('admin.penerimaan.show')->with('receipt', $receipt);
     }
 
     /**
@@ -176,8 +190,19 @@ class PenerimaanController extends Controller
      */
     public function edit($id)
     {
-//        $head = Head::find($id);
-//        return response()->json($head);
+        $receipt = Receipt::find($id);
+        $vendors = Vendor::all();
+        $heads = Head::all();
+        $materials = Material::all();
+        $units = Unit::all();
+
+        return view('admin.penerimaan.edit')->with([
+            'receipt' => $receipt,
+            'vendors' => $vendors,
+            'heads' => $heads,
+            'materials' => $materials,
+            'units' => $units,
+        ]);
     }
 
     /**
@@ -189,7 +214,47 @@ class PenerimaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $receipt = Receipt::find($id);
+        $counter = count($request->jumlah);
+        $counterDetail = count($receipt->detail);
+
+        $receipt->update([
+            'vendor_id' => $request->vendors,
+            'head_id' => $request->heads,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        if ($counter > $counterDetail){
+            foreach ($receipt->detail as $i => $detail){
+                Tail::destroy($detail->id);
+            }
+            for($i=0; $i < $counter; $i++){
+                Tail::create([
+                    'receipt_id' => $receipt->id,
+                    'receipt_code' => $receipt->code,
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+        else {
+            foreach ($receipt->detail as $i => $detail){
+                $item = Tail::find($detail->id);
+                $item->update([
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+
+        Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+        return redirect()->route('admin.penerimaan.index');
     }
 
     /**

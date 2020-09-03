@@ -87,7 +87,6 @@
             </div>
         </li>
 
-
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -109,6 +108,31 @@
                     <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>
                     <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Data Penerimaan</a>
                     <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Data Vendor</a>
+                </div>
+            </div>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Operasional
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Resource Operasional</span>
+            </a>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Master Operasional:</h6>
+                    <a class="collapse-item" href="{{ route('admin.dashboard-operasional.index') }}">Dashboard Operasional</a>
+                    <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Data Pengeluaran</a>
+                    <a class="collapse-item" href="{{ route('admin.retur.index') }}">Data Retur</a>
                 </div>
             </div>
         </li>

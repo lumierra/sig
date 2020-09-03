@@ -46,8 +46,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('vendor', 'Vendor\VendorController')->except('create', 'show', 'update');
     Route::resource('permintaan', 'Permintaan\PermintaanController');
     Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
-//    Route::get('permintaan/test', 'Permintaan\PermintaanController@showDemand');
+    Route::get('penerimaan/{id}/showReceipt', 'Penerimaan\PenerimaanController@showReceipt')->name('penerimaan.showReceipt');
     Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
+
+    Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
+    Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');
+    Route::resource('retur', 'Retur\ReturController');
+
 
     Route::resource('products', 'ProductController');
 

@@ -21,6 +21,7 @@ class CreateReceiptsTable extends Migration
             $table->unsignedInteger('head_id')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->string('name')->nullable();
+            $table->string('status')->default('proses');
             $table->timestamps();
         });
     }

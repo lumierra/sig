@@ -20,5 +20,10 @@ class Receipt extends Model
         return $this->belongsTo(Head::class);
     }
 
+    public function detail()
+    {
+        return $this->hasMany(Tail::class);
+    }
+
 
 }

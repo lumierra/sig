@@ -5,10 +5,6 @@
 @section('subtitle', 'Data Satuan Makanan')
 
 @section('content')
-    {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">--}}
-
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
 @section('button')
@@ -21,7 +17,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-add float-right btn-icon-split">
+            <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-sm float-right btn-icon-split">
                 <span class="icon text-white-50">
                       <i class="fas fa-plus-circle"></i>
                 </span>

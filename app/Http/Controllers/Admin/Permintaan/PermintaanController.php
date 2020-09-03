@@ -139,7 +139,7 @@ class PermintaanController extends Controller
                     'material_id' => $request->material[$i],
                     'unit_id' => $request->unit[$i],
                     'user_id' => Auth::user()->id,
-                    'jumlah' => $request->jumlah[$i],
+                    'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
             }
@@ -151,7 +151,7 @@ class PermintaanController extends Controller
                 'material_id' => $request->material[0],
                 'unit_id' => $request->unit[0],
                 'user_id' => Auth::user()->id,
-                'jumlah' => $request->jumlah[0],
+                'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
         }
@@ -225,34 +225,31 @@ class PermintaanController extends Controller
         ]);
 
         if ($counter > $counterDetail){
-//            for($i=0; $i < ($counterDetail - $counter); $i++){
-//
-//            }
-            echo 'tambah';
+            foreach ($demand->detail as $i => $detail){
+                Detail::destroy($detail->id);
+            }
+            for($i=0; $i < $counter; $i++){
+                Detail::create([
+                    'demand_id' => $demand->id,
+                    'demand_code' => $demand->code,
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
         }
         else {
-            foreach ($demand->detail as $detail){
+            foreach ($demand->detail as $i => $detail){
                 $item = Detail::find($detail->id);
                 $item->update([
                     'material_id' => $request->material[$i],
                     'unit_id' => $request->unit[$i],
                     'user_id' => Auth::user()->id,
-                    'jumlah' => $request->jumlah[$i],
+                    'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
-            }
-
-            for($i=0; $i < $counterDetail; $i++){
-                foreach ($demand->detail as $detail){
-                    $item = Detail::find($detail->id);
-                        $item->update([
-                            'material_id' => $request->material[$i],
-                            'unit_id' => $request->unit[$i],
-                            'user_id' => Auth::user()->id,
-                            'jumlah' => $request->jumlah[$i],
-                            'keterangan' => $request->keterangan[$i],
-                    ]);
-                }
             }
         }
 
@@ -269,8 +266,8 @@ class PermintaanController extends Controller
      */
     public function destroy($id)
     {
-        Head::find($id)->delete();
+        Demand::find($id)->delete();
 
-        return response()->json(['success'=>'Head deleted successfully.']);
+        return response()->json(['success'=>'Permintaan deleted successfully.']);
     }
 }

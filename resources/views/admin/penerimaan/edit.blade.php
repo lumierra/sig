@@ -23,8 +23,10 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.penerimaan.store') }}" method="POST" class="needs-validation" novalidate>
+                                    <form action="{{ route('admin.penerimaan.update', $receipt->id) }}" method="POST" class="needs-validation" novalidate>
                                         @csrf
+                                        {{ method_field('PUT') }}
+
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group">
@@ -32,7 +34,7 @@
                                                     <select class="form-control custom-select" id="vendors" name="vendors" required>
                                                         <option selected>Pilih Vendor</option>
                                                         @foreach ($vendors as $vendor)
-                                                            <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                                                            <option value="{{$vendor->id}}"  {{$receipt->vendor->id == $vendor->id  ? 'selected' : ''}} name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -43,7 +45,7 @@
                                                     <select class="form-control custom-select" id="heads" name="heads" required>
                                                         <option selected>Pilih</option>
                                                         @foreach ($heads as $head)
-                                                            <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
+                                                            <option value="{{$head->id}}" {{$receipt->head->id == $head->id  ? 'selected' : ''}} name="{{$head->name}}">{{ $head->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -64,43 +66,45 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td width="200px">
-                                                                    <div class="form-group">
-                                                                        <select class="form-control custom-select" id="material[]" name="material[]" required>
-                                                                            <option selected disabled>Bahan</option>
-                                                                            @foreach ($materials as $material)
-                                                                                <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td width="100px">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
-                                                                    </div>
-                                                                </td>
-                                                                <td width="150px">
-                                                                    <div class="form-group">
-                                                                        <select class="form-control custom-select" name="unit[]" id="unit[]">
-                                                                            <option selected disabled>Satuan</option>
-                                                                            @foreach ($units as $unit)
-                                                                                <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td width="300px">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <button id="removeRow" type="button" class="btn btn-danger rounded">
-                                                                        <i class="fas fa-trash fa-sm"></i>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
+                                                            @foreach($receipt->detail as $detail)
+                                                                <tr>
+                                                                    <td width="200px">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>
+                                                                                <option selected disabled>Bahan</option>
+                                                                                @foreach ($materials as $material)
+                                                                                    <option value="{{$material->id}}" {{$detail->material->id == $material->id  ? 'selected' : ''}}  name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="100px">
+                                                                        <div class="form-group">
+                                                                            <input value="{{ $detail->jumlah }}" type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="150px">
+                                                                        <div class="form-group">
+                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">
+                                                                                <option selected disabled>Satuan</option>
+                                                                                @foreach ($units as $unit)
+                                                                                    <option value="{{$unit->id}}" {{$detail->unit->id == $unit->id  ? 'selected' : ''}} name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="300px">
+                                                                        <div class="form-group">
+                                                                            <input value="{{ $detail->keterangan }}" type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button id="removeRow" type="button" class="btn btn-danger rounded">
+                                                                            <i class="fas fa-trash fa-sm"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -112,7 +116,7 @@
                                             <i class="fa fa-plus-circle"></i>
                                         </button><br><br>
 
-                                        <a href="{{ route('admin.penerimaan.index') }}" class="btn btn-danger">Batal</a>
+                                        <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger">Batal</a>
                                         <button type="submit" class="btn btn-success">Simpan</button>
                                     </form>
                                 </div>

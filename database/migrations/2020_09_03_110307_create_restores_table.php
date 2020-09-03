@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDemandsTable extends Migration
+class CreateRestoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateDemandsTable extends Migration
      */
     public function up()
     {
-        Schema::create('demands', function (Blueprint $table) {
+        Schema::create('restores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->nullable();
             $table->datetime('date')->nullable();
-            $table->unsignedInteger('vendor_id')->nullable();
-            $table->unsignedInteger('head_id')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
+            $table->string('dari')->nullable();
             $table->string('name')->nullable();
-            $table->string('status')->default('proses');
+            $table->string('status')->default('masuk');
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateDemandsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demands');
+        Schema::dropIfExists('restores');
     }
 }

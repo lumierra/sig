@@ -5,10 +5,6 @@
 @section('subtitle', 'Data Permintaan')
 
 @section('content')
-    {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">--}}
-    {{--    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">--}}
-
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
 @section('button')
@@ -21,7 +17,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="{{ route('admin.permintaan.create') }}" class="btn btn-success btn-add float-right btn-icon-split">
+            <a href="{{ route('admin.permintaan.create') }}" class="btn btn-success btn-sm float-right btn-icon-split">
                 <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
                 <span class="text">Tambah Permintaan</span>
             </a>
@@ -31,14 +27,15 @@
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr class="text-success">
-                        <th>No. Permintaan</th>
-                        <th>Tgl. Permintaan</th>
+                        <th width="100px">No. Permintaan</th>
+                        <th width="120px">Tgl. Permintaan</th>
                         <th>Vendor</th>
-                        <th>Penanggung Jawab</th>
+                        <th width="120px">Penanggung Jawab</th>
+                        <th width="50px">Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody class="text-capitalize">
+                    <tbody>
                     </tbody>
                 </table>
             </div>
@@ -96,18 +93,6 @@
                             </select>
                         </div>
                     </div>
-{{--                    <div class="form-group">--}}
-{{--                        <label for="name" class="col-sm-5 control-label">Nama</label>--}}
-{{--                        <div class="col-sm-12">--}}
-{{--                            <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="form-group">--}}
-{{--                        <label for="name" class="col-sm-5 control-label">Keterangan</label>--}}
-{{--                        <div class="col-sm-12">--}}
-{{--                            <input type="text" class="form-control" id="status" name="status" value="" maxlength="50" required="" autocomplete="off">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
@@ -152,6 +137,18 @@
                 },
                 {data: 'vendor', name: 'vendor'},
                 {data: 'head', name: 'head'},
+                {
+                    data: null,
+                    render: function (data){
+                        if (data.status == 'proses'){
+                            var badge = '<span class="badge badge-danger">proses</span>';
+                        }
+                        else {
+                            var badge = '<span class="badge badge-success">selesai</span>';
+                        }
+                        return badge;
+                    }
+                },
                 {
                     data: 'action',
                     name: 'action',
