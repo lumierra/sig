@@ -22,4 +22,9 @@ class Unit extends Model
     {
         return $this->hasOne(Tail::class);
     }
+
+    public function one()
+    {
+        return $this->hasOne(One::class);
+    }
 }

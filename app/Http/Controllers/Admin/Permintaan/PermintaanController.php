@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Permintaan;
 use Alert;
 use App\Food;
 use App\Head;
+use App\Spend;
 use App\Unit;
 use DateTime;
 use App\Detail;
@@ -266,8 +267,11 @@ class PermintaanController extends Controller
      */
     public function destroy($id)
     {
-        Demand::find($id)->delete();
+        $demand = Demand::find($id)->delete();
 
+        foreach ($demand->detail as $detail){
+            $detail->delete();
+        }
         return response()->json(['success'=>'Permintaan deleted successfully.']);
     }
 }

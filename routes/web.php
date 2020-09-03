@@ -32,7 +32,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('users', 'Users\UserController');
     Route::resource('management-user', 'Management\ManagementController');
 
-    Route::resource('kepala-gizi', 'Head\HeadController')->except('craete', 'show', 'update');
+    Route::resource('kepala-gizi', 'Head\HeadController')->except('create', 'show', 'update');
 //    Route::get('users/data', 'Users\UserController@getUser')->name('user.data');
 
     Route::resource('dashboard-makanan', 'Dashboard\DashboardMakanan')->only('index');
@@ -52,6 +52,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
     Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');
     Route::resource('retur', 'Retur\ReturController');
+    Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
+//    Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
 
 
     Route::resource('products', 'ProductController');
