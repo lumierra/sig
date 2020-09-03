@@ -20,20 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/database/seeds/MaterialTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/TypesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/UnitsTableSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Satuan/SatuanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Satuan/SatuanController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Unit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Unit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_31_111012_create_units_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_111012_create_units_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardOperasional.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/dashboardOperasional.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/satuan/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_31_163205_create_receipts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_163205_create_receipts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/vendor/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +229,7 @@
       <workItem from="1598924659764" duration="26326000" />
       <workItem from="1598961829897" duration="5949000" />
       <workItem from="1599011412069" duration="26264000" />
-      <workItem from="1599096727756" duration="22961000" />
+      <workItem from="1599096727756" duration="27161000" />
     </task>
     <servers />
   </component>
@@ -276,10 +268,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1598862120506" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1599122590211">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1599127184426">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1599122590211" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1599127184426" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -128,7 +128,7 @@
 
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
-                $(this).html('Sending..');
+                $(this).html('Simpan');
 
                 $.ajax({
                     data: $('#productForm').serialize(),

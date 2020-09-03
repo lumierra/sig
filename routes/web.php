@@ -54,7 +54,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('retur', 'Retur\ReturController');
     Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
     Route::get('retur/{id}/showRetur', 'Retur\ReturController@showRetur')->name('retur.showRetur');
-
+    Route::get('pengeluaran/{id}/{material}/cekBahan', 'Pengeluaran\PengeluaranController@cekBahan');
 
     Route::resource('products', 'ProductController');
 

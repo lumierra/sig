@@ -9,6 +9,7 @@ use App\Head;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Spend;
+use App\Tail;
 use App\Unit;
 use App\One;
 use App\Vendor;
@@ -261,5 +262,19 @@ class PengeluaranController extends Controller
         }
 
         return response()->json(['success'=>'Pengeluaran Berhasil Di Hapus']);
+    }
+
+    public function cekBahan($id, $material)
+    {
+        $detail = Tail::find(1)->get();
+
+        foreach ($detail as $item){
+
+        }
+
+//        $total = sum($detail->)
+
+//        return $detail;
+
     }
 }

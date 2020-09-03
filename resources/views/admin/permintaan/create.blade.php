@@ -23,14 +23,14 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.permintaan.store') }}" method="POST" class="needs-validation" novalidate>
+                                    <form action="{{ route('admin.permintaan.store') }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="jenis">Vendor</label>
                                                     <select class="form-control custom-select" id="vendors" name="vendors" required>
-                                                        <option selected>Pilih Vendor</option>
+                                                        <option selected disabled >Pilih Vendor</option>
                                                         @foreach ($vendors as $vendor)
                                                             <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
                                                         @endforeach
@@ -67,7 +67,7 @@
                                                                 <tr>
                                                                     <td width="200px">
                                                                         <div class="form-group">
-                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>
+                                                                            <select class="form-control custom-select" id="material" name="material[]" required>
                                                                                 <option selected disabled>Bahan</option>
                                                                                 @foreach ($materials as $material)
                                                                                     <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
@@ -77,12 +77,12 @@
                                                                     </td>
                                                                     <td width="100px">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
+                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off">
                                                                         </div>
                                                                     </td>
                                                                     <td width="150px">
                                                                         <div class="form-group">
-                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">
+                                                                            <select class="form-control custom-select" name="unit[]" id="unit">
                                                                                 <option selected disabled>Satuan</option>
                                                                                 @foreach ($units as $unit)
                                                                                     <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
@@ -92,7 +92,7 @@
                                                                     </td>
                                                                     <td width="300px">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
+                                                                            <input type="text" class="form-control" id="keterangan" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -126,6 +126,35 @@
 
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript">
+        function validasi(form) {
+
+            if (form.jumlah.value != ""){
+                return true;
+            }
+            else {
+                confirm('Anda harus mengisi data dengan lengkap !');
+            }
+            // return (true);
+            // var vendor = document.getElementById("vendors").value;
+            // var jumlah = document.getElementById("jumlah").value;
+            // var alamat = document.getElementById("alamat").value;
+            // if (nama != "" && email!="" && alamat !="") {
+            //     return true;
+            // }else{
+            //     alert('Anda harus mengisi data dengan lengkap !');
+            // }
+            // if (vendor != "" && jumlah != "") {
+            //     return true;
+            // }else{
+            //     swal({
+            //         type: 'error',
+            //         icon: 'error',
+            //         title: 'Data Belum Selesai'
+            //     })
+            // }
+        }
+    </script>
+    <script type="text/javascript">
         // add row
         $("#addRow").click(function () {
             var html = '';
@@ -134,7 +163,7 @@
                 '                                                                <tr>\n' +
                 '                                                                    <td width="200px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>\n' +
+                '                                                                            <select class="form-control custom-select" id="material" name="material[]" required>\n' +
                 '                                                                                <option selected disabled>Bahan</option>\n' +
                 '                                                                                @foreach ($materials as $material)\n' +
                 '                                                                                    <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\n' +
@@ -144,12 +173,12 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">\n' +
+                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">\n' +
+                '                                                                            <select class="form-control custom-select" name="unit[]" id="unit">\n' +
                 '                                                                                <option selected disabled>Satuan</option>\n' +
                 '                                                                                @foreach ($units as $unit)\n' +
                 '                                                                                    <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\n' +
@@ -159,7 +188,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="300px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">\n' +
+                '                                                                            <input type="text" class="form-control" id="keterangan" name="keterangan[]" autocomplete="off" placeholder="Keterangan">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td>\n' +
