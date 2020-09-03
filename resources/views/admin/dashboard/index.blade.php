@@ -14,7 +14,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 <a href="{{ route('admin.dashboard-makanan.index') }}" class="text-success text-lg">Master Makanan</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">6 Fitur</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">5 Fitur</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-th-large fa-2x text-gray-300"></i>
@@ -23,6 +23,25 @@
                 </div>
             </div>
             <br>
+        </div>
+
+        <!-- Master Operasional -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-bottom-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                <a href="{{ route('admin.dashboard-operasional.index') }}" class="text-warning text-lg">Master Operasional</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">2 Fitur</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Master Pengadaan -->
@@ -37,7 +56,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">4 Fitur</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-th-large fa-2x text-gray-300"></i>
+                            <i class="fas fa-truck fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

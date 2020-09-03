@@ -58,10 +58,10 @@ class SatuanController extends Controller
      */
     public function store(Request $request)
     {
-        Unit::updateOrCreate(['id' => $request->id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+        Unit::updateOrCreate(['id' => $request->product_id],
+            ['name' => $request->name, 'deskripsi' => $request->deskripsi, 'user_id' => Auth::user()->id]);
 
-        return response()->json(['success'=>'Unit saved successfully.']);
+        return response()->json(['success'=> 'Nama Satuan Berhasil']);
     }
 
     /**

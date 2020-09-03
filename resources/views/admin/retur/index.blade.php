@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Retur')
+@section('title', 'Data Pengembalian')
 
-@section('subtitle', 'Data Retur')
+@section('subtitle', 'Data Pengembalian')
 
 @section('content')
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -19,7 +19,7 @@
         <div class="card-header py-3">
             <a href="{{ route('admin.retur.create') }}" class="btn btn-success btn-sm float-right btn-icon-split">
                 <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
-                <span class="text">Tambah Retur</span>
+                <span class="text">Tambah Pengembalian</span>
             </a>
         </div>
         <div class="card-body">
@@ -27,8 +27,8 @@
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr class="text-success">
-                        <th>No. Retur</th>
-                        <th>Tgl. Retur</th>
+                        <th>No. Pengembalian</th>
+                        <th>Tgl. Pengembalian</th>
                         <th>Dari</th>
                         <th>Status</th>
                         <th>Actions</th>

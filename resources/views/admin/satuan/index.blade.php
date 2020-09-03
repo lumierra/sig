@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Satuan Makanan')
+@section('title', 'Data Satuan Bahan')
 
-@section('subtitle', 'Data Satuan Makanan')
+@section('subtitle', 'Data Satuan Bahan')
 
 @section('content')
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -30,7 +30,8 @@
                     <thead>
                     <tr class="text-success">
                         <th>No</th>
-                        <th>Nama Satuan Makanan</th>
+                        <th width="200px">Nama Satuan Bahan</th>
+                        <th>Deskripsi</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -52,9 +53,15 @@
                 <form id="productForm" name="productForm" class="form-horizontal">
                     <input type="hidden" name="product_id" id="product_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Nama Satuan Makanan</label>
+                        <label for="name" class="col-sm-5 control-label">Nama Satuan Bahan</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Bungkus, Cup, Sachet" value="" maxlength="50" required="" autocomplete="off">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Kg, Gr, Bks" required="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Deskripsi</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="(Kilogram, Gram, Bungkus)" required="" autocomplete="off">
                         </div>
                     </div>
 
@@ -92,6 +99,7 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
+                {data: 'deskripsi', name: 'deskripsi'},
                 {
                     data: 'action',
                     name: 'action',
@@ -105,24 +113,25 @@
             $('#saveBtn').val("create-product");
             $('#product_id').val('');
             $('#productForm').trigger("reset");
-            $('#modelHeading').html("Form Satuan Makanan");
+            $('#modelHeading').html("Form Satuan Bahan");
             $('#ajaxModel').modal('show');
         });
 
         $('body').on('click', '.editProduct', function () {
             var product_id = $(this).data('id');
             $.get("{{ route('admin.satuan-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                $('#modelHeading').html("Edit Satuan Makanan");
+                $('#modelHeading').html("Edit Satuan Bahan");
                 $('#saveBtn').val("edit-user");
                 $('#ajaxModel').modal('show');
                 $('#product_id').val(data.id);
                 $('#name').val(data.name);
+                $('#deskripsi').val(data.deskripsi);
             })
         });
 
         $('#saveBtn').click(function (e) {
             e.preventDefault();
-            $(this).html('Sending..');
+            $(this).html('Simpan');
 
             $.ajax({
                 data: $('#productForm').serialize(),
@@ -133,8 +142,8 @@
                     swal({
                         type: 'success',
                         icon: 'success',
-                        title: 'Tambah Satuan Makanan',
-                        text: 'Anda Berhasil Menambah Satuan'
+                        title: 'Berhasil',
+                        // text: 'Anda Berhasil Menambah Satuan'
                     })
                     $('#productForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
@@ -147,7 +156,7 @@
                         type: 'error',
                         title: 'Data Belum Lengkap'
                     })
-                    $('#saveBtn').html('Save Changes');
+                    $('#saveBtn').html('Tersimpan');
                 }
             });
         });

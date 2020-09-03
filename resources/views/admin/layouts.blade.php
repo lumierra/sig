@@ -92,6 +92,58 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
+            Makanan
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Master Makanan</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Master Makanan:</h6>
+                    <a class="collapse-item" href="{{ route('admin.dashboard-makanan.index') }}">Dashboard Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Data Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Data Jenis Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Data Bahan Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Data Satuan Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Data Detail Bahan Makanan</a>
+                </div>
+            </div>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Operasional
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Operasional</span>
+            </a>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Master Operasional:</h6>
+                    <a class="collapse-item" href="{{ route('admin.dashboard-operasional.index') }}">Dashboard Operasional</a>
+                    <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
+                    <a class="collapse-item" href="{{ route('admin.retur.index') }}">Pengembalian</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
             Pengadaan
         </div>
 
@@ -113,56 +165,6 @@
         </li>
 
 
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Operasional
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Resource Operasional</span>
-            </a>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Operasional:</h6>
-                    <a class="collapse-item" href="{{ route('admin.dashboard-operasional.index') }}">Dashboard Operasional</a>
-                    <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Data Pengeluaran</a>
-                    <a class="collapse-item" href="{{ route('admin.retur.index') }}">Data Retur</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Makanan
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Resource Makanan</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Makanan:</h6>
-                    <a class="collapse-item" href="{{ route('admin.dashboard-makanan.index') }}">Dashboard Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Data Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Data Jenis Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Data Bahan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Data Satuan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Data Detail Bahan Makanan</a>
-                </div>
-            </div>
-        </li>
 
 
         <!-- Divider -->
@@ -347,7 +349,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
                                onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"
+                                    document.getElementById('logout-form').submit();"
                             >
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         <span class="nav-link-text">
@@ -368,93 +370,10 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-            @yield('button')
-            {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 class="h3 mb-0 text-gray-800">@yield('subtitle')</h1>
-              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-            </div> --}}
-            @include('sweetalert::alert')
-            @yield('content')
-            <!-- Content Row -->
-                {{-- <div class="row">
+                @yield('button')
 
-                  <!-- Earnings (Monthly) Card Example -->
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Earnings (Monthly) Card Example -->
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Earnings (Monthly) Card Example -->
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                            <div class="row no-gutters align-items-center">
-                              <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                              </div>
-                              <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Pending Requests Card Example -->
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
+                @include('sweetalert::alert')
+                @yield('content')
 
             </div>
             <!-- /.container-fluid -->
@@ -466,7 +385,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
+                    <span>Copyright &copy; Sistem Informasi Gizi RSUD Langsa 2020</span>
                 </div>
             </div>
         </footer>

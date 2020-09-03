@@ -28,7 +28,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                <a href="{{ route('admin.retur.index') }}" class="sidebar-brand text-danger text-lg">Data Retur</a>
+                                <a href="{{ route('admin.retur.index') }}" class="sidebar-brand text-danger text-lg">Data Pengembalian</a>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                         </div>

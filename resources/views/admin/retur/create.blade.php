@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Buat Retur')
+@section('title', 'Form Pengembalian')
 
-@section('subtitle', 'Buat Retur')
+@section('subtitle', 'Form Pengembalian')
 
 @section('content')
 
@@ -19,7 +19,7 @@
                     <div class="col-lg-12">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-success">Form Retur</h6>
+                                <h6 class="m-0 font-weight-bold text-success">Form Pengembalian</h6>
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
@@ -66,7 +66,7 @@
                                                                 </td>
                                                                 <td width="100px">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
+                                                                        <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)" maxlength="5">
                                                                     </div>
                                                                 </td>
                                                                 <td width="150px">
@@ -133,7 +133,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">\n' +
+                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)" maxlength="5">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
@@ -173,10 +173,21 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script>
 
-        $("#satuan").on('keyup', function(){
-            var n = parseInt($(this).val().replace(/\D/g,''),10);
-            $(this).val(n.toLocaleString());
-        });
+        var jumlah = document.getElementById('jumlah');
+
+        var	reverse = jumlah.toString().split('').reverse().join(''),
+        ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
+
+        // Cetak hasil
+        document.write(jumlah); // Hasil: 23.456.789
+
+        function hanyaAngka(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
     </script>
 
 @endsection
