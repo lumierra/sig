@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Demand;
+use App\Receipt;
+use App\Spend;
+use App\Restore;
 
 class DashboardController extends Controller
 {
@@ -19,7 +23,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        $demand = Demand::count();
+        $receipt = Receipt::count();
+        $retur = Restore::count();
+        $spend = Spend::count();
+
+
+        return view('admin.dashboard.index')->with([
+            'demand' => $demand,
+            'receipt' => $receipt,
+            'retur' => $retur,
+            'spend' => $spend,
+        ]);
     }
 
     /**

@@ -30,12 +30,12 @@
                         <thead>
                         <tr class="text-success">
                             <th>No</th>
-                            <th width="200px">Nama Satuan Bahan</th>
+                            <th width="200px">Singkatan Satuan</th>
                             <th>Deskripsi</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody class="text-capitalize">
+                        <tbody>
                         </tbody>
                     </table>
                 </div>

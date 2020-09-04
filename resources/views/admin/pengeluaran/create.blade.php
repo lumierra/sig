@@ -56,7 +56,7 @@
                                                             <tr>
                                                                 <td width="200px">
                                                                     <div class="form-group">
-                                                                        <select class="form-control custom-select" id="material[]" name="material[]" required>
+                                                                        <select class="form-control custom-select material" id="material" name="material[]" required>
                                                                             <option selected disabled>Bahan</option>
                                                                             @foreach ($materials as $material)
                                                                                 <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
@@ -66,12 +66,12 @@
                                                                 </td>
                                                                 <td width="100px">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
+                                                                        <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
                                                                     </div>
                                                                 </td>
                                                                 <td width="150px">
                                                                     <div class="form-group">
-                                                                        <select class="form-control custom-select" name="unit[]" id="unit[]">
+                                                                        <select class="form-control custom-select" name="unit" id="unit[]">
                                                                             <option selected disabled>Satuan</option>
                                                                             @foreach ($units as $unit)
                                                                                 <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
@@ -81,7 +81,7 @@
                                                                 </td>
                                                                 <td width="300px">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
+                                                                        <input type="text" class="form-control" id="keterangan" name="keterangan[]" autocomplete="off" placeholder="Keterangan">
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -123,7 +123,7 @@
                 '                                                                <tr>\n' +
                 '                                                                    <td width="200px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <select class="form-control custom-select" id="material[]" name="material[]" required>\n' +
+                '                                                                            <select class="form-control custom-select" id="material" name="material[]" required>\n' +
                 '                                                                                <option selected disabled>Bahan</option>\n' +
                 '                                                                                @foreach ($materials as $material)\n' +
                 '                                                                                    <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\n' +
@@ -133,12 +133,12 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">\n' +
+                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <select class="form-control custom-select" name="unit[]" id="unit[]">\n' +
+                '                                                                            <select class="form-control custom-select" name="unit" id="unit[]">\n' +
                 '                                                                                <option selected disabled>Satuan</option>\n' +
                 '                                                                                @foreach ($units as $unit)\n' +
                 '                                                                                    <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\n' +
@@ -148,7 +148,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="300px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off" placeholder="Keterangan">\n' +
+                '                                                                            <input type="text" class="form-control" id="keterangan" name="keterangan[]" autocomplete="off" placeholder="Keterangan">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td>\n' +
@@ -173,9 +173,53 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script>
 
-        $("#satuan").on('keyup', function(){
-            var n = parseInt($(this).val().replace(/\D/g,''),10);
-            $(this).val(n.toLocaleString());
+        var jumlah = document.getElementById('jumlah');
+
+        var	reverse = jumlah.toString().split('').reverse().join('');
+        ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
+
+        // Cetak hasil
+        document.write(jumlah); // Hasil: 23.456.789
+
+        function hanyaAngka(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("select.material").change(function(){
+                var material = $(this).children("option:selected").val();
+                var jumlah = $('#jumlah').val();
+                jumlah = parseInt(jumlah);
+                material = parseInt(material);
+                console.log(material);
+                console.log(jumlah);
+                $.ajax({
+                    url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: null,
+                    success: function(msg) {
+                        // $('#test').html(msg);
+                        console.log('bahan ' + msg);
+                        if (jumlah > material){
+                            swal({
+
+                            });
+                        }
+
+                    },
+                    error: function(msg) {
+                        alert('msg');
+                    }
+                });
+
+                // alert("You have selected the country - " + selectedCountry);
+            });
         });
     </script>
 

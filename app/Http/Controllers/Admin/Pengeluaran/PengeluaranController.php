@@ -264,17 +264,17 @@ class PengeluaranController extends Controller
         return response()->json(['success'=>'Pengeluaran Berhasil Di Hapus']);
     }
 
-    public function cekBahan($id, $material)
+    public function cekBahan($material)
     {
-        $detail = Tail::find(1)->get();
+        $detail = Tail::all();
 
+        $count = 0;
         foreach ($detail as $item){
-
+            if ($item->material_id == $material){
+                $count = $item->jumlah + $count;
+            }
         }
 
-//        $total = sum($detail->)
-
-//        return $detail;
-
+        return $count;
     }
 }

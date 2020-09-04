@@ -67,7 +67,7 @@
                                                                 <tr>
                                                                     <td width="200px">
                                                                         <div class="form-group">
-                                                                            <select class="form-control custom-select" id="material" name="material[]" required>
+                                                                            <select class="form-control custom-select material" id="material" name="material[]" required>
                                                                                 <option selected disabled>Bahan</option>
                                                                                 @foreach ($materials as $material)
                                                                                     <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
@@ -77,7 +77,7 @@
                                                                     </td>
                                                                     <td width="100px">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off">
+                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
                                                                         </div>
                                                                     </td>
                                                                     <td width="150px">
@@ -125,33 +125,22 @@
     </div>
 
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript">
-        function validasi(form) {
+    <script>
 
-            if (form.jumlah.value != ""){
-                return true;
-            }
-            else {
-                confirm('Anda harus mengisi data dengan lengkap !');
-            }
-            // return (true);
-            // var vendor = document.getElementById("vendors").value;
-            // var jumlah = document.getElementById("jumlah").value;
-            // var alamat = document.getElementById("alamat").value;
-            // if (nama != "" && email!="" && alamat !="") {
-            //     return true;
-            // }else{
-            //     alert('Anda harus mengisi data dengan lengkap !');
-            // }
-            // if (vendor != "" && jumlah != "") {
-            //     return true;
-            // }else{
-            //     swal({
-            //         type: 'error',
-            //         icon: 'error',
-            //         title: 'Data Belum Selesai'
-            //     })
-            // }
+        var jumlah = document.getElementById('jumlah');
+
+        var	reverse = jumlah.toString().split('').reverse().join(''),
+            ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
+
+        // Cetak hasil
+        document.write(jumlah); // Hasil: 23.456.789
+
+        function hanyaAngka(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
         }
     </script>
     <script type="text/javascript">
@@ -173,7 +162,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off">\n' +
+                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
@@ -217,6 +206,16 @@
             var n = parseInt($(this).val().replace(/\D/g,''),10);
             $(this).val(n.toLocaleString());
         });
+
+        $(document).ready(function(){
+            $("select.material").change(function(){
+                var selectedMaterial = $(this).children("option:selected").val();
+                var test = $( "#material" ).val();
+                alert("You have selected the country - " + test);
+                console.log(test);
+            });
+        });
+
     </script>
 
 @endsection

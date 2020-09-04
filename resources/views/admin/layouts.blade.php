@@ -68,48 +68,28 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Managamenet
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Management</span>
-            </a>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Pengadaan:</h6>
-                    <a class="collapse-item" href="{{ route('admin.management-user.index') }}">Management User</a>
-                    <a class="collapse-item" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
-                    <a class="collapse-item" href="{{ route('admin.users.index') }}">Profil User</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Makanan
+            Master
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Master Makanan</span>
+                <span>Master</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Makanan:</h6>
-                    <a class="collapse-item" href="{{ route('admin.dashboard-makanan.index') }}">Dashboard Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Data Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Data Jenis Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Data Bahan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Data Satuan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Data Detail Bahan Makanan</a>
+{{--                    <h6 class="collapse-header">Master</h6>--}}
+                    <a class="collapse-item" href="{{ route('admin.management-user.index') }}">Pengguna</a>
+                    <a class="collapse-item" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
+                    <hr class="divider">
+                    <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Bahan Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Jenis Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Menu Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Detail Bahan Makanan</a>
+                    <hr class="divider">
+                    <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Satuan Makanan</a>
+                    <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Vendor</a>
                 </div>
             </div>
         </li>
@@ -120,51 +100,25 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Operasional
+            Transaksi
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Operasional</span>
+                <i class="fas fa-fw fa-shopping-cart "></i>
+                <span>Transaksi</span>
             </a>
             <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Operasional:</h6>
-                    <a class="collapse-item" href="{{ route('admin.dashboard-operasional.index') }}">Dashboard Operasional</a>
+                    <h6 class="collapse-header">Transaksi</h6>
+                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>
+                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Data Penerimaan</a>
                     <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
                     <a class="collapse-item" href="{{ route('admin.retur.index') }}">Pengembalian</a>
                 </div>
             </div>
         </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Pengadaan
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Resource Pengadaan</span>
-            </a>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Master Pengadaan:</h6>
-                    <a class="collapse-item" href="{{ route('admin.dashboard-pengadaan.index') }}">Dashboard Pengadaan</a>
-                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>
-                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Data Penerimaan</a>
-                    <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Data Vendor</a>
-                </div>
-            </div>
-        </li>
-
-
 
 
         <!-- Divider -->
@@ -344,7 +298,7 @@
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                                Profil {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
