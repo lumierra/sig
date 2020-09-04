@@ -20,7 +20,7 @@
             <div class="card-header py-3">
                 <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-sm btn-add float-right btn-icon-split">
                     <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
-                    <span class="text">Tambah Jenis</span>
+                    <span class="text">Tambah Jenis Makanan</span>
                 </button>
             </div>
             <div class="card-body">
@@ -68,118 +68,117 @@
         </div>
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-<script type="text/javascript">
-    $(function () {
+    <script type="text/javascript">
+        $(function () {
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        var table = $('.yajra-datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('admin.jenis-makanan.index') }}",
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ]
-        })
+            var table = $('.yajra-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.jenis-makanan.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                ]
+            })
 
-        $('#createNewProduct').click(function () {
-            $('#saveBtn').val("create-product");
-            $('#product_id').val('');
-            $('#productForm').trigger("reset");
-            $('#modelHeading').html("Form Bahan Makanan");
-            $('#ajaxModel').modal('show');
-        });
-
-        $('body').on('click', '.editProduct', function () {
-            var product_id = $(this).data('id');
-            $.get("{{ route('admin.jenis-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                $('#modelHeading').html("Edit Jenis Makanan");
-                $('#saveBtn').val("edit-jenis");
+            $('#createNewProduct').click(function () {
+                $('#saveBtn').val("create-product");
+                $('#product_id').val('');
+                $('#productForm').trigger("reset");
+                $('#modelHeading').html("Form Jenis Makanan");
                 $('#ajaxModel').modal('show');
-                $('#product_id').val(data.id);
-                $('#name').val(data.name);
-            })
-        });
+            });
 
-        $('#saveBtn').click(function (e) {
-            e.preventDefault();
-            $(this).html('Sending..');
+            $('body').on('click', '.editProduct', function () {
+                var product_id = $(this).data('id');
+                $.get("{{ route('admin.jenis-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
+                    $('#modelHeading').html("Edit Jenis Makanan");
+                    $('#saveBtn').val("edit-jenis");
+                    $('#ajaxModel').modal('show');
+                    $('#product_id').val(data.id);
+                    $('#name').val(data.name);
+                })
+            });
 
-            $.ajax({
-                data: $('#productForm').serialize(),
-                url: "{{ route('admin.jenis-makanan.store') }}",
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    swal({
-                        type: 'success',
-                        icon: 'success',
-                        title: 'Tambah Jenis Makanan',
-                        text: 'Anda Berhasil Menambah Jenis Makanan'
-                    })
-                    $('#productForm').trigger("reset");
-                    $('#ajaxModel').modal('hide');
-                    table.draw();
+            $('#saveBtn').click(function (e) {
+                e.preventDefault();
+                $(this).html('Simpan');
 
-                },
-                error: function (data) {
-                    // console.log('Error:', data);
-                    swal({
-                        type: 'error',
-                        title: 'Data Belum Lengkap'
-                    })
-                    $('#saveBtn').html('Save Changes');
-                }
+                $.ajax({
+                    data: $('#productForm').serialize(),
+                    url: "{{ route('admin.jenis-makanan.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        swal({
+                            type: 'success',
+                            icon: 'success',
+                            title: 'Berhasil',
+                            // text: 'Anda Berhasil Menambah Jenis Makanan'
+                        })
+                        $('#productForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+                        table.draw();
+
+                    },
+                    error: function (data) {
+                        // console.log('Error:', data);
+                        swal({
+                            type: 'error',
+                            title: 'Data Belum Lengkap'
+                        })
+                        $('#saveBtn').html('Simpan');
+                    }
+                });
+            });
+
+            $('body').on('click', '.deleteProduct', function () {
+
+                var product_id = $(this).data("id");
+
+                swal({
+                    title: "Apakah Anda Yakin ?",
+                    // text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Data Jenis Makanan Berhasil di Hapus", {
+                            icon: "success",
+                        });
+                        $.ajax({
+                            type: "DELETE",
+                            url: "{{ route('admin.jenis-makanan.store') }}"+'/'+product_id,
+                            success: function (data) {
+                                table.draw();
+                            },
+                            error: function (data) {
+                                console.log('Error:', data);
+                            }
+                        });
+                    }
+                });
             });
         });
-
-        $('body').on('click', '.deleteProduct', function () {
-
-            var product_id = $(this).data("id");
-
-            swal({
-                title: "Apakah Anda Yakin ?",
-                // text: "",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Data Jenis Makanan Berhasil di Hapus", {
-                        icon: "success",
-                    });
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('admin.jenis-makanan.store') }}"+'/'+product_id,
-                        success: function (data) {
-                            table.draw();
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            });
-        });
-    });
-</script>
+    </script>
 @endsection

@@ -10,6 +10,7 @@ use App\FoodMaterial;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DetailBahanMakananController extends Controller
@@ -37,8 +38,11 @@ class DetailBahanMakananController extends Controller
                     return $food->type->name;
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct" alt="edit"><i class="fas fa-edit"></i></a>';
+                    $route = 'detail-makanan/' . $row->id . '/' . 'edit';
+                    $btn = '';
+//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct" alt="edit"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
+                    $btn = $btn.' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -76,6 +80,23 @@ class DetailBahanMakananController extends Controller
         ]);
     }
 
+    public function create2($id)
+    {
+        $item = Food::find($id);
+        $types = Type::all();
+        $foods = Food::all();
+        $materials = Material::all();
+        $units = Unit::all();
+
+        return view('admin.detailBahan.create2')->with([
+            'types' => $types,
+            'foods' => $foods,
+            'materials' => $materials,
+            'units' => $units,
+            'item' => $item,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -92,7 +113,7 @@ class DetailBahanMakananController extends Controller
                     'type_id' => $request->type,
                     'food_id' => $request->food,
                     'material_id' => $request->material[$i],
-                    'satuan' => (int)$request->jumlah[$i],
+                    'jumlah' => (int)$request->jumlah[$i],
                     'unit_id' => $request->unit[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
@@ -104,7 +125,7 @@ class DetailBahanMakananController extends Controller
                 'type_id' => $request->type,
                 'food_id' => $request->food,
                 'material_id' => $request->material[0],
-                'satuan' => (int)$request->jumlah[0],
+                'jumlah' => (int)$request->jumlah[0],
                 'unit_id' => $request->unit[0],
                 'keterangan' => $request->keterangan[0],
             ]);
@@ -113,6 +134,7 @@ class DetailBahanMakananController extends Controller
 
         return redirect()->route('admin.detail-makanan.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -123,7 +145,7 @@ class DetailBahanMakananController extends Controller
     public function show($id)
     {
         $food = Food::find($id);
-        return view('admin.detail-makanan.show')->with('food', $food);
+        return view('admin.detailBahan.show')->with('food', $food);
     }
 
     /**
@@ -134,10 +156,19 @@ class DetailBahanMakananController extends Controller
      */
     public function edit($id)
     {
-//        $food = Food::find($id);
-//        return response()->json($food);
         $food = Food::find($id);
-        return view('admin.detailBahan.show')->with('food', $food);
+        $materials = Material::all();
+        $units = Unit::all();
+        $types = Type::all();
+        $foods = Food::all();
+
+        return view('admin.detailBahan.edit')->with([
+            'food' => $food,
+            'materials' => $materials,
+            'units' => $units,
+            'types' => $types,
+            'makanan' => $foods,
+        ]);
     }
 
     /**
@@ -149,7 +180,41 @@ class DetailBahanMakananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $food = Food::find($id);
+        $counter = count($request->jumlah);
+        $counterDetail = count($food->detail);
+
+        if ($counter > $counterDetail){
+            foreach ($food->detail as $i => $detail){
+                FoodMaterial::destroy($detail->id);
+            }
+            for($i=0; $i < $counter; $i++){
+                FoodMaterial::create([
+                    'food_id' => $food->id,
+                    'type_id' => $food->type->id,
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+        else {
+            foreach ($food->detail as $i => $detail){
+                $item = FoodMaterial::find($detail->id);
+                $item->update([
+                    'material_id' => $request->material[$i],
+                    'unit_id' => $request->unit[$i],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[$i],
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
+
+        Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+        return redirect()->route('admin.detail-makanan.index');
     }
 
     /**
@@ -160,6 +225,13 @@ class DetailBahanMakananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $food = Food::find($id);
+
+        foreach ($food->detail as $detail){
+            $item = FoodMaterial::find($detail->id);
+            $item->delete();
+        }
+
+        return redirect()->route('admin.detail-makanan.index');
     }
 }
