@@ -41,6 +41,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('jenis-makanan', 'Jenis\JenisController');
     Route::resource('satuan-makanan', 'Satuan\SatuanController');
     Route::resource('detail-makanan', 'Detail\DetailBahanMakananController');
+    Route::resource('kategori', 'Kategori\KategoriController');
     Route::get('detail-makanan/{id}/show', 'Detail\DetailBahanMakananController@show');
     Route::delete('detail-makanan/{id}/destroy', 'Detail\DetailBahanMakananController@destroy');
     Route::get('detail-makanan/{id}/create2', 'Detail\DetailBahanMakananController@create2');

@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Bahan Makanan')
+@section('title', 'Kategori Bahan')
 
-@section('subtitle', 'Bahan Makanan')
+@section('subtitle', 'Kategori Bahan Makanan')
 
 @section('content')
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
             <div class="card-header py-3">
                 <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-sm btn-add float-right btn-icon-split">
                     <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
-                    <span class="text">Tambah Bahan Makanan</span>
+                    <span class="text">Tambah Kategori</span>
                 </button>
             </div>
             <div class="card-body">
@@ -29,7 +29,7 @@
                         <thead>
                         <tr class="text-success">
                             <th>No</th>
-                            <th>Nama Bahan Makanan</th>
+                            <th>Nama Kategori Bahan Makanan</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -51,11 +51,18 @@
                     <form id="productForm" name="productForm" class="form-horizontal">
                         <input type="hidden" name="product_id" id="product_id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Nama Bahan Makanan</label>
+                            <label for="name" class="col-sm-5 control-label">Nama Kategori</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Ayam, Ikan, Beras" value="" maxlength="50" required="" autocomplete="off">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="(Makanan Pokok)" value="" maxlength="50" required="" autocomplete="off">
                             </div>
                         </div>
+
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="col-sm-5 control-label"></label>--}}
+{{--                            <div class="col-sm-12">--}}
+{{--                                <input type="text" class="form-control" id="name" name="name" placeholder="Ayam, Ikan, Beras" value="" maxlength="50" required="" autocomplete="off">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -86,7 +93,7 @@
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.bahan-makanan.index') }}",
+                ajax: "{{ route('admin.kategori.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
@@ -103,14 +110,14 @@
                 $('#saveBtn').val("create-product");
                 $('#product_id').val('');
                 $('#productForm').trigger("reset");
-                $('#modelHeading').html("Form Bahan Makanan");
+                $('#modelHeading').html("Form Kategori");
                 $('#ajaxModel').modal('show');
             });
 
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.get("{{ route('admin.bahan-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                    $('#modelHeading').html("Edit Bahan Makanan");
+                $.get("{{ route('admin.kategori.index') }}" +'/' + product_id +'/edit', function (data) {
+                    $('#modelHeading').html("Edit Kategori");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.id);
@@ -124,7 +131,7 @@
 
                 $.ajax({
                     data: $('#productForm').serialize(),
-                    url: "{{ route('admin.bahan-makanan.store') }}",
+                    url: "{{ route('admin.kategori.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
@@ -161,12 +168,12 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        swal("Data Bahan Makanan Berhasil di Hapus", {
+                        swal("Data Kategori Berhasil di Hapus", {
                             icon: "success",
                         });
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('admin.bahan-makanan.store') }}"+'/'+product_id,
+                            url: "{{ route('admin.kategori.store') }}"+'/'+product_id,
                             success: function (data) {
                                 table.draw();
                             },

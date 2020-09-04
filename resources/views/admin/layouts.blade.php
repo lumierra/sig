@@ -83,6 +83,7 @@
                     <a class="collapse-item" href="{{ route('admin.management-user.index') }}">Pengguna</a>
                     <a class="collapse-item" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
                     <hr class="divider">
+                    <a class="collapse-item" href="{{ route('admin.kategori.index') }}">Kategori Bhn Mkn</a>
                     <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Bahan Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Jenis Makanan</a>
                     <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Menu Makanan</a>

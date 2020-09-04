@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Detail Bahan Makanan')
+@section('title', 'Detail Bahan Makanan')
 
-@section('subtitle', 'Data Detail Bahan Makanan')
+@section('subtitle', 'Detail Bahan Makanan')
 
 @section('content')
 
