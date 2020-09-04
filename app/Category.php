@@ -9,4 +9,9 @@ class Category extends Model
     protected $fillable = [
       'name', 'description',
     ];
+
+    public function material()
+    {
+        return $this->hasOne(Material::class);
+    }
 }

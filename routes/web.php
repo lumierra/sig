@@ -46,6 +46,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::delete('detail-makanan/{id}/destroy', 'Detail\DetailBahanMakananController@destroy');
     Route::get('detail-makanan/{id}/create2', 'Detail\DetailBahanMakananController@create2');
 
+
     Route::resource('dashboard-pengadaan', 'Dashboard\DashboardPengadaan')->only('index');
     Route::resource('vendor', 'Vendor\VendorController');
     Route::resource('permintaan', 'Permintaan\PermintaanController');
@@ -63,9 +64,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('products', 'ProductController');
 
 //    Route::get('/test', 'Makanan\MakananController@test');
-    Route::get('/test', function (){
-       return view('admin.test');
-    });
+//    Route::get('/test', function (){
+//       return view('admin.test');
+//    });
 });
 
 //Route::resource('products', 'ProductController');

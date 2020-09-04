@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Bahan;
 
-use App\Http\Controllers\Controller;
+use App\Unit;
 use App\User;
-use Illuminate\Http\Request;
 use App\Material;
+use App\Category;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\DataTables;
+use App\Http\Controllers\Controller;
 
 class BahanController extends Controller
 {
@@ -22,15 +24,24 @@ class BahanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    public function
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = Material::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('category', function (Material $material) {
+                    return $material->category->name;
+                })
+                ->addColumn('unit', function (Material $material) {
+                    return $material->unit->name;
+                })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-
+                    $btn = '';
+//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -38,8 +49,13 @@ class BahanController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+        $categories = Category::all();
+        $units = Unit::all();
 
-        return view('admin.bahan.index');
+        return view('admin.bahan.index')->with([
+            'categories' => $categories,
+            'units' => $units
+        ]);
     }
 
     /**
@@ -61,7 +77,12 @@ class BahanController extends Controller
     public function store(Request $request)
     {
         Material::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'user_id' => Auth::user()->id]);
+            [
+                'name' => $request->name,
+                'user_id' => Auth::user()->id,
+                'category_id' => $request->category,
+                'unit_id' => $request->unit,
+            ]);
 
         return response()->json(['success'=>'Material saved successfully.']);
     }
@@ -86,7 +107,14 @@ class BahanController extends Controller
     public function edit($id)
     {
         $material = Material::find($id);
-        return response()->json($material);
+        $categories = Category::all();
+        $units = Unit::all();
+
+        return view('admin.bahan.show')->with([
+            'material' => $material,
+            'categories' => $categories,
+            'units' => $units,
+        ]);
     }
 
     /**

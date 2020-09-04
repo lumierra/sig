@@ -32,4 +32,9 @@ class Unit extends Model
     {
         return $this->hasOne(Two::class);
     }
+
+    public function material()
+    {
+        return $this->hasOne(Material::class);
+    }
 }

@@ -32,4 +32,14 @@ class Material extends Model
     {
         return $this->hasOne(Two::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }
