@@ -32,7 +32,7 @@
                                                     <select class="form-control custom-select" id="tujuan" name="tujuan" required>
                                                         <option selected>Pilih Tujuan</option>
                                                         @foreach($places as $place)
-                                                            <option value="">{{ $place->name }}</option>
+                                                            <option value="{{ $place->name }}" name="{{ $place->name }}">{{ $place->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -56,7 +56,7 @@
                                                             <tr>
                                                                 <td width="200px">
                                                                     <div class="form-group">
-                                                                        <select class="form-control custom-select material" id="material" name="material[]" required>
+                                                                        <select class="form-control custom-select material" id="material0" name="material[]" required>
                                                                             <option selected disabled>Bahan</option>
                                                                             @foreach ($materials as $material)
                                                                                 <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
@@ -66,7 +66,7 @@
                                                                 </td>
                                                                 <td width="100px">
                                                                     <div class="form-group">
-                                                                        <input onkeyup="myFunction(matrial)" type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
+                                                                        <input onkeyup="myFunction('0')" type="text" class="form-control" id="jumlah0" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
                                                                     </div>
                                                                 </td>
                                                                 <td width="150px">
@@ -117,7 +117,6 @@
     <script type="text/javascript">
         // add row
         var material = 1;
-        var jumlah = 1;
         $("#addRow").click(function () {
             var html = '';
             html += '<table class="table table-borderless" id="inputFormRow2">\n' +
@@ -135,7 +134,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                           <input onkeyup="myFunction()" type="text" class="form-control" id="jumlah' + material + '" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
+                '                                                                           <input onkeyup="myFunction(' + material + ')" type="text" class="form-control" id="jumlah' + material + '" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
@@ -193,10 +192,12 @@
     </script>
     <script type="text/javascript">
 
-        function myFunction(){
-            var material = $("#material option:selected" ).val();
+        function myFunction(counter){
+            console.log('counter ' + counter);
+            var material = $('#material' + counter + ' option:selected').val();
+            // var test = $('#');
             material = parseInt(material);
-            var jumlah = $('#jumlah').val();
+            var jumlah = $('#jumlah' + counter).val();
             jumlah = parseInt(jumlah);
             // var material = document.getElementsById('material[]');
             console.log('bahan ' + material);

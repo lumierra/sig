@@ -56,6 +56,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::get('penerimaan/{id}/showReceipt', 'Penerimaan\PenerimaanController@showReceipt')->name('penerimaan.showReceipt');
     Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
     Route::get('penerimaan/{id}/create2', 'Permintaan\PermintaanController@create2')->name('penerimaan.create2');
+    Route::get('permintaan/{material}/cekBahan', 'Permintaan\PermintaanController@cekBahan')->name('permintaan.cekBahan');
 
     Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
     Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');
@@ -67,9 +68,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('products', 'ProductController');
 
 //    Route::get('/test', 'Makanan\MakananController@test');
-//    Route::get('/test', function (){
-//       return view('admin.test');
-//    });
+    Route::get('/asd', function (){
+       return view('admin.permintaan.test');
+    });
 });
 
 //Route::resource('products', 'ProductController');

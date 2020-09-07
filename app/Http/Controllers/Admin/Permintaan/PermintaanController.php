@@ -300,4 +300,11 @@ class PermintaanController extends Controller
         }
         return response()->json(['success'=>'Permintaan deleted successfully.']);
     }
+
+    public function cekBahan($id)
+    {
+        $material = Material::find($id);
+
+        return $material->unit;
+    }
 }

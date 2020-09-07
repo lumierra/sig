@@ -110,8 +110,13 @@ class PengeluaranController extends Controller
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }
             else {
-                $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
-//                if ()
+                if ($year != $now){
+                    $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
+                } else {
+                    $lastIncrement = substr($lastID->code, 17, 6);
+                    $newIncrement = 'Pengeluaran-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                    $newID = $newIncrement . '/' . $month . '/' . $year;
+                }
             }
         }
 
@@ -137,11 +142,11 @@ class PengeluaranController extends Controller
                     'keterangan' => $request->keterangan[$i],
                 ]);
 
-//                $stock = Stock::where('material_id', $request->material[$i]);
-//                $stock->update([
-//                    'total' => (int)$request->jumlah[$i],
-//                    'total_lama' => $stock->total,
-//                ]);
+                $stock = Stock::where('material_id', $request->material[$i])->first();
+                $stock->update([
+                    'total' => $stock->total - (int)$request->jumlah[$i],
+                    'total_lama' => $stock->total,
+                ]);
             }
         }
         else {
@@ -155,10 +160,10 @@ class PengeluaranController extends Controller
                 'keterangan' => $request->keterangan[0],
             ]);
 
-            $stock = Stock::where('material_id', $request->material[0]);
+            $stock = Stock::where('material_id', $request->material[0])->first();
             $stock->update([
-               'total' => (int)$request->jumlah[0],
-               'total_lama' => $stock->total,
+                'total' => $stock->total - (int)$request->jumlah[0],
+                'total_lama' => $stock->total,
             ]);
         }
 
@@ -285,21 +290,8 @@ class PengeluaranController extends Controller
 
     public function cekBahan($material)
     {
-//        $detail = Tail::all();
-//
-//        $count = 0;
-//        foreach ($detail as $item){
-//            if ($item->material_id == $material){
-//                $count = $item->jumlah + $count;
-//            }
-//        }
-//
-//        return $count;
         $stock = Stock::where('material_id', $material)->first();
 
-//        return response()->json([
-//            'data' => $stock->total,
-//        ]);
         return $stock->total;
     }
 }
