@@ -31,9 +31,9 @@
                                                     <label for="jenis">Tujuan</label>
                                                     <select class="form-control custom-select" id="tujuan" name="tujuan" required>
                                                         <option selected>Pilih Tujuan</option>
-                                                        <option name="dapur">Dapur</option>
-                                                        <option name="ruangan">Ruangan</option>
-                                                        <option name="dll">Dan lain-lain</option>
+                                                        @foreach($places as $place)
+                                                            <option value="">{{ $place->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
                                                                 </td>
                                                                 <td width="100px">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
+                                                                        <input onkeyup="myFunction(matrial)" type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">
                                                                     </div>
                                                                 </td>
                                                                 <td width="150px">
@@ -102,7 +102,7 @@
                                         </button><br><br>
 
                                         <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger">Batal</a>
-                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                        <button type="submit" class="btn btn-success" onclick="cekStok">Simpan</button>
                                     </form>
                                 </div>
                             </div>
@@ -116,6 +116,8 @@
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript">
         // add row
+        var material = 1;
+        var jumlah = 1;
         $("#addRow").click(function () {
             var html = '';
             html += '<table class="table table-borderless" id="inputFormRow2">\n' +
@@ -123,7 +125,7 @@
                 '                                                                <tr>\n' +
                 '                                                                    <td width="200px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <select class="form-control custom-select" id="material" name="material[]" required>\n' +
+                '                                                                            <select class="form-control custom-select material" id="material' + material + '" name="material[]" required>\n' +
                 '                                                                                <option selected disabled>Bahan</option>\n' +
                 '                                                                                @foreach ($materials as $material)\n' +
                 '                                                                                    <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\n' +
@@ -133,7 +135,7 @@
                 '                                                                    </td>\n' +
                 '                                                                    <td width="100px">\n' +
                 '                                                                        <div class="form-group">\n' +
-                '                                                                            <input type="text" class="form-control" id="jumlah" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
+                '                                                                           <input onkeyup="myFunction()" type="text" class="form-control" id="jumlah' + material + '" name="jumlah[]" autocomplete="off" onkeypress="return hanyaAngka(event)">\n' +
                 '                                                                        </div>\n' +
                 '                                                                    </td>\n' +
                 '                                                                    <td width="150px">\n' +
@@ -161,6 +163,7 @@
                 '                                                        </table>';
 
             $('#newRow').append(html);
+            material++;
         });
 
         // remove row
@@ -179,8 +182,7 @@
         ribuan 	= reverse.match(/\d{1,3}/g);
         ribuan	= ribuan.join('.').split('').reverse().join('');
 
-        // Cetak hasil
-        document.write(jumlah); // Hasil: 23.456.789
+        document.write(jumlah);
 
         function hanyaAngka(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode
@@ -190,31 +192,74 @@
         }
     </script>
     <script type="text/javascript">
+
+        function myFunction(){
+            var material = $("#material option:selected" ).val();
+            material = parseInt(material);
+            var jumlah = $('#jumlah').val();
+            jumlah = parseInt(jumlah);
+            // var material = document.getElementsById('material[]');
+            console.log('bahan ' + material);
+            console.log('jumlah ' + jumlah);
+
+            $.ajax({
+                url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
+                type: 'GET',
+                dataType: 'html',
+                data: null,
+                success: function(msg) {
+                    // console.log('bahan ' + msg);
+                    console.log('msg ' + msg);
+                    if (jumlah > msg){
+                        swal({
+                            type: 'error',
+                            icon: 'error',
+                            text: 'Jumlah Tidak Tersedia'
+                        });
+                    }
+
+                },
+                error: function(msg) {
+                    // alert('msg');
+                    swal({
+                        type: 'warning',
+                        icon: 'warning',
+                        text: 'Bahan Tidak Tersedia'
+                    });
+                }
+            });
+        }
+
         $(document).ready(function(){
             $("select.material").change(function(){
                 var material = $(this).children("option:selected").val();
                 var jumlah = $('#jumlah').val();
                 jumlah = parseInt(jumlah);
                 material = parseInt(material);
-                console.log(material);
-                console.log(jumlah);
+
                 $.ajax({
                     url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
                     type: 'GET',
                     dataType: 'html',
                     data: null,
                     success: function(msg) {
-                        // $('#test').html(msg);
-                        console.log('bahan ' + msg);
+                        // console.log('bahan ' + msg);
                         if (jumlah > material){
                             swal({
-
+                                type: 'error',
+                                icon: 'error',
+                                text: 'Jumlah Tidak Tersedia'
                             });
                         }
 
                     },
                     error: function(msg) {
-                        alert('msg');
+                        // alert('msg');
+                        swal({
+                            type: 'warning',
+                            icon: 'warning',
+                            text: 'Bahan Tidak Tersedia'
+                        });
                     }
                 });
 

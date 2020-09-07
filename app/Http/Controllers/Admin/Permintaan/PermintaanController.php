@@ -44,10 +44,12 @@ class PermintaanController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $route = 'permintaan/' . $row->id . '/' . 'edit';
+                    $route2 = 'penerimaan/' . $row->id . '/' . 'create2';
                     $btn = '';
 //                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm showProduct"><i class="fas fa-eye"></i></a>';
                     $btn = $btn.' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="' . $route2 . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Create" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-plus-circle"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
@@ -90,6 +92,23 @@ class PermintaanController extends Controller
         ]);
     }
 
+    public function create2($id)
+    {
+        $demand = Demand::find($id);
+        $vendors = Vendor::all();
+        $heads = Head::all();
+        $units = Unit::all();
+        $materials = Material::all();
+
+        return view('admin.penerimaan.create2')->with([
+            'demand' => $demand,
+            'vendors' => $vendors,
+            'heads' => $heads,
+            'units' => $units,
+            'materials' => $materials,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -107,17 +126,24 @@ class PermintaanController extends Controller
 
         $lastID = Demand::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
-            $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
+//            $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
+            $newID = '000001/BM/IG/RSUD-LGS/' . $month . '/' . $year;
         }
         else{
             if ($year == $now){
-                $lastIncrement = substr($lastID->code, 16, 6);
-                $newIncrement = 'Permintaan-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                $lastIncrement = substr($lastID->code, 0, 6);
+                $newIncrement = str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT) . '/BM/IG/RSUD-LGS/' . $month . '/' . $year;
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }
             else {
-                $newID = 'Permintaan-RSGZ/000001/' . $month . '/' . $year;
-//                if ()
+                if ($year != $now){
+                    $newID = '000001/BM/IG/RSUD-LGS/' . $month . '/' . $year;
+                }
+                else {
+                    $lastIncrement = substr($lastID->code, 0, 6);
+                    $newIncrement = str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT) . '/BM/IG/RSUD-LGS/' . $month . '/' . $year;
+                    $newID = $newIncrement;
+                }
             }
         }
 

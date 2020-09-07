@@ -43,72 +43,53 @@
         </div>
     </div>
 
-{{--    <div class="modal fade" id="ajaxModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">--}}
-{{--        <div class="modal-dialog ">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h4 class="modal-title" id="modelHeading"></h4>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body" id="test">--}}
-{{--                    <form id="productForm" name="productForm" class="form-horizontal">--}}
-{{--                        <input type="hidden" name="product_id" id="product_id">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="name" class="col-sm-5 control-label">Kategori</label>--}}
-{{--                            <div class="col-sm-12">--}}
-{{--                                <select class="form-control" id="category" name="category">--}}
-{{--                                    <option selected>Pilih</option>--}}
-{{--                                    @foreach($categories as $category)--}}
-{{--                                        <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="form-group">--}}
-{{--                            <label for="name" class="col-sm-5 control-label">Nama Bahan Makanan</label>--}}
-{{--                            <div class="col-sm-12">--}}
-{{--                                <input type="text" class="form-control" id="name" name="name" placeholder="Ayam, Ikan, Beras" value="" maxlength="50" required="" autocomplete="off">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="form-group">--}}
-{{--                            <label for="name" class="col-sm-5 control-label">Satuan</label>--}}
-{{--                            <div class="col-sm-12">--}}
-{{--                                <select class="form-control" id="unit" name="unit">--}}
-{{--                                    <option selected>Pilih</option>--}}
-{{--                                    @foreach($units as $unit)--}}
-{{--                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="col-sm-offset-2 col-sm-10">--}}
-{{--                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>--}}
-{{--                            <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
-    <div class="modal fade modal-static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal fade" id="ajaxModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-success" id="exampleModalLabel">Bahan Makanan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
                 <div class="modal-body" id="test">
-                    <input type="hidden" name="product_id" id="product_id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveBtn">Simpan</button>
+                    <form id="productForm" name="productForm" class="form-horizontal">
+
+                        <input type="hidden" name="product_id" id="product_id">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Kategori</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="category" name="category">
+                                    <option selected>Pilih</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Nama Bahan Makanan</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Ayam, Ikan, Beras" value="" maxlength="50" required="" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Satuan</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="unit" name="unit">
+                                    <option selected>Pilih</option>
+                                    @foreach($units as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -156,38 +137,23 @@
                 $('#ajaxModel').modal('show');
             });
 
-            {{--$('body').on('click', '.editProduct', function () {--}}
-            {{--    var product_id = $(this).data('id');--}}
-            {{--    $.get("{{ route('admin.bahan-makanan.index') }}" +'/' + product_id +'/edit', function (data) {--}}
-            {{--        $('#modelHeading').html("Edit Bahan Makanan");--}}
-            {{--        $('#saveBtn').val("edit-user");--}}
-            {{--        $('#ajaxModel').modal('show');--}}
-            {{--        $('#product_id').val(data.id);--}}
-            {{--        $('#name').val(data.name);--}}
-            {{--        $('#category').val(data.category);--}}
-            {{--        $('#unit').val(data.unit);--}}
-            {{--    })--}}
-            {{--});--}}
-
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.ajax({
-                    url: "/admin/bahan-makanan/" + product_id + '/' + 'edit',
-                    type: 'GET',
-                    dataType: 'html',
-                    data: null,
-                    success: function(msg) {
-                        $('#test').html(msg);
-                    },
-                    error: function(msg) {
-                        alert('msg');
-                    }
-                });
+                $.get("{{ route('admin.bahan-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
+                    $('#modelHeading').html("Edit Bahan Makanan");
+                    $('#saveBtn').val("edit-bahan");
+                    $('#ajaxModel').modal('show');
+                    $('#product_id').val(data.data.id);
+                    $('#name').val(data.data.name);
+                    $('#category').val(data.data.category.id);
+                    $('#unit').val(data.data.unit.id);
+                })
             });
 
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
                 $(this).html('Simpan');
+                var save = $('#saveBtn').val();
 
                 $.ajax({
                     data: $('#productForm').serialize(),
@@ -199,7 +165,7 @@
                             type: 'success',
                             icon: 'success',
                             title: 'Berhasil',
-                            // text: 'Anda Berhasil Menambah Bahan Makanan'
+                            // text: 'Anda Berhasil Menambah Jenis Makanan'
                         })
                         $('#productForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
@@ -207,6 +173,7 @@
 
                     },
                     error: function (data) {
+                        // console.log('Error:', data);
                         swal({
                             type: 'error',
                             title: 'Data Belum Lengkap'

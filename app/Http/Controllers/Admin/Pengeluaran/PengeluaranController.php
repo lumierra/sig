@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Pengeluaran;
 
 use Alert;
+use App\Place;
+use App\Stock;
 use App\Demand;
 use App\Detail;
 use App\Head;
@@ -73,10 +75,12 @@ class PengeluaranController extends Controller
     {
         $materials = Material::all();
         $units = Unit::all();
+        $places = Place::all();
 
         return view('admin.pengeluaran.create')->with([
             'materials' => $materials,
             'units' => $units,
+            'places' => $places,
         ]);
     }
 
@@ -132,6 +136,12 @@ class PengeluaranController extends Controller
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
+
+//                $stock = Stock::where('material_id', $request->material[$i]);
+//                $stock->update([
+//                    'total' => (int)$request->jumlah[$i],
+//                    'total_lama' => $stock->total,
+//                ]);
             }
         }
         else {
@@ -144,7 +154,16 @@ class PengeluaranController extends Controller
                 'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
+
+            $stock = Stock::where('material_id', $request->material[0]);
+            $stock->update([
+               'total' => (int)$request->jumlah[0],
+               'total_lama' => $stock->total,
+            ]);
         }
+
+
+
         if (!$spend){
             Alert::error('Gagal', 'Data Gagal Di Tambah');
         } else {
@@ -266,15 +285,21 @@ class PengeluaranController extends Controller
 
     public function cekBahan($material)
     {
-        $detail = Tail::all();
+//        $detail = Tail::all();
+//
+//        $count = 0;
+//        foreach ($detail as $item){
+//            if ($item->material_id == $material){
+//                $count = $item->jumlah + $count;
+//            }
+//        }
+//
+//        return $count;
+        $stock = Stock::where('material_id', $material)->first();
 
-        $count = 0;
-        foreach ($detail as $item){
-            if ($item->material_id == $material){
-                $count = $item->jumlah + $count;
-            }
-        }
-
-        return $count;
+//        return response()->json([
+//            'data' => $stock->total,
+//        ]);
+        return $stock->total;
     }
 }

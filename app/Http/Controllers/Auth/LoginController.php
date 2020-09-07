@@ -40,6 +40,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+//    public function showLoginForm()
+//    {
+//        return view('loginForm');
+//    }
+
     public function redirectTo()
     {
         $user = User::find(Auth::user()->id);

@@ -27,7 +27,7 @@
                 <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr class="text-success">
-                        <th width="100px">No. Permintaan</th>
+                        <th width="250px">No. Permintaan</th>
                         <th width="120px">Tgl. Permintaan</th>
                         <th>Vendor</th>
                         <th width="120px">Penanggung Jawab</th>

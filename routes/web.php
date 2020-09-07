@@ -45,6 +45,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::get('detail-makanan/{id}/show', 'Detail\DetailBahanMakananController@show');
     Route::delete('detail-makanan/{id}/destroy', 'Detail\DetailBahanMakananController@destroy');
     Route::get('detail-makanan/{id}/create2', 'Detail\DetailBahanMakananController@create2');
+    Route::get('bahan-makanan/{id}/show', 'Bahan\BahanController@show');
+    Route::get('bahan-makanan/{id}/updateData', 'Bahan\BahanController@updateData')->name('bahan.update');
 
 
     Route::resource('dashboard-pengadaan', 'Dashboard\DashboardPengadaan')->only('index');
@@ -53,6 +55,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
     Route::get('penerimaan/{id}/showReceipt', 'Penerimaan\PenerimaanController@showReceipt')->name('penerimaan.showReceipt');
     Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
+    Route::get('penerimaan/{id}/create2', 'Permintaan\PermintaanController@create2')->name('penerimaan.create2');
 
     Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
     Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');

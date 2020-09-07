@@ -7,6 +7,7 @@ use App\Head;
 use App\Tail;
 use App\Unit;
 use DateTime;
+use App\Stock;
 use App\Demand;
 use App\Vendor;
 use App\Detail;
@@ -115,8 +116,15 @@ class PenerimaanController extends Controller
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }
             else {
-                $newID = 'Penerimaan-RSGZ/000001/' . $month . '/' . $year;
-//                if ()
+
+                if ($year != $now){
+                    $newID = 'Penerimaan-RSGZ/000001/' . $month . '/' . $year;
+                }
+                else {
+                    $lastIncrement = substr($lastID->code, 16, 6);
+                    $newIncrement = 'Penerimaan-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                    $newID = $newIncrement . '/' . $month . '/' . $year;
+                }
             }
         }
 
@@ -142,6 +150,21 @@ class PenerimaanController extends Controller
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
+
+                $stock = Stock::where('material_id', $request->material[$i])->first();
+                if (!$stock){
+                    Stock::create([
+                        'material_id' => $request->material[$i],
+                        'date' => new DateTime(),
+                        'total' => (int)$request->jumlah[$i],
+                        'total_lama' => 0,
+                    ]);
+                } else {
+                    $stock->update([
+                        'total' => (int)$request->jumlah[$i],
+                        'total_lama' => (int)$stock->total,
+                    ]);
+                }
             }
         }
         else {
@@ -154,12 +177,32 @@ class PenerimaanController extends Controller
                 'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
+
+            $stock = Stock::where('material_id', $request->material[0])->first();
+            if (!$stock){
+                Stock::create([
+                   'material_id' => $request->material[0],
+                   'date' => new DateTime(),
+                    'total' => (int)$request->jumlah[0],
+                    'total_lama' => 0,
+                ]);
+            } else {
+                $stock->update([
+                    'total' => (int)$request->jumlah[0],
+                    'total_lama' => (int)$stock->total,
+                ]);
+            }
         }
         if (!$receipt){
             Alert::error('Gagal', 'Data Gagal Di Tambah');
         } else {
             Alert::success('Berhasil', 'Data Berhasil Di Tambah');
         }
+
+        $demand = Demand::where('code', $request->code);
+        $demand->update([
+           'status' => 'selesai'
+        ]);
 
         return redirect()->route('admin.penerimaan.index');
     }
@@ -238,6 +281,12 @@ class PenerimaanController extends Controller
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
+
+                $stock = Stock::where('material_id', $request->material[$i])->first();
+                $stock->update([
+                    'total' => (int)$request->jumlah[$i],
+                    'total_lama' => (int)$stock->total,
+                ]);
             }
         }
         else {
@@ -249,6 +298,12 @@ class PenerimaanController extends Controller
                     'user_id' => Auth::user()->id,
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
+                ]);
+
+                $stock = Stock::where('material_id', $request->material[$i])->first();
+                $stock->update([
+                    'total' => (int)$request->jumlah[$i],
+                    'total_lama' => (int)$stock->total,
                 ]);
             }
         }

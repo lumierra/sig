@@ -113,8 +113,8 @@
             <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Transaksi</h6>
-                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Data Permintaan</a>
-                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Data Penerimaan</a>
+                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Permintaan</a>
+                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Penerimaan</a>
                     <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
                     <a class="collapse-item" href="{{ route('admin.retur.index') }}">Pengembalian</a>
                 </div>
