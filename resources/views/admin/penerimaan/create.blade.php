@@ -33,7 +33,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.permintaan.store') }}" method="POST" name="formPendaftaran">
+                                    <form action="{{ route('admin.penerimaan.store') }}" method="POST" name="formPendaftaran">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-10">
@@ -92,37 +92,7 @@
                                                                     <th width="7%">Aksi</th>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                <tr class="text-center">
-                                                                    <td class="sNo">1</td>
-                                                                    <td>
-                                                                        <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
-                                                                            <option selected>Pilih Bahan</option>
-                                                                            @foreach($materials as $material)
-                                                                                <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select class='form-control' name='unit[]' id='unit1' required>
-                                                                            <option selected>Pilih</option>
-                                                                            @foreach($units as $unit)
-                                                                                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='keterangan[]' id='keterangan1' autocomplete="off">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
-                                                                            <i class='fas fa-trash'></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                <tbody id="addBody">
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -204,15 +174,82 @@
                 dataType: 'json',
                 data: null,
                 success: function(msg) {
+                    const counter = msg.details.length;
+
+                    for(i=0; i<counter;i++){
+                        let id = '#tr' + (i+1);
+                        $(id).remove();
+                    }
+
+                    for(i=0; i<counter;i++){
+                        let no = i+1;
+                        trow = `<tr class="text-center" id="tr${no}">
+                                    <td class='sNo'>${i+1}</td>
+                                    <td>
+                                        <select onchange="myFunction(${no})" class='form-control' name='material[]' id='material${no}' required>
+                                            <option selected disabled>Pilih Bahan</option>
+                                            @foreach($materials as $material)
+                                                <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
+                                    <td>
+                                        <select class='form-control' name='unit[]' id='unit${no}' required>
+                                            <option selected>Pilih</option>
+                                            @foreach($units as $unit)
+                                                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}'>
+                                    </td>
+                                    <td>
+                                        <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                            <i class='fas fa-trash'></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
+
+                        $('#pTable').append(trow);
+                    }
+                },
+                error: function(msg) {
+                    console.log('error');
+                }
+            });
+
+
+
+            $.ajax({
+                url: "/admin/penerimaan/" + demand + '/' + 'findDemand',
+                type: 'GET',
+                dataType: 'json',
+                data: null,
+                success: function(msg) {
                     var vendor = document.getElementById('vendors').value = msg.vendor.id;
                     var head = document.getElementById('heads').value = msg.head.id;
                     var counter = msg.details.length;
-                    // console.log(asd);
+
+                    // var material = document.getElementById('material1').value = '1';
+
                     for(i=0; i < counter; i++){
-                        // console.log(msg.details[i].material_id);
+
                         let materialID = 'material' + (i+1);
-                        console.log(materialID);
-                        let material = document.getElementById(materialID).value = msg.details[i].material_id;
+                        let jumlahID = 'jumlah' + (i+1);
+                        let unitID = 'unit' + (i+1);
+                        let ketID = 'keterangan' + (i+1);
+
+                        dataMaterial = msg.details[i].material_id;
+                        dataJumlah = msg.details[i].jumlah;
+                        dataUnit = msg.details[i].unit_id;
+                        dataKet = msg.details[i].keterangan;
+
+                        var material = document.getElementById(materialID).value = String(dataMaterial);
+                        var jumlah = document.getElementById(jumlahID).value = parseInt(dataJumlah);
+                        var unit = document.getElementById(unitID).value = String(dataUnit);
+                        var ket = document.getElementById(ketID).value = String(dataKet);
                     }
                 },
                 error: function(msg) {

@@ -20,16 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/edit2.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Bahan/BahanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Bahan/BahanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Permintaan/PermintaanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/create2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create2.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +251,7 @@
       <workItem from="1599307940209" duration="2489000" />
       <workItem from="1599399578001" duration="2418000" />
       <workItem from="1599440893203" duration="28866000" />
-      <workItem from="1599528680199" duration="12779000" />
+      <workItem from="1599528680199" duration="18099000" />
     </task>
     <servers />
   </component>

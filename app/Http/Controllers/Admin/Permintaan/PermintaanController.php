@@ -88,6 +88,7 @@ class PermintaanController extends Controller
         $heads = Head::all();
         $units = Unit::all();
         $materials = Material::all();
+        $demands = Demand::all();
 
         return view('admin.penerimaan.create2')->with([
             'demand' => $demand,
@@ -95,6 +96,7 @@ class PermintaanController extends Controller
             'heads' => $heads,
             'units' => $units,
             'materials' => $materials,
+            'demands' => $demands,
         ]);
     }
 
@@ -138,7 +140,7 @@ class PermintaanController extends Controller
             if ($year == $now){
                 $lastIncrement = substr($lastID->code, 0, 6);
                 $newIncrement = str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT) . '/BM/IG/RSUD-LGS/' . $month . '/' . $year;
-                $newID = $newIncrement . '/' . $month . '/' . $year;
+                $newID = $newIncrement;
             }
             else {
                 if ($year != $now){

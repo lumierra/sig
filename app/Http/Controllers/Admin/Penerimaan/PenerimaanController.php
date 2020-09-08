@@ -133,7 +133,7 @@ class PenerimaanController extends Controller
             'vendor_id' => $request->vendors,
             'head_id' => $request->heads,
             'user_id' => Auth::user()->id,
-            'name' => $newID,
+            'name' => $request->demand,
         ]);
 
         $find = Receipt::where('code', $newID)->first();
@@ -198,7 +198,7 @@ class PenerimaanController extends Controller
             Alert::success('Berhasil', 'Data Berhasil Di Tambah');
         }
 
-        $demand = Demand::where('code', $request->code);
+        $demand = Demand::where('code', $request->demand);
         $demand->update([
            'status' => 'selesai'
         ]);
