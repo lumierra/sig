@@ -29,7 +29,7 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Material::latest()->get();
+            $data = Material::orderBy('name', 'asc')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function (Material $material) {

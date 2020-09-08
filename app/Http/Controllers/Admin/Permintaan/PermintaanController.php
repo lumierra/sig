@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin\Permintaan;
 
 use Alert;
-use App\Food;
 use App\Head;
-use App\Spend;
 use App\Unit;
 use DateTime;
 use App\Detail;
@@ -25,11 +23,7 @@ class PermintaanController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -72,11 +66,6 @@ class PermintaanController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $vendors = Vendor::all();
@@ -109,14 +98,30 @@ class PermintaanController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'vendors' => 'required',
+            'heads' => 'required',
+//            'jumlah[]' => 'required',
+//            'material[]' => 'required',
+//            'unit[]' => 'required',
+//            'keterangan[]' => 'required'
+        ], [
+            'vendors.required' => 'Vendor Belum di isi',
+            'heads.required' => 'Penanggung Jawab Belum di isi',
+//            'jumlah[].required' => 'Jumlah Belum di isi',
+//            'material[].required' => 'Bahan Makanan Belum di pilih',
+//            'unit[].required' => 'Nama Satuan Belum di pilih',
+//            'keterangan[].required' => 'Keterangan Belum di isi',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.permintaan.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $counter = count($request->jumlah);
 
         $today = new DateTime();
@@ -191,12 +196,6 @@ class PermintaanController extends Controller
         return redirect()->route('admin.permintaan.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         return 'asd';
@@ -208,12 +207,6 @@ class PermintaanController extends Controller
         return view('admin.permintaan.show')->with('demand', $demand);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $demand = Demand::find($id);
@@ -222,7 +215,7 @@ class PermintaanController extends Controller
         $materials = Material::all();
         $units = Unit::all();
 
-        return view('admin.permintaan.edit')->with([
+        return view('admin.permintaan.edit2')->with([
             'demand' => $demand,
             'vendors' => $vendors,
             'heads' => $heads,
@@ -231,13 +224,6 @@ class PermintaanController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 
@@ -245,52 +231,88 @@ class PermintaanController extends Controller
         $counter = count($request->jumlah);
         $counterDetail = count($demand->detail);
 
+        $validator = Validator::make($request->all(), [
+            'vendors' => 'required',
+            'heads' => 'required',
+//            'jumlah[]' => 'required',
+//            'material[]' => 'required',
+//            'unit[]' => 'required',
+//            'keterangan[]' => 'required'
+        ], [
+            'vendors.required' => 'Vendor Belum di isi',
+            'heads.required' => 'Penanggung Jawab Belum di isi',
+//            'jumlah[].required' => 'Jumlah Belum di isi',
+//            'material[].required' => 'Bahan Makanan Belum di pilih',
+//            'unit[].required' => 'Nama Satuan Belum di pilih',
+//            'keterangan[].required' => 'Keterangan Belum di isi',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.permintaan.edit', $demand->id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $demand->update([
-           'vendor_id' => $request->vendors,
-           'head_id' => $request->heads,
+            'vendor_id' => $request->vendors,
+            'head_id' => $request->heads,
             'user_id' => Auth::user()->id,
         ]);
 
-        if ($counter > $counterDetail){
-            foreach ($demand->detail as $i => $detail){
-                Detail::destroy($detail->id);
-            }
-            for($i=0; $i < $counter; $i++){
-                Detail::create([
-                    'demand_id' => $demand->id,
-                    'demand_code' => $demand->code,
-                    'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
-                    'user_id' => Auth::user()->id,
-                    'jumlah' => (int)$request->jumlah[$i],
-                    'keterangan' => $request->keterangan[$i],
-                ]);
-            }
+        foreach ($demand->detail as $i => $detail){
+            Detail::destroy($detail->id);
         }
-        else {
-            foreach ($demand->detail as $i => $detail){
-                $item = Detail::find($detail->id);
-                $item->update([
-                    'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
-                    'user_id' => Auth::user()->id,
-                    'jumlah' => (int)$request->jumlah[$i],
-                    'keterangan' => $request->keterangan[$i],
-                ]);
-            }
+        for($i=0; $i < $counter; $i++){
+            Detail::create([
+                'demand_id' => $demand->id,
+                'demand_code' => $demand->code,
+                'material_id' => $request->material[$i],
+                'unit_id' => $request->unit[$i],
+                'user_id' => Auth::user()->id,
+                'jumlah' => (int)$request->jumlah[$i],
+                'keterangan' => $request->keterangan[$i],
+            ]);
         }
 
-        Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+//        if ($counter > $counterDetail){
+//            foreach ($demand->detail as $i => $detail){
+//                Detail::destroy($detail->id);
+//            }
+//            for($i=0; $i < $counter; $i++){
+//                Detail::create([
+//                    'demand_id' => $demand->id,
+//                    'demand_code' => $demand->code,
+//                    'material_id' => $request->material[$i],
+//                    'unit_id' => $request->unit[$i],
+//                    'user_id' => Auth::user()->id,
+//                    'jumlah' => (int)$request->jumlah[$i],
+//                    'keterangan' => $request->keterangan[$i],
+//                ]);
+//            }
+//        }
+//        else {
+//            foreach ($demand->detail as $i => $detail){
+//                $item = Detail::find($detail->id);
+//                $item->update([
+//                    'material_id' => $request->material[$i],
+//                    'unit_id' => $request->unit[$i],
+//                    'user_id' => Auth::user()->id,
+//                    'jumlah' => (int)$request->jumlah[$i],
+//                    'keterangan' => $request->keterangan[$i],
+//                ]);
+//            }
+//        }
+
+        if (!$demand){
+            Alert::error('Gagal', 'Data Gagal Di Tambah');
+        } else {
+            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+        }
+
         return redirect()->route('admin.permintaan.index');
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $demand = Demand::find($id)->delete();
@@ -301,10 +323,21 @@ class PermintaanController extends Controller
         return response()->json(['success'=>'Permintaan deleted successfully.']);
     }
 
+    public function delete($id)
+    {
+        $demand = Demand::find($id);
+        foreach ($demand->detail as $detail){
+            $detail->delete();
+        }
+        $demand->delete();
+
+        return response()->json(['success'=>'Permintaan deleted successfully.']);
+    }
+
     public function cekBahan($id)
     {
         $material = Material::find($id);
 
-        return $material->unit;
+        return $material->unit->id;
     }
 }

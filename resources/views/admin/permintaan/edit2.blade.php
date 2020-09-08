@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Penerimaan')
+@section('title', 'Edit Permintaan')
 
-@section('subtitle', 'Penerimaan')
+@section('subtitle', 'Edit Permintaan')
 
 @section('content')
 
@@ -29,28 +29,13 @@
                     <div class="col-lg-12">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-success">Form Penerimaan</h6>
+                                <h6 class="m-0 font-weight-bold text-success">Form Edit Permintaan</h6>
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.permintaan.store') }}" method="POST" name="formPendaftaran">
+                                    <form action="{{ route('admin.permintaan.update', $demand->id) }}" method="POST">
                                         @csrf
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <label for="demand">Permintaan</label>
-                                                        <select onchange="myCheck()" class="form-control custom-select" id="demand" name="demand" required>
-                                                            <option selected disabled >Pilih</option>
-                                                            @foreach ($demands as $demand)
-                                                                <option value="{{$demand->id}}" name="{{$demand->name}}">{{ $demand->code }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
+                                        {{ method_field('PUT') }}
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <div class="row">
@@ -59,7 +44,7 @@
                                                         <select class="form-control custom-select" id="vendors" name="vendors" required>
                                                             <option selected disabled >Pilih Vendor</option>
                                                             @foreach ($vendors as $vendor)
-                                                                <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                                                                <option value="{{$vendor->id}}" {{ $demand->vendor->id == $vendor->id ? 'selected' : '' }} name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -68,7 +53,7 @@
                                                         <select class="form-control custom-select" id="heads" name="heads" required>
                                                             <option selected disabled>Pilih</option>
                                                             @foreach ($heads as $head)
-                                                                <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
+                                                                <option value="{{$head->id}}" {{ $demand->head->id == $head->id ? 'selected' : '' }} name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -93,36 +78,38 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr class="text-center">
-                                                                    <td class="sNo">1</td>
-                                                                    <td>
-                                                                        <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
-                                                                            <option selected>Pilih Bahan</option>
-                                                                            @foreach($materials as $material)
-                                                                                <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select class='form-control' name='unit[]' id='unit1' required>
-                                                                            <option selected>Pilih</option>
-                                                                            @foreach($units as $unit)
-                                                                                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='keterangan[]' id='keterangan1' autocomplete="off">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
-                                                                            <i class='fas fa-trash'></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                @foreach($demand->detail as $detail)
+                                                                    <tr class="text-center">
+                                                                        <td class="sNo">{{ $loop->iteration }}</td>
+                                                                        <td>
+                                                                            <select onchange="myFunction({{$loop->iteration}})" class='form-control' name='material[]' id='material{{$loop->iteration}}' required>
+                                                                                <option selected>Pilih Bahan</option>
+                                                                                @foreach($materials as $material)
+                                                                                    <option value="{{ $material->id }}" {{ $detail->material->id == $material->id ? 'selected' : ''}} name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required>
+                                                                                <option selected>Pilih</option>
+                                                                                @foreach($units as $unit)
+                                                                                    <option value="{{ $unit->id }}" {{ $detail->unit->id == $unit->id ? 'selected' : '' }} name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input value="{{ $detail->keterangan }}" type='text' class='form-control' name='keterangan[]' id='keterangan{{$loop->iteration}}' autocomplete="off" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                                                                <i class='fas fa-trash'></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -131,30 +118,30 @@
                                                                 <thead>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr>
-                                                                    <td width="79%">
-                                                                        <a class="btn btn-primary btn-icon-split btn-sm" id="addRow">
+                                                                    <tr>
+                                                                        <td width="79%">
+                                                                            <a class="btn btn-primary btn-icon-split btn-sm" id="addRow">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
-                                                                            <span class="text text-white">Tambah</span>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                                <span class="text text-white">Tambah</span>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
-                                                                            <span class="text">Batal</span>
-                                                                        </a>
-                                                                        <button class="btn btn-success btn-sm btn-icon-split" onclick="validateForm()">
+                                                                                <span class="text">Batal</span>
+                                                                            </a>
+                                                                            <button class="btn btn-success btn-sm btn-icon-split">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
-                                                                            <span class="text">Simpan</span>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                                <span class="text">Simpan</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -195,32 +182,6 @@
             });
         }
 
-        function myCheck(){
-            var demand = document.getElementById('demand').value;
-
-            $.ajax({
-                url: "/admin/penerimaan/" + demand + '/' + 'findDemand',
-                type: 'GET',
-                dataType: 'json',
-                data: null,
-                success: function(msg) {
-                    var vendor = document.getElementById('vendors').value = msg.vendor.id;
-                    var head = document.getElementById('heads').value = msg.head.id;
-                    var counter = msg.details.length;
-                    // console.log(asd);
-                    for(i=0; i < counter; i++){
-                        // console.log(msg.details[i].material_id);
-                        let materialID = 'material' + (i+1);
-                        console.log(materialID);
-                        let material = document.getElementById(materialID).value = msg.details[i].material_id;
-                    }
-                },
-                error: function(msg) {
-                    console.log('error');
-                }
-            });
-        }
-
     </script>
     <script>
 
@@ -253,21 +214,21 @@
                     <select onchange="myFunction(${sno})" class='form-control' name='material[]' id='material${sno}' required>
                     <option selected>Pilih Bahan</option>
                         @foreach($materials as $material)
-                <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                            <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                         @endforeach
-                </select>
-            </td>
-            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+                    </select>
+                </td>
+                <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
-                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                            <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
                         @endforeach
-                </select>
-            </td>
-            <td>
-                <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}'>
+                    </select>
+                </td>
+                <td>
+                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}' autocomplete="off">
                 </td>
                 <td>
                     <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>

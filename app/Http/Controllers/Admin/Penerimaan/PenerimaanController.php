@@ -25,11 +25,7 @@ class PenerimaanController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -70,13 +66,9 @@ class PenerimaanController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $demands = Demand::where('status', 'proses')->get();
         $vendors = Vendor::all();
         $heads = Head::all();
         $materials = Material::all();
@@ -87,15 +79,22 @@ class PenerimaanController extends Controller
             'heads' => $heads,
             'materials' => $materials,
             'units' => $units,
+            'demands' => $demands,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function findDemand($id)
+    {
+        $demand = Demand::find($id);
+
+        return response()->json([
+            'data' => $demand,
+            'vendor' => $demand->vendor,
+            'head' => $demand->head,
+            'details' => $demand->detail,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $counter = count($request->jumlah);
@@ -207,12 +206,6 @@ class PenerimaanController extends Controller
         return redirect()->route('admin.penerimaan.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $receipt = Receipt::find($id);
