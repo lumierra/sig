@@ -43,7 +43,7 @@
                                                         <select onchange="myCheck()" class="form-control custom-select" id="demand" name="demand" required>
                                                             <option selected disabled >Pilih</option>
                                                             @foreach ($demands as $demand)
-                                                                <option value="{{$demand->id}}" name="{{$demand->name}}">{{ $demand->code }}</option>
+                                                                <option value="{{$demand->id}}" {{ $data->id == $demand->id ? 'selected' : ''  }} name="{{$demand->name}}">{{ $demand->code }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -59,7 +59,7 @@
                                                         <select class="form-control custom-select" id="vendors" name="vendors" required>
                                                             <option selected disabled >Pilih Vendor</option>
                                                             @foreach ($vendors as $vendor)
-                                                                <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                                                                <option value="{{$vendor->id}}" {{ $data->vendor->id == $vendor->id ? 'selected' : '' }} name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -68,7 +68,7 @@
                                                         <select class="form-control custom-select" id="heads" name="heads" required>
                                                             <option selected disabled>Pilih</option>
                                                             @foreach ($heads as $head)
-                                                                <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
+                                                                <option value="{{$head->id}}" {{ $data->head->id == $head->id ? 'selected' : '' }} name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -93,6 +93,38 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody id="addBody">
+                                                                    @foreach($data->detail as $detail)
+                                                                        <tr class="text-center">
+                                                                            <td class="sNo">{{ $loop->iteration }}</td>
+                                                                            <td>
+                                                                                <select onchange="myFunction(1)" class='form-control' name='material[]' id='material{{$loop->iteration}}' required>
+                                                                                    <option selected>Pilih Bahan</option>
+                                                                                    @foreach($materials as $material)
+                                                                                        <option value="{{ $material->id }}" {{ $detail->material->id == $material->id ? 'selected' : '' }} name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required>
+                                                                                    <option selected>Pilih</option>
+                                                                                    @foreach($units as $unit)
+                                                                                        <option value="{{ $unit->id }}" {{ $detail->unit->id == $unit->id ? 'selected' : '' }} name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input value="{{ $detail->keterangan }}" type='text' class='form-control' name='keterangan[]' id='keterangan{{$loop->iteration}}' autocomplete="off">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                                                                    <i class='fas fa-trash'></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>

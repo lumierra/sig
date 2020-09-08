@@ -177,16 +177,28 @@
             $('body').on('click', '.deleteProduct', function () {
 
                 var product_id = $(this).data("id");
-                confirm("Are You sure want to delete !");
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{ route('admin.permintaan.store') }}"+'/'+product_id,
-                    success: function (data) {
-                        table.draw();
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
+                swal({
+                    title: "Apakah Anda Yakin ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Data Berhasil di Hapus", {
+                            icon: "success",
+                        });
+                        $.ajax({
+                            type: "GET",
+                            url: "penerimaan/" + product_id + '/delete',
+                            success: function (data) {
+                                table.draw();
+                                console.log(data);
+                            },
+                            error: function (data) {
+                                console.log('Error:', data);
+                            }
+                        });
                     }
                 });
             });

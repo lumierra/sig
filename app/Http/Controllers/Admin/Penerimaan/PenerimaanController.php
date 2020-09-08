@@ -198,7 +198,7 @@ class PenerimaanController extends Controller
             Alert::success('Berhasil', 'Data Berhasil Di Tambah');
         }
 
-        $demand = Demand::where('code', $request->demand);
+        $demand = Demand::find($request->demand);
         $demand->update([
            'status' => 'selesai'
         ]);
@@ -260,48 +260,73 @@ class PenerimaanController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        if ($counter > $counterDetail){
-            foreach ($receipt->detail as $i => $detail){
-                Tail::destroy($detail->id);
-            }
-            for($i=0; $i < $counter; $i++){
-                Tail::create([
-                    'receipt_id' => $receipt->id,
-                    'receipt_code' => $receipt->code,
-                    'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
-                    'user_id' => Auth::user()->id,
-                    'jumlah' => (int)$request->jumlah[$i],
-                    'keterangan' => $request->keterangan[$i],
-                ]);
-
-                $stock = Stock::where('material_id', $request->material[$i])->first();
-                $stock->update([
-                    'total' => (int)$request->jumlah[$i],
-                    'total_lama' => (int)$stock->total,
-                ]);
-            }
+        foreach ($receipt->detail as $i => $detail){
+            Tail::destroy($detail->id);
         }
-        else {
-            foreach ($receipt->detail as $i => $detail){
-                $item = Tail::find($detail->id);
-                $item->update([
-                    'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
-                    'user_id' => Auth::user()->id,
-                    'jumlah' => (int)$request->jumlah[$i],
-                    'keterangan' => $request->keterangan[$i],
-                ]);
+        for($i=0; $i < $counter; $i++){
+            Tail::create([
+                'receipt_id' => $receipt->id,
+                'receipt_code' => $receipt->code,
+                'material_id' => $request->material[$i],
+                'unit_id' => $request->unit[$i],
+                'user_id' => Auth::user()->id,
+                'jumlah' => (int)$request->jumlah[$i],
+                'keterangan' => $request->keterangan[$i],
+            ]);
 
-                $stock = Stock::where('material_id', $request->material[$i])->first();
-                $stock->update([
-                    'total' => (int)$request->jumlah[$i],
-                    'total_lama' => (int)$stock->total,
-                ]);
-            }
+            $stock = Stock::where('material_id', $request->material[$i])->first();
+            $stock->update([
+                'total' => (int)$request->jumlah[$i],
+                'total_lama' => (int)$stock->total,
+            ]);
         }
 
-        Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+//        if ($counter > $counterDetail){
+//            foreach ($receipt->detail as $i => $detail){
+//                Tail::destroy($detail->id);
+//            }
+//            for($i=0; $i < $counter; $i++){
+//                Tail::create([
+//                    'receipt_id' => $receipt->id,
+//                    'receipt_code' => $receipt->code,
+//                    'material_id' => $request->material[$i],
+//                    'unit_id' => $request->unit[$i],
+//                    'user_id' => Auth::user()->id,
+//                    'jumlah' => (int)$request->jumlah[$i],
+//                    'keterangan' => $request->keterangan[$i],
+//                ]);
+//
+//                $stock = Stock::where('material_id', $request->material[$i])->first();
+//                $stock->update([
+//                    'total' => (int)$request->jumlah[$i],
+//                    'total_lama' => (int)$stock->total,
+//                ]);
+//            }
+//        }
+//        else {
+//            foreach ($receipt->detail as $i => $detail){
+//                $item = Tail::find($detail->id);
+//                $item->update([
+//                    'material_id' => $request->material[$i],
+//                    'unit_id' => $request->unit[$i],
+//                    'user_id' => Auth::user()->id,
+//                    'jumlah' => (int)$request->jumlah[$i],
+//                    'keterangan' => $request->keterangan[$i],
+//                ]);
+//
+//                $stock = Stock::where('material_id', $request->material[$i])->first();
+//                $stock->update([
+//                    'total' => (int)$request->jumlah[$i],
+//                    'total_lama' => (int)$stock->total,
+//                ]);
+//            }
+//        }
+
+        if (!$receipt){
+            Alert::error('Gagal', 'Data Gagal Di Ubah');
+        } else {
+            Alert::success('Berhasil', 'Data Berhasil Di Ubah');
+        }
         return redirect()->route('admin.penerimaan.index');
     }
 
@@ -316,5 +341,16 @@ class PenerimaanController extends Controller
 //        Head::find($id)->delete();
 //
 //        return response()->json(['success'=>'Head deleted successfully.']);
+    }
+
+    public function delete($id)
+    {
+        $receipt = Receipt::find($id);
+        foreach ($receipt->detail as $detail){
+            $detail->delete();
+        }
+        $receipt->delete();
+
+        return response()->json(['success'=>'Penerimaan deleted successfully.']);
     }
 }

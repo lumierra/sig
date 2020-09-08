@@ -157,24 +157,24 @@
                 buttons: true,
                 dangerMode: true,
             })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Data Berhasil di Hapus", {
-                            icon: "success",
-                        });
-                        $.ajax({
-                            type: "GET",
-                            url: "permintaan/" + product_id + '/delete',
-                            success: function (data) {
-                                table.draw();
-                                console.log(data);
-                            },
-                            error: function (data) {
-                                console.log('Error:', data);
-                            }
-                        });
-                    }
-                });
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data Berhasil di Hapus", {
+                        icon: "success",
+                    });
+                    $.ajax({
+                        type: "GET",
+                        url: "permintaan/" + product_id + '/delete',
+                        success: function (data) {
+                            table.draw();
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            });
         });
 
 

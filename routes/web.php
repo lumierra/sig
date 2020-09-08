@@ -59,6 +59,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::get('permintaan/{material}/cekBahan', 'Permintaan\PermintaanController@cekBahan')->name('permintaan.cekBahan');
     Route::get('permintaan/{id}/delete', 'Permintaan\PermintaanController@delete')->name('permintaan.delete');
     Route::get('penerimaan/{id}/findDemand', 'Penerimaan\PenerimaanController@findDemand')->name('penerimmaan.findDemand');
+    Route::get('penerimaan/{id}/delete', 'Penerimaan\PenerimaanController@delete')->name('penerimaan.delete');
 
     Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
     Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');

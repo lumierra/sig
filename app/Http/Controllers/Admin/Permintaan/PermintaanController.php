@@ -83,7 +83,7 @@ class PermintaanController extends Controller
 
     public function create2($id)
     {
-        $demand = Demand::find($id);
+        $data = Demand::find($id);
         $vendors = Vendor::all();
         $heads = Head::all();
         $units = Unit::all();
@@ -91,7 +91,7 @@ class PermintaanController extends Controller
         $demands = Demand::all();
 
         return view('admin.penerimaan.create2')->with([
-            'demand' => $demand,
+            'data' => $data,
             'vendors' => $vendors,
             'heads' => $heads,
             'units' => $units,
@@ -306,9 +306,9 @@ class PermintaanController extends Controller
 //        }
 
         if (!$demand){
-            Alert::error('Gagal', 'Data Gagal Di Tambah');
+            Alert::error('Gagal', 'Data Gagal Di Ubah');
         } else {
-            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+            Alert::success('Berhasil', 'Data Berhasil Di Ubah');
         }
 
         return redirect()->route('admin.permintaan.index');
