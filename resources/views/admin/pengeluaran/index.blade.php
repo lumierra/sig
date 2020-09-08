@@ -91,7 +91,7 @@
                         sort: 'timestamp'
                     }
                 },
-                {data: 'tujuan', name: 'tujuan'},
+                {data: 'place', name: 'place'},
                 {
                     data: null,
                     render: function (data){

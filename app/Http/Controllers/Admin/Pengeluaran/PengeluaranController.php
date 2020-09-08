@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\Admin\Pengeluaran;
 
 use Alert;
-use App\Place;
+use App\One;
+use App\Head;
+use App\Tail;
+use DateTime;
+use App\Unit;
 use App\Stock;
+use App\Place;
+use App\Spend;
 use App\Demand;
 use App\Detail;
-use App\Head;
-use App\Http\Controllers\Controller;
-use App\Material;
-use App\Spend;
-use App\Tail;
-use App\Unit;
-use App\One;
 use App\Vendor;
-use DateTime;
+use App\Material;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class PengeluaranController extends Controller
 {
@@ -28,17 +28,15 @@ class PengeluaranController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = Spend::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('place', function (Spend $spend) {
+                    return $spend->place->name;
+                })
                 ->addColumn('action', function($row){
                     $route = 'pengeluaran/' . $row->id . '/' . 'edit';
                     $btn = '';
@@ -66,30 +64,19 @@ class PengeluaranController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $materials = Material::all();
         $units = Unit::all();
         $places = Place::all();
 
-        return view('admin.pengeluaran.create')->with([
+        return view('admin.pengeluaran.create2')->with([
             'materials' => $materials,
             'units' => $units,
             'places' => $places,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $counter = count($request->jumlah);
@@ -123,7 +110,7 @@ class PengeluaranController extends Controller
         $spend = Spend::create([
             'code' => $newID,
             'date' => new DateTime(),
-            'tujuan' => $request->tujuan,
+            'place_id' => $request->place,
             'user_id' => Auth::user()->id,
             'name' => $newID,
         ]);
@@ -143,10 +130,19 @@ class PengeluaranController extends Controller
                 ]);
 
                 $stock = Stock::where('material_id', $request->material[$i])->first();
-                $stock->update([
-                    'total' => $stock->total - (int)$request->jumlah[$i],
-                    'total_lama' => $stock->total,
-                ]);
+                if($stock){
+                    Stock::create([
+                        'material_id' => $request->material[$i],
+                        'date' => new DateTime(),
+                        'total' => (int)$request->jumlah[$i],
+                        'total_lama' => (int)$request->jumlah[$i],
+                    ]);
+                } else {
+                    $stock->update([
+                        'total' => $stock->total - (int)$request->jumlah[$i],
+                        'total_lama' => $stock->total,
+                    ]);
+                }
             }
         }
         else {
@@ -161,10 +157,19 @@ class PengeluaranController extends Controller
             ]);
 
             $stock = Stock::where('material_id', $request->material[0])->first();
-            $stock->update([
-                'total' => $stock->total - (int)$request->jumlah[0],
-                'total_lama' => $stock->total,
-            ]);
+            if(!$stock){
+                Stock::create([
+                    'material_id' => $request->material[0],
+                    'date' => new DateTime(),
+                    'total' => (int)$request->jumlah[0],
+                    'total_lama' => (int)$request->jumlah[0],
+                ]);
+            } else {
+                $stock->update([
+                    'total' => $stock->total - (int)$request->jumlah[0],
+                    'total_lama' => $stock->total,
+                ]);
+            }
         }
 
 
@@ -178,12 +183,6 @@ class PengeluaranController extends Controller
         return redirect()->route('admin.pengeluaran.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $spend = Spend::find($id);
@@ -196,32 +195,21 @@ class PengeluaranController extends Controller
         return view('admin.pengeluaran.show')->with('spend', $spend);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $spend = Spend::find($id);
         $materials = Material::all();
         $units = Unit::all();
+        $places = Place::all();
 
         return view('admin.pengeluaran.edit')->with([
             'spend' => $spend,
             'materials' => $materials,
             'units' => $units,
+            'places' => $places,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $spend = Spend::find($id);
@@ -229,7 +217,7 @@ class PengeluaranController extends Controller
         $counterDetail = count($spend->detail);
 
         $spend->update([
-            'tujuan' => $request->tujuan,
+            'place_id' => $request->place,
             'user_id' => Auth::user()->id,
         ]);
 
@@ -270,12 +258,6 @@ class PengeluaranController extends Controller
         return redirect()->route('admin.pengeluaran.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Spend::find($id)->delete();

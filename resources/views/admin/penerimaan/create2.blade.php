@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Penerimaan')
+@section('title', 'Tambah Penerimaan')
 
-@section('subtitle', 'Penerimaan')
+@section('subtitle', 'Tambah Penerimaan')
 
 @section('content')
 
