@@ -130,17 +130,21 @@ class PengeluaranController extends Controller
                 ]);
 
                 $stock = Stock::where('material_id', $request->material[$i])->first();
-                if($stock){
+                if(!$stock){
                     Stock::create([
                         'material_id' => $request->material[$i],
                         'date' => new DateTime(),
                         'total' => (int)$request->jumlah[$i],
                         'total_lama' => (int)$request->jumlah[$i],
+                        'jumlah_lama' => (int)$request->jumlah[$i],
+                        'jumlah_baru' => (int)$request->jumlah[$i]
                     ]);
                 } else {
                     $stock->update([
                         'total' => $stock->total - (int)$request->jumlah[$i],
                         'total_lama' => $stock->total,
+                        'jumlah_lama' => $stock->jumlah_baru,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
                     ]);
                 }
             }
@@ -163,16 +167,18 @@ class PengeluaranController extends Controller
                     'date' => new DateTime(),
                     'total' => (int)$request->jumlah[0],
                     'total_lama' => (int)$request->jumlah[0],
+                    'jumlah_lama' => (int)$request->jumlah[0],
+                    'jumlah_baru' => (int)$request->jumlah[0]
                 ]);
             } else {
                 $stock->update([
                     'total' => $stock->total - (int)$request->jumlah[0],
                     'total_lama' => $stock->total,
+                    'jumlah_lama' => $stock->jumlah_baru,
+                    'jumlah_baru' => (int)$request->jumlah[0],
                 ]);
             }
         }
-
-
 
         if (!$spend){
             Alert::error('Gagal', 'Data Gagal Di Tambah');
@@ -235,6 +241,41 @@ class PengeluaranController extends Controller
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
+
+                $stock = Stock::where('material_id', $request->material[$i])->first();
+                if (!$stock){
+                    Stock::create([
+                        'material_id' => $request->material[$i],
+                        'date' => new DateTime(),
+                        'total' => (int)$request->jumlah[$i],
+                        'total_lama' => 0,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
+                        'jumlah_lama' => (int)$request->jumlah[$i],
+                    ]);
+                } else {
+                    if ((int)$request->jumlah[$i] > $stock->total){
+                        $stock->update([
+                            'total_lama' => $stock->total,
+                            'total' => ($stock->total - $stock->jumlah_lama) + (int)$request->jumlah[$i],
+                            'jumlah_lama' => $stock->jumlah_baru,
+                            'jumlah_baru' => (int)$request->jumlah[$i],
+                        ]);
+                    } elseif ( (int)$request->jumlah[$i] < $stock->total ) {
+                        $stock->update([
+                            'total_lama' => $stock->total,
+                            'total' => ($stock->total - $stock->jumlah_baru) + (int)$request->jumlah[$i],
+                            'jumlah_lama' => $stock->jumlah_baru,
+                            'jumlah_baru' => (int)$request->jumlah[$i],
+                        ]);
+                    } else {
+                        $stock->update([
+                            'total_lama' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
+                            'total' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
+                            'jumlah_lama' => $stock->jumlah_baru,
+                            'jumlah_baru' => (int)$request->jumlah[$i],
+                        ]);
+                    }
+                }
             }
         }
         else {
@@ -274,6 +315,7 @@ class PengeluaranController extends Controller
     {
         $stock = Stock::where('material_id', $material)->first();
 
-        return $stock->total;
+//        return $stock->total;
+        return response()->json($stock->total);
     }
 }

@@ -67,6 +67,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
     Route::get('retur/{id}/showRetur', 'Retur\ReturController@showRetur')->name('retur.showRetur');
     Route::get('pengeluaran/{material}/cekBahan', 'Pengeluaran\PengeluaranController@cekBahan');
+    Route::resource('stok-bahan', 'Stok\StokController');
 
     Route::resource('products', 'ProductController');
 

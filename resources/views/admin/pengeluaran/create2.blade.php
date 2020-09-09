@@ -79,7 +79,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
+                                                                            <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
                                                                         </td>
                                                                         <td>
                                                                             <select class='form-control' name='unit[]' id='unit1' required>
@@ -116,7 +116,7 @@
                                                                             </a>
                                                                         </td>
                                                                         <td>
-                                                                            <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                            <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
@@ -170,6 +170,36 @@
             });
         }
 
+        function cekBahan(counter){
+            var material = $('#material' + counter + ' option:selected').val();
+            material = parseInt(material);
+            var jumlah = $('#jumlah' + counter).val();
+            jumlah = parseInt(jumlah);
+
+            $.ajax({
+                url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
+                type: 'GET',
+                dataType: 'json',
+                data: null,
+                success: function(msg) {
+                    if (jumlah > msg){
+                        swal({
+                            type: 'error',
+                            icon: 'error',
+                            text: 'Jumlah Tidak Tersedia'
+                        });
+                    }
+                },
+                error: function(msg) {
+                    swal({
+                        type: 'warning',
+                        icon: 'warning',
+                        text: 'Bahan Tidak Tersedia di Stok'
+                    });
+                }
+            });
+        }
+
     </script>
     <script>
 
@@ -206,7 +236,7 @@
                         @endforeach
                     </select>
                 </td>
-                <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+                <td><input onchange="cekBahan(${nos})" type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>

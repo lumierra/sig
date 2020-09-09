@@ -113,6 +113,7 @@
                 },
             ],
             select: true,
+            order : [[0, 'desc']]
         })
 
         $('body').on('click', '.showProduct', function () {

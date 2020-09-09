@@ -88,7 +88,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
+                                                                            <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off">
                                                                         </td>
                                                                         <td>
                                                                             <select class='form-control' name='unit[]' id='unit1' required>
@@ -215,7 +215,7 @@
                         @endforeach
                     </select>
                 </td>
-                <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+                <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>
@@ -225,7 +225,7 @@
                     </select>
                 </td>
                 <td>
-                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}'>
+                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}' autocomplete="off">
                 </td>
                 <td>
                     <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>

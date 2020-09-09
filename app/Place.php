@@ -12,4 +12,10 @@ class Place extends Model
     {
         return $this->hasOne(Spend::class);
     }
+
+    public function restore()
+    {
+        return $this->hasOne(Restore::class);
+    }
+
 }

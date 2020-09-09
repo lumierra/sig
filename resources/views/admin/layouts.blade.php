@@ -40,88 +40,9 @@
             <div class="sidebar-brand-text mx-3">Gizi <sup></sup></div>
         </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+        @include('admin.navbar')
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-{{--        <li class="nav-item active">--}}
-{{--            <a class="nav-link" href="{{ route('admin.user.index') }}">--}}
-{{--                <i class="fas fa-fw fa-user"></i>--}}
-{{--                <span>User</span></a>--}}
-{{--        </li>--}}
-
-{{--        <li class="nav-item active">--}}
-{{--            <a class="nav-link" href="{{ route('admin.kepala-gizi.index') }}">--}}
-{{--                <i class="fas fa-fw fa-users"></i>--}}
-{{--                <span>Kepala Gizi</span>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Master
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Master</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-{{--                    <h6 class="collapse-header">Master</h6>--}}
-                    <a class="collapse-item" href="{{ route('admin.management-user.index') }}">Pengguna</a>
-                    <a class="collapse-item" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
-                    <hr class="divider">
-                    <a class="collapse-item" href="{{ route('admin.kategori.index') }}">Kategori Bhn Mkn</a>
-                    <a class="collapse-item" href="{{ route('admin.bahan-makanan.index') }}">Bahan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.jenis-makanan.index') }}">Jenis Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.makanan.index') }}">Menu Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.detail-makanan.index') }}">Detail Bahan Makanan</a>
-                    <hr class="divider">
-                    <a class="collapse-item" href="{{ route('admin.satuan-makanan.index') }}">Satuan Makanan</a>
-                    <a class="collapse-item" href="{{ route('admin.vendor.index') }}">Vendor</a>
-                </div>
-            </div>
-        </li>
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Transaksi
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-fw fa-shopping-cart "></i>
-                <span>Transaksi</span>
-            </a>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Transaksi</h6>
-                    <a class="collapse-item" href="{{ route('admin.permintaan.index') }}">Permintaan</a>
-                    <a class="collapse-item" href="{{ route('admin.penerimaan.index') }}">Penerimaan</a>
-                    <a class="collapse-item" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
-                    <a class="collapse-item" href="{{ route('admin.retur.index') }}">Pengembalian</a>
-                </div>
-            </div>
-        </li>
-
-
+        
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 

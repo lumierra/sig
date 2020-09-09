@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Retur;
 
 use Alert;
 use App\One;
+use App\Place;
 use App\Two;
 use App\Head;
 use DateTime;
@@ -66,10 +67,12 @@ class ReturController extends Controller
     {
         $materials = Material::all();
         $units = Unit::all();
+        $places = Place::all();
 
         return view('admin.retur.create')->with([
             'materials' => $materials,
             'units' => $units,
+            'places' => $places,
         ]);
     }
 
@@ -99,8 +102,13 @@ class ReturController extends Controller
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }
             else {
-                $newID = 'Retur-RSGZ/000001/' . $month . '/' . $year;
-//                if ()
+                if ($year != $now){
+                    $newID = 'Retur-RSGZ/000001/' . $month . '/' . $year;
+                } else {
+                    $lastIncrement = substr($lastID->code, 11, 6);
+                    $newIncrement = 'Retur-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                    $newID = $newIncrement . '/' . $month . '/' . $year;
+                }
             }
         }
 

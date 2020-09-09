@@ -157,11 +157,15 @@ class PenerimaanController extends Controller
                         'date' => new DateTime(),
                         'total' => (int)$request->jumlah[$i],
                         'total_lama' => 0,
+                        'jumlah_lama' => (int)$request->jumlah[$i],
+                        'jumlah_baru' => (int)$request->jumlah[$i],
                     ]);
                 } else {
                     $stock->update([
-                        'total' => (int)$request->jumlah[$i],
+                        'total' => (int)$request->jumlah[$i] + (int)$stock->total,
                         'total_lama' => (int)$stock->total,
+                        'jumlah_lama' => $stock->jumlah_baru,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
                     ]);
                 }
             }
@@ -180,15 +184,19 @@ class PenerimaanController extends Controller
             $stock = Stock::where('material_id', $request->material[0])->first();
             if (!$stock){
                 Stock::create([
-                   'material_id' => $request->material[0],
-                   'date' => new DateTime(),
+                    'material_id' => $request->material[0],
+                    'date' => new DateTime(),
                     'total' => (int)$request->jumlah[0],
                     'total_lama' => 0,
+                    'jumlah_lama' => (int)$request->jumlah[0],
+                    'jumlah_baru' => (int)$request->jumlah[0],
                 ]);
             } else {
                 $stock->update([
-                    'total' => (int)$request->jumlah[0],
+                    'total' => (int)$request->jumlah[0] + (int)$stock->total,
                     'total_lama' => (int)$stock->total,
+                    'jumlah_lama' => $stock->jumlah_baru,
+                    'jumlah_baru' => (int)$request->jumlah[0],
                 ]);
             }
         }
@@ -218,12 +226,6 @@ class PenerimaanController extends Controller
         return view('admin.penerimaan.show')->with('receipt', $receipt);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $receipt = Receipt::find($id);
@@ -241,13 +243,6 @@ class PenerimaanController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $receipt = Receipt::find($id);
@@ -275,10 +270,39 @@ class PenerimaanController extends Controller
             ]);
 
             $stock = Stock::where('material_id', $request->material[$i])->first();
-            $stock->update([
-                'total' => (int)$request->jumlah[$i],
-                'total_lama' => (int)$stock->total,
-            ]);
+            if (!$stock){
+                Stock::create([
+                    'material_id' => $request->material[$i],
+                    'date' => new DateTime(),
+                    'total' => (int)$request->jumlah[$i],
+                    'total_lama' => 0,
+                    'jumlah_baru' => (int)$request->jumlah[$i],
+                    'jumlah_lama' => (int)$request->jumlah[$i],
+                ]);
+            } else {
+                if ((int)$request->jumlah[$i] > $stock->total){
+                    $stock->update([
+                        'total_lama' => $stock->total,
+                        'total' => ($stock->total - $stock->jumlah_lama) + (int)$request->jumlah[$i],
+                        'jumlah_lama' => $stock->jumlah_baru,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
+                    ]);
+                } elseif ( (int)$request->jumlah[$i] < $stock->total ) {
+                    $stock->update([
+                        'total_lama' => $stock->total,
+                        'total' => ($stock->total - $stock->jumlah_baru) + (int)$request->jumlah[$i],
+                        'jumlah_lama' => $stock->jumlah_baru,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
+                    ]);
+                } else {
+                    $stock->update([
+                        'total_lama' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
+                        'total' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
+                        'jumlah_lama' => $stock->jumlah_baru,
+                        'jumlah_baru' => (int)$request->jumlah[$i],
+                    ]);
+                }
+            }
         }
 
 //        if ($counter > $counterDetail){
@@ -330,12 +354,6 @@ class PenerimaanController extends Controller
         return redirect()->route('admin.penerimaan.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
 //        Head::find($id)->delete();

@@ -81,7 +81,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)" required>
+                                                                            <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)" required autocomplete="off">
                                                                         </td>
                                                                         <td>
                                                                             <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required>
@@ -119,7 +119,7 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                        <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
@@ -209,7 +209,7 @@
                         @endforeach
                 </select>
             </td>
-            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>

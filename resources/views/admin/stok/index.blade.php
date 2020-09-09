@@ -1,10 +1,11 @@
 @extends('admin.layouts')
 
-@section('title', 'Data Penerimaan')
+@section('title', 'Stok Bahan Makanan')
 
-@section('subtitle', 'Data Penerimaan')
+@section('subtitle', 'Stok Bahan Makanan')
 
 @section('content')
+
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     @section('button')
@@ -17,25 +18,23 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="{{ route('admin.penerimaan.create') }}" class="btn btn-sm btn-success float-right btn-icon-split">
-                    <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
-                    <span class="text">Tambah Penerimaan</span>
-                </a>
+{{--                <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-sm btn-add float-right btn-icon-split">--}}
+{{--                    <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>--}}
+{{--                    <span class="text">Tambah Jenis Makanan</span>--}}
+{{--                </button>--}}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr class="text-success">
-                            <th width="270px">No. Penerimaan</th>
-                            <th width="120px">Tgl. Penerimaan</th>
-                            <th>Vendor</th>
-                            <th width="120px">Penanggung Jawab</th>
-                            <th width="50px">Status</th>
-                            <th>Actions</th>
+                            <th>No</th>
+                            <th>Nama Bahan Makanan</th>
+                            <th>Stok</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-capitalize">
                         </tbody>
                     </table>
                 </div>
@@ -43,25 +42,32 @@
         </div>
     </div>
 
-    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal fade" id="ajaxModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-success" id="exampleModalLabel">Detail Penerimaan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
-                <div class="modal-body" id="test">
-                    <input type="hidden" name="product_id" id="product_id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                <div class="modal-body">
+                    <form id="productForm" name="productForm" class="form-horizontal">
+                        <input type="hidden" name="product_id" id="product_id">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Nama Jenis Makanan</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Nasi, Sayur" value="" maxlength="50" required="" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
@@ -81,31 +87,11 @@
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.penerimaan.index') }}",
+                ajax: "{{ route('admin.stok-bahan.index') }}",
                 columns: [
-                    {data: 'code', name: 'code'},
-                    {
-                        data: 'date',
-                        type: 'num',
-                        render: {
-                            _: 'display',
-                            sort: 'timestamp'
-                        }
-                    },
-                    {data: 'vendor', name: 'vendor'},
-                    {data: 'head', name: 'head'},
-                    {
-                        data: null,
-                        render: function (data){
-                            if (data.status == 'proses'){
-                                var badge = '<span class="badge badge-danger">proses</span>';
-                            }
-                            else {
-                                var badge = '<span class="badge badge-success">selesai</span>';
-                            }
-                            return badge;
-                        }
-                    },
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'material', name: 'material'},
+                    {data: 'total', name: 'total'},
                     {
                         data: 'action',
                         name: 'action',
@@ -113,64 +99,56 @@
                         searchable: true
                     },
                 ],
-                select: true,
-                order: [[0, 'desc']]
+                order: [[ 0, "desc" ]]
             })
 
             $('#createNewProduct').click(function () {
                 $('#saveBtn').val("create-product");
                 $('#product_id').val('');
                 $('#productForm').trigger("reset");
-                $('#modelHeading').html("Form Permintaan");
+                $('#modelHeading').html("Form Jenis Makanan");
                 $('#ajaxModel').modal('show');
             });
 
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.get("{{ route('admin.permintaan.index') }}" +'/' + product_id +'/edit', function (data) {
-                    $('#modelHeading').html("Edit Data");
-                    $('#saveBtn').val("edit-user");
+                $.get("{{ route('admin.jenis-makanan.index') }}" +'/' + product_id +'/edit', function (data) {
+                    $('#modelHeading').html("Edit Jenis Makanan");
+                    $('#saveBtn').val("edit-jenis");
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.id);
-                    $('#vendors option:selected').val(data.vendors);
+                    $('#name').val(data.name);
                 })
-            });
-
-            $('body').on('click', '.showProduct', function () {
-                var product_id = $(this).data('id');
-                $.ajax({
-                    url: "/admin/penerimaan/" + product_id + '/' + 'showReceipt',
-                    type: 'GET',
-                    dataType: 'html',
-                    data: null,
-                    success: function(msg) {
-                        $('#test').html(msg);
-                    },
-                    error: function(msg) {
-                        alert('msg');
-                    }
-                });
             });
 
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
-                $(this).html('Sending..');
+                $(this).html('Simpan');
 
                 $.ajax({
                     data: $('#productForm').serialize(),
-                    url: "{{ route('admin.permintaan.store') }}",
+                    url: "{{ route('admin.jenis-makanan.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
-
+                        swal({
+                            type: 'success',
+                            icon: 'success',
+                            title: 'Berhasil',
+                            // text: 'Anda Berhasil Menambah Jenis Makanan'
+                        })
                         $('#productForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
 
                     },
                     error: function (data) {
-                        console.log('Error:', data);
-                        $('#saveBtn').html('Save Changes');
+                        // console.log('Error:', data);
+                        swal({
+                            type: 'error',
+                            title: 'Data Belum Lengkap'
+                        })
+                        $('#saveBtn').html('Simpan');
                     }
                 });
             });
@@ -178,23 +156,24 @@
             $('body').on('click', '.deleteProduct', function () {
 
                 var product_id = $(this).data("id");
+
                 swal({
                     title: "Apakah Anda Yakin ?",
+                    // text: "",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        swal("Data Berhasil di Hapus", {
+                        swal("Data Jenis Makanan Berhasil di Hapus", {
                             icon: "success",
                         });
                         $.ajax({
-                            type: "GET",
-                            url: "penerimaan/" + product_id + '/delete',
+                            type: "DELETE",
+                            url: "{{ route('admin.jenis-makanan.store') }}"+'/'+product_id,
                             success: function (data) {
                                 table.draw();
-                                console.log(data);
                             },
                             error: function (data) {
                                 console.log('Error:', data);
@@ -203,8 +182,6 @@
                     }
                 });
             });
-
-
         });
     </script>
 @endsection
