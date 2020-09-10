@@ -93,7 +93,8 @@
                                                                             <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)" required>
                                                                         </td>
                                                                         <td>
-                                                                            <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required>
+                                                                            <input type="hidden" value="{{ $detail->unit->id }}" name="satuan[]" id="satuan{{$loop->iteration}}">
+                                                                            <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required disabled>
                                                                                 <option selected>Pilih</option>
                                                                                 @foreach($units as $unit)
                                                                                     <option value="{{ $unit->id }}" {{ $detail->unit->id == $unit->id ? 'selected' : '' }} name="{{ $unit->name }}">{{ $unit->name }}</option>
@@ -220,7 +221,8 @@
             </td>
             <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
-                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                <input type="hidden" value="" name="satuan[]" id="satuan${sno}">
+                    <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
                 <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>

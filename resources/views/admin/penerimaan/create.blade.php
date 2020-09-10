@@ -193,9 +193,10 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
+                                    <td><input type='text' class='form-control text-center' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
                                     <td>
-                                        <select class='form-control' name='unit[]' id='unit${no}' required>
+                                        <input type="hidden" value="" name="satuan[]" id="satuan${no}">
+                                        <select class='form-control' name='unit[]' id='unit${no}' required disabled>
                                             <option selected>Pilih</option>
                                             @foreach($units as $unit)
                                                 <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
@@ -239,6 +240,7 @@
                         let materialID = 'material' + (i+1);
                         let jumlahID = 'jumlah' + (i+1);
                         let unitID = 'unit' + (i+1);
+                        let satuanID = 'satuan' + (i+1);
                         let ketID = 'keterangan' + (i+1);
 
                         dataMaterial = msg.details[i].material_id;
@@ -249,6 +251,7 @@
                         var material = document.getElementById(materialID).value = String(dataMaterial);
                         var jumlah = document.getElementById(jumlahID).value = parseInt(dataJumlah);
                         var unit = document.getElementById(unitID).value = String(dataUnit);
+                        var satuan = document.getElementById(satuanID).value = String(dataUnit);
                         var ket = document.getElementById(ketID).value = String(dataKet);
                     }
                 },
@@ -296,7 +299,8 @@
             </td>
             <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
-                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                <input type="hidden" value="" name="satuan[]" id="satuan${nos}">
+                    <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
                 <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>

@@ -33,19 +33,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.pengeluaran.store') }}" method="POST" name="formPendaftaran">
+                                    <form action="{{ route('admin.pengeluaran.store') }}" method="POST" name="formPendaftaran" id="validate_form">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <div class="row">
                                                     <div class="col-md-5">
                                                         <label for="vendors">Tujuan</label>
-                                                        <select class="form-control custom-select" id="place" name="place" required>
+                                                        <select class="form-control custom-select @error('title') is-invalid @enderror" id="place" name="place" required data-parsley-trigger="keyup" data-parsley-required-message="Tujuan Belum di Pilih">
                                                             <option selected disabled >Pilih</option>
                                                             @foreach ($places as $place)
                                                                 <option value="{{$place->id}}" name="{{$place->name}}">{{ Str::ucfirst($place->name) }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('title')
+                                                        <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,7 +85,8 @@
                                                                             <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off">
                                                                         </td>
                                                                         <td>
-                                                                            <select class='form-control' name='unit[]' id='unit1' required>
+                                                                            <input type="hidden" value="" name="satuan[]" id="satuan1">
+                                                                            <select class='form-control' name='unit[]' id='unit1' required disabled>
                                                                                 <option selected>Pilih</option>
                                                                                 @foreach($units as $unit)
                                                                                     <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
@@ -122,11 +126,11 @@
                                                                                 </span>
                                                                                 <span class="text">Batal</span>
                                                                             </a>
-                                                                            <button class="btn btn-success btn-sm btn-icon-split" onclick="validateForm()">
+                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" name="submit">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
-                                                                                <span class="text">Simpan</span>
+                                                                                <span class="text" name="subButton">Simpan</span>
                                                                             </button>
                                                                         </td>
                                                                     </tr>
@@ -150,6 +154,7 @@
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <script src="http://parsleyjs.org/dist/parsley.js"></script>
     <script>
         function myFunction(angka) {
             id = 'material' + parseInt(angka);
@@ -239,6 +244,7 @@
                 </td>
                 <td><input onchange="cekBahan(${nos})" type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
+                    <input type="hidden" value="" name="satuan[]" id="satuan${sno}">
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)

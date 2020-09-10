@@ -105,10 +105,11 @@
                                                                                 </select>
                                                                             </td>
                                                                             <td>
-                                                                                <input value="{{ $detail->jumlah }}" type='text' class='form-control' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)">
+                                                                                <input value="{{ $detail->jumlah }}" type='text' class='form-control text-center' name='jumlah[]' id='jumlah{{$loop->iteration}}' onkeypress="return hanyaAngka(event)">
                                                                             </td>
                                                                             <td>
-                                                                                <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required>
+                                                                                <input type="hidden" value="{{ $detail->unit->id }}" name="satuan[]" id="satuan{{$loop->iteration}}">
+                                                                                <select class='form-control' name='unit[]' id='unit{{$loop->iteration}}' required disabled>
                                                                                     <option selected>Pilih</option>
                                                                                     @foreach($units as $unit)
                                                                                         <option value="{{ $unit->id }}" {{ $detail->unit->id == $unit->id ? 'selected' : '' }} name="{{ $unit->name }}">{{ $unit->name }}</option>
@@ -189,7 +190,9 @@
                 data: null,
                 success: function(msg) {
                     unitID = 'unit' + angka;
+                    satuanID = 'satuan' + angka;
                     var unit = document.getElementById(unitID).value = msg;
+                    var satuan = document.getElementById(satuanID).value = msg;
                 },
                 error: function(msg) {
                     console.log('error');
@@ -225,13 +228,14 @@
                                             @endforeach
                         </select>
                     </td>
-                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
-                                    <td>
-                                        <select class='form-control' name='unit[]' id='unit${no}' required>
-                                            <option selected>Pilih</option>
-                                            @foreach($units as $unit)
-                        <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
-                                            @endforeach
+                    <td><input type='text' class='form-control text-center' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
+                    <td>
+                        <input type="hidden" value="" name="satuan[]" id="satuan${no}">
+                        <select class='form-control text-center' name='unit[]' id='unit${no}' required disabled>
+                            <option selected>Pilih</option>
+                            @foreach($units as $unit)
+                                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td>
@@ -281,6 +285,7 @@
                         var material = document.getElementById(materialID).value = String(dataMaterial);
                         var jumlah = document.getElementById(jumlahID).value = parseInt(dataJumlah);
                         var unit = document.getElementById(unitID).value = String(dataUnit);
+                        var satuan = document.getElementById(satuan).value = String(dataUnit);
                         var ket = document.getElementById(ketID).value = String(dataKet);
                     }
                 },
@@ -326,9 +331,10 @@
                         @endforeach
                 </select>
             </td>
-            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+            <td><input type='text' class='form-control text-center' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
-                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                  <input type="hidden" value="{{ $detail->unit->id }}" name="satuan[]" id="satuan${nos}">
+                    <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
                 <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>

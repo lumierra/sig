@@ -20,24 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/ReceiptDetail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/SpendDetail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_09_165800_create_receipt_details_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_10_090109_create_spend_details_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Penerimaan/PenerimaanController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Retur/ReturController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Retur/ReturController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Stok/StokController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Stok/StokController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Material.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Material.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Receipt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Receipt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Spend.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Spend.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Unit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Unit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/create2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/create2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/pengeluaran/create2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pengeluaran/create2.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/stok/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/stok/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +262,7 @@
       <workItem from="1599440893203" duration="28866000" />
       <workItem from="1599528680199" duration="22098000" />
       <workItem from="1599615269361" duration="21222000" />
-      <workItem from="1599701364800" duration="14677000" />
+      <workItem from="1599701364800" duration="22524000" />
     </task>
     <servers />
   </component>
@@ -314,10 +305,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1598862120506" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1599714607857">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1599725724760">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1599714607857" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1599725724760" />
     <state x="486" y="84" width="945" height="965" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1599309566651" />
   </component>
   <component name="XDebuggerManager">

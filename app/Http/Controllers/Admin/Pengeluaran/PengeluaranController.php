@@ -23,6 +23,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class PengeluaranController extends Controller
 {
@@ -95,14 +96,44 @@ class PengeluaranController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->jumlah[0] > $this->kalkulasi($request->material[0])){
-            Alert::success('Berhasil', 'berhasill');
-            return redirect()->route('admin.pengeluaran.index');
-        } else {
-            Alert::error('Erorr', 'gagal');
-            return redirect()->back();
+        $counter = count($request->jumlah);
+
+        $validator = Validator::make($request->all(), [
+            'place' => 'required',
+        ], [
+            'place.required' => 'Tujuan Belum di Pilih',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.pengeluaran.create')
+                ->withErrors($validator)
+                ->withInput();
         }
-//        $counter = count($request->jumlah);
+
+        if ($counter > 1){
+            for($i=0; $i < $counter; $i++){
+                if ($request->jumlah[$i] > $this->kalkulasi($request->material[$i])){
+
+                    Alert::success('Berhasil', 'berhasill');
+                    return redirect()->route('admin.pengeluaran.index');
+                } else {
+                    Alert::error('Erorr', 'gagal');
+                    return redirect()->back();
+                }
+            }
+        }
+        else {
+            if ($request->jumlah[0] > $this->kalkulasi($request->material[0])){
+                Alert::success('Berhasil', 'berhasill');
+                return redirect()->route('admin.pengeluaran.index');
+            } else {
+                Alert::error('Erorr', 'gagal');
+                return redirect()->back();
+            }
+        }
+
+
+
 //
 //        $today = new DateTime();
 //        $month = $today->format('m');

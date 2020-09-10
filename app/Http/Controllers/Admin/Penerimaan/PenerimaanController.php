@@ -105,6 +105,9 @@ class PenerimaanController extends Controller
         $year = $today->format('Y');
         $now = '2020';
 
+        $name = Demand::find($request->demand);
+        $name = $name->name;
+
         $lastID = Receipt::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
             $newID = 'Penerimaan-RSGZ/000001/' . $month . '/' . $year;
@@ -134,7 +137,7 @@ class PenerimaanController extends Controller
             'vendor_id' => $request->vendors,
             'head_id' => $request->heads,
             'user_id' => Auth::user()->id,
-            'name' => $request->demand,
+            'name' => $name,
         ]);
 
         $find = Receipt::where('code', $newID)->first();
@@ -146,7 +149,7 @@ class PenerimaanController extends Controller
                     'receipt_id' => $find->id,
                     'receipt_code' => $find->code,
                     'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
+                    'unit_id' => $request->satuan[$i],
                     'user_id' => Auth::user()->id,
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
@@ -159,7 +162,7 @@ class PenerimaanController extends Controller
                 'receipt_id' => $find->id,
                 'receipt_code' => $find->code,
                 'material_id' => $request->material[0],
-                'unit_id' => $request->unit[0],
+                'unit_id' => $request->satuan[0],
                 'user_id' => Auth::user()->id,
                 'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
@@ -222,53 +225,19 @@ class PenerimaanController extends Controller
         ]);
 
         foreach ($receipt->detail as $i => $detail){
-            Tail::destroy($detail->id);
+            ReceiptDetail::destroy($detail->id);
         }
         for($i=0; $i < $counter; $i++){
-            Tail::create([
+            ReceiptDetail::create([
+                'date' => new DateTime(),
                 'receipt_id' => $receipt->id,
                 'receipt_code' => $receipt->code,
                 'material_id' => $request->material[$i],
-                'unit_id' => $request->unit[$i],
+                'unit_id' => $request->satuan[$i],
                 'user_id' => Auth::user()->id,
                 'jumlah' => (int)$request->jumlah[$i],
                 'keterangan' => $request->keterangan[$i],
             ]);
-
-            $stock = Stock::where('material_id', $request->material[$i])->first();
-            if (!$stock){
-                Stock::create([
-                    'material_id' => $request->material[$i],
-                    'date' => new DateTime(),
-                    'total' => (int)$request->jumlah[$i],
-                    'total_lama' => 0,
-                    'jumlah_baru' => (int)$request->jumlah[$i],
-                    'jumlah_lama' => (int)$request->jumlah[$i],
-                ]);
-            } else {
-                if ((int)$request->jumlah[$i] > $stock->total){
-                    $stock->update([
-                        'total_lama' => $stock->total,
-                        'total' => ($stock->total - $stock->jumlah_lama) + (int)$request->jumlah[$i],
-                        'jumlah_lama' => $stock->jumlah_baru,
-                        'jumlah_baru' => (int)$request->jumlah[$i],
-                    ]);
-                } elseif ( (int)$request->jumlah[$i] < $stock->total ) {
-                    $stock->update([
-                        'total_lama' => $stock->total,
-                        'total' => ($stock->total - $stock->jumlah_baru) + (int)$request->jumlah[$i],
-                        'jumlah_lama' => $stock->jumlah_baru,
-                        'jumlah_baru' => (int)$request->jumlah[$i],
-                    ]);
-                } else {
-                    $stock->update([
-                        'total_lama' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
-                        'total' => ($stock->total - (int)$request->jumlah[$i]) + (int)$request->jumlah[$i],
-                        'jumlah_lama' => $stock->jumlah_baru,
-                        'jumlah_baru' => (int)$request->jumlah[$i],
-                    ]);
-                }
-            }
         }
 
 //        if ($counter > $counterDetail){
