@@ -12,7 +12,7 @@ class Spend extends Model
 
     public function detail()
     {
-        return $this->hasMany(One::class);
+        return $this->hasMany(SpendDetail::class);
     }
 
     public function place()

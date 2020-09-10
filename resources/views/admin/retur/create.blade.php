@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Tambah Pengembalian')
+@section('title', 'Pengembalian')
 
-@section('subtitle', 'Tambah Pengembalian')
+@section('subtitle', 'Pengembalian')
 
 @section('content')
 
@@ -39,8 +39,24 @@
                                             <div class="col-md-10">
                                                 <div class="row">
                                                     <div class="col-md-5">
-                                                        <label for="vendors">Dari</label>
-                                                        <select class="form-control custom-select" id="place" name="place" required>
+                                                        <label for="demand">Pengeluaran</label>
+                                                        <select onchange="myCheck()" class="form-control custom-select" id="spend" name="spend" required>
+                                                            <option selected disabled >Pilih</option>
+                                                            @foreach ($spends as $spend)
+                                                                <option value="{{$spend->id}}" name="{{$spend->name}}">{{ $spend->code }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <label for="places">Dari</label>
+                                                        <select class="form-control custom-select" id="places" name="places" required>
                                                             <option selected disabled >Pilih</option>
                                                             @foreach ($places as $place)
                                                                 <option value="{{$place->id}}" name="{{$place->name}}">{{ Str::ucfirst($place->name) }}</option>
@@ -67,37 +83,7 @@
                                                                     <th width="7%">Aksi</th>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                <tr class="text-center">
-                                                                    <td class="sNo">1</td>
-                                                                    <td>
-                                                                        <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
-                                                                            <option selected>Pilih Bahan</option>
-                                                                            @foreach($materials as $material)
-                                                                                <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select class='form-control' name='unit[]' id='unit1' required>
-                                                                            <option selected>Pilih</option>
-                                                                            @foreach($units as $unit)
-                                                                                <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type='text' class='form-control' name='keterangan[]' id='keterangan1' autocomplete="off">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
-                                                                            <i class='fas fa-trash'></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                <tbody id="addBody">
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -116,7 +102,7 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                        <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
@@ -170,32 +156,94 @@
             });
         }
 
-        function cekBahan(counter){
-            var material = $('#material' + counter + ' option:selected').val();
-            material = parseInt(material);
-            var jumlah = $('#jumlah' + counter).val();
-            jumlah = parseInt(jumlah);
+        function myCheck(){
+            var spend = document.getElementById('spend').value;
 
             $.ajax({
-                url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
+                url: "/admin/retur/" + spend + '/' + 'findSpend',
                 type: 'GET',
                 dataType: 'json',
                 data: null,
                 success: function(msg) {
-                    if (jumlah > msg){
-                        swal({
-                            type: 'error',
-                            icon: 'error',
-                            text: 'Jumlah Tidak Tersedia'
-                        });
+                    const counter = msg.details.length;
+
+                    for(i=0; i<counter;i++){
+                        let id = '#tr' + (i+1);
+                        $(id).remove();
+                    }
+
+                    for(i=0; i<counter;i++){
+                        let no = i+1;
+                        trow = `<tr class="text-center" id="tr${no}">
+                                    <td class='sNo'>${i+1}</td>
+                                    <td>
+                                        <select class='form-control' name='material[]' id='material${no}' required>
+                                            <option selected disabled>Pilih Bahan</option>
+                                            @foreach($materials as $material)
+                        <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
+                                    <td>
+                                        <select class='form-control' name='unit[]' id='unit${no}' required>
+                                            <option selected>Pilih</option>
+                                            @foreach($units as $unit)
+                        <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}'>
+                                    </td>
+                                    <td>
+                                        <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                            <i class='fas fa-trash'></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
+
+                        $('#pTable').append(trow);
                     }
                 },
                 error: function(msg) {
-                    swal({
-                        type: 'warning',
-                        icon: 'warning',
-                        text: 'Bahan Tidak Tersedia di Stok'
-                    });
+                    console.log('error');
+                }
+            });
+
+
+
+            $.ajax({
+                url: "/admin/retur/" + spend + '/' + 'findSpend',
+                type: 'GET',
+                dataType: 'json',
+                data: null,
+                success: function(msg) {
+                    var place = document.getElementById('places').value = msg.place.id;
+                    var counter = msg.details.length;
+
+                    // var material = document.getElementById('material1').value = '1';
+
+                    for(i=0; i < counter; i++){
+
+                        let materialID = 'material' + (i+1);
+                        let jumlahID = 'jumlah' + (i+1);
+                        let unitID = 'unit' + (i+1);
+                        let ketID = 'keterangan' + (i+1);
+
+                        dataMaterial = msg.details[i].material_id;
+                        dataJumlah = msg.details[i].jumlah;
+                        dataUnit = msg.details[i].unit_id;
+                        dataKet = msg.details[i].keterangan;
+
+                        var material = document.getElementById(materialID).value = String(dataMaterial);
+                        var jumlah = document.getElementById(jumlahID).value = parseInt(dataJumlah);
+                        var unit = document.getElementById(unitID).value = String(dataUnit);
+                        var ket = document.getElementById(ketID).value = String(dataKet);
+                    }
+                },
+                error: function(msg) {
+                    console.log('error');
                 }
             });
         }

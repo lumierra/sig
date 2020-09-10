@@ -73,13 +73,13 @@
                                                                         <td>
                                                                             <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
                                                                                 <option selected>Pilih Bahan</option>
-                                                                                @foreach($materials as $material)
+                                                                                @foreach($data as $material)
                                                                                     <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                                                                                 @endforeach
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)">
+                                                                            <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off">
                                                                         </td>
                                                                         <td>
                                                                             <select class='form-control' name='unit[]' id='unit1' required>
@@ -177,11 +177,12 @@
             jumlah = parseInt(jumlah);
 
             $.ajax({
-                url: "/admin/pengeluaran/" + material + '/' + 'cekBahan',
+                url: "/admin/pengeluaran/" + material + '/' + 'kalkulasi',
                 type: 'GET',
                 dataType: 'json',
                 data: null,
                 success: function(msg) {
+                    console.log(msg);
                     if (jumlah > msg){
                         swal({
                             type: 'error',
@@ -231,12 +232,12 @@
                 <td>
                     <select onchange="myFunction(${sno})" class='form-control' name='material[]' id='material${sno}' required>
                     <option selected>Pilih Bahan</option>
-                        @foreach($materials as $material)
+                        @foreach($data as $material)
                             <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                         @endforeach
                     </select>
                 </td>
-                <td><input onchange="cekBahan(${nos})" type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+                <td><input onchange="cekBahan(${nos})" type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
                     <select class='form-control' name='unit[]' id='unit${sno}' required>
                         <option selected>Pilih</option>
@@ -246,7 +247,7 @@
                     </select>
                 </td>
                 <td>
-                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}'>
+                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}' autocomplete="off">
                 </td>
                 <td>
                     <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>

@@ -23,9 +23,19 @@ class Material extends Model
         return $this->hasOne(Tail::class);
     }
 
+    public function receiptDetail()
+    {
+        return $this->hasOne(ReceiptDetail::class);
+    }
+
     public function one()
     {
         return $this->hasOne(One::class);
+    }
+
+    public function spendDetail()
+    {
+        return $this->hasOne(SpendDetail::class);
     }
 
     public function two()

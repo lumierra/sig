@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Penerimaan;
 
 use Alert;
 use App\Head;
+use App\ReceiptDetail;
 use App\Tail;
 use App\Unit;
 use DateTime;
@@ -140,7 +141,8 @@ class PenerimaanController extends Controller
 
         if ($counter > 1){
             for ($i=0; $i < $counter; $i++){
-                Tail::create([
+                ReceiptDetail::create([
+                    'date' => new DateTime(),
                     'receipt_id' => $find->id,
                     'receipt_code' => $find->code,
                     'material_id' => $request->material[$i],
@@ -149,29 +151,11 @@ class PenerimaanController extends Controller
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
                 ]);
-
-                $stock = Stock::where('material_id', $request->material[$i])->first();
-                if (!$stock){
-                    Stock::create([
-                        'material_id' => $request->material[$i],
-                        'date' => new DateTime(),
-                        'total' => (int)$request->jumlah[$i],
-                        'total_lama' => 0,
-                        'jumlah_lama' => (int)$request->jumlah[$i],
-                        'jumlah_baru' => (int)$request->jumlah[$i],
-                    ]);
-                } else {
-                    $stock->update([
-                        'total' => (int)$request->jumlah[$i] + (int)$stock->total,
-                        'total_lama' => (int)$stock->total,
-                        'jumlah_lama' => $stock->jumlah_baru,
-                        'jumlah_baru' => (int)$request->jumlah[$i],
-                    ]);
-                }
             }
         }
         else {
-            Tail::create([
+            ReceiptDetail::create([
+                'date' => new DateTime(),
                 'receipt_id' => $find->id,
                 'receipt_code' => $find->code,
                 'material_id' => $request->material[0],
@@ -180,26 +164,8 @@ class PenerimaanController extends Controller
                 'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
-
-            $stock = Stock::where('material_id', $request->material[0])->first();
-            if (!$stock){
-                Stock::create([
-                    'material_id' => $request->material[0],
-                    'date' => new DateTime(),
-                    'total' => (int)$request->jumlah[0],
-                    'total_lama' => 0,
-                    'jumlah_lama' => (int)$request->jumlah[0],
-                    'jumlah_baru' => (int)$request->jumlah[0],
-                ]);
-            } else {
-                $stock->update([
-                    'total' => (int)$request->jumlah[0] + (int)$stock->total,
-                    'total_lama' => (int)$stock->total,
-                    'jumlah_lama' => $stock->jumlah_baru,
-                    'jumlah_baru' => (int)$request->jumlah[0],
-                ]);
-            }
         }
+
         if (!$receipt){
             Alert::error('Gagal', 'Data Gagal Di Tambah');
         } else {

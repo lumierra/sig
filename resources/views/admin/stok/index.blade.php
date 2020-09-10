@@ -90,8 +90,9 @@
                 ajax: "{{ route('admin.stok-bahan.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'material', name: 'material'},
-                    {data: 'total', name: 'total'},
+                    {data: 'name', name: 'name'},
+                    // {data: 'test', name: 'test'},
+                    // {data: 'material', name: 'material'},
                     {
                         data: 'action',
                         name: 'action',

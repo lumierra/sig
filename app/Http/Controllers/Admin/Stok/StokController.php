@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin\Stok;
 
 use App\Http\Controllers\Controller;
+use App\Material;
+use App\Receipt;
+use App\ReceiptDetail;
+use App\SpendDetail;
 use App\Stock;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -16,13 +20,24 @@ class StokController extends Controller
      */
     public function index(Request $request)
     {
+
+        $data = array();
+        $temp = new Receipt();
+        $receipts = ReceiptDetail::all();
+        foreach ($receipts as $receipt){
+            $name = Material::findOrFail($receipt->material_id);
+            if (!in_array($name, $data)){
+                array_push($data, $name);
+            }
+        }
+
         if ($request->ajax()) {
-            $data = Stock::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('material', function (Stock $stock) {
-                    return $stock->material->name;
-                })
+//                ->addColumn('test', $this->kalkulasi())
+//                ->addColumn('material', function (Stock $stock) {
+//                    return $stock->material->name;
+//                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -101,5 +116,30 @@ class StokController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function kalkulasi($material)
+    {
+        $hari_ini = date("Y-m-d");
+        $tgl_pertama = date('Y-m-01', strtotime($hari_ini));
+        $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
+
+        $masuk = ReceiptDetail::where([
+            ['material_id', $material],
+            ['date', '>=', $tgl_pertama],
+            ['date', '<=', $tgl_terakhir],
+        ])
+            ->get()->sum('jumlah');
+
+        $keluar = SpendDetail::where([
+            ['material_id', $material],
+            ['date', '>=', $tgl_pertama],
+            ['date', '<=', $tgl_terakhir],
+        ])
+            ->get()->sum('jumlah');
+
+        $data = $masuk - $keluar;
+
+        return $data;
     }
 }

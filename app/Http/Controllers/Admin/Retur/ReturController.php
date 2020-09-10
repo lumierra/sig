@@ -57,22 +57,29 @@ class ReturController extends Controller
 
         return view('admin.retur.index');
     }
+    public function findSpend($id)
+    {
+        $spend = Spend::find($id);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+        return response()->json([
+            'data' => $spend,
+            'details' => $spend->detail,
+            'place' => $spend->place
+        ]);
+    }
+
     public function create()
     {
         $materials = Material::all();
         $units = Unit::all();
         $places = Place::all();
+        $spends = Spend::all();
 
         return view('admin.retur.create')->with([
             'materials' => $materials,
             'units' => $units,
             'places' => $places,
+            'spends' => $spends,
         ]);
     }
 
@@ -183,11 +190,13 @@ class ReturController extends Controller
         $retur = Restore::find($id);
         $materials = Material::all();
         $units = Unit::all();
+        $spends = Spend::all();
 
         return view('admin.retur.edit')->with([
             'retur' => $retur,
             'materials' => $materials,
             'units' => $units,
+            'spends' => $spends,
         ]);
     }
 
