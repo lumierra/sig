@@ -33,7 +33,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.pengeluaran.store') }}" method="POST" name="formPendaftaran" id="validate_form">
+                                    <form action="{{ route('admin.pengeluaran.store') }}" method="POST" name="formPendaftaran" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-10">
@@ -121,12 +121,12 @@
                                                                                 </span>
                                                                                 <span class="text text-white">Tambah</span>
                                                                             </a>
-                                                                            <a class="btn btn-warning btn-icon-split btn-sm" id="checkData" onclick="cekData()">
-                                                                                <span class="icon text-white-50">
-                                                                                  <i class="fas fa-search"></i>
-                                                                                </span>
-                                                                                <span class="text text-white">Cek</span>
-                                                                            </a>
+{{--                                                                            <a class="btn btn-warning btn-icon-split btn-sm" id="checkData" onclick="cekData()">--}}
+{{--                                                                                <span class="icon text-white-50">--}}
+{{--                                                                                  <i class="fas fa-search"></i>--}}
+{{--                                                                                </span>--}}
+{{--                                                                                <span class="text text-white">Cek</span>--}}
+{{--                                                                            </a>--}}
                                                                         </td>
                                                                         <td>
                                                                             <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
@@ -135,7 +135,7 @@
                                                                                 </span>
                                                                                 <span class="text">Batal</span>
                                                                             </a>
-                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" name="submit" disabled>
+                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="button" id="submit" name="submit" onclick="return mySubmit(event)">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
@@ -165,9 +165,89 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <script src="http://parsleyjs.org/dist/parsley.js"></script>
     <script>
+
+        function mySubmit(event){
+            let counter=0;
+            $('#pTable tr').each(function() {
+                $(this).find(".sNo").html(counter);
+                counter++;
+            });
+            counter = counter-1;
+            var counterCek = 0;
+            const simpan = document.getElementById('submit');
+
+            for(i=0; i < counter; i++)
+            {
+                let id = 'material' + (i+1);
+                let jumlahID = 'jumlah' + (i+1);
+                const material = document.getElementById(id).value;
+                const jumlah = document.getElementById(jumlahID).value;
+
+                var selection = document.getElementById(id);
+                var name = selection.options[selection.selectedIndex].getAttribute('name');
+                var result;
+
+                $.ajax({
+                    url: "/admin/pengeluaran/" + material + '/' + 'kalkulasi',
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    global: false,
+                    data: { 'request': "", 'target': 'arrange_url', 'method': 'method_target' },
+                    success: function(data) {
+                        result = data;
+                        if (jumlah > data){
+                            swal({
+                                type: 'error',
+                                icon: 'error',
+                                text: 'Stok ' + name + ' Tidak Tersedia',
+                                timer: 3000,
+                            });
+                            counterCek++;
+                        }
+                    },
+                    error: function(msg) {
+                        swal({
+                            type: 'warning',
+                            icon: 'warning',
+                            text: 'Bahan Tidak Tersedia di Stok'
+                        });
+                    }
+                });
+            }
+            if (counterCek > 0){
+                swal({
+                    type: 'error',
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Data Gagal di Simpan'
+                });
+                event.preventDefault();
+            }
+            else if(counterCek == 0){
+                swal({
+                    type: 'error',
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Data Belum di isi'
+                });
+                event.preventDefault();
+            }
+            else {
+                swal({
+                    type: 'success',
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Pengecekkan Stok Berhasil'
+                });
+                $("myForm").submit();
+            }
+        }
+
         function myFunction(angka) {
             id = 'material' + parseInt(angka);
             var material = document.getElementById(id).value;
+
 
             $.ajax({
                 url: "/admin/permintaan/" + material + '/' + 'cekBahan',
