@@ -39,15 +39,15 @@
                                             <div class="col-md-10">
                                                 <div class="row">
                                                     <div class="col-md-5">
-                                                        <label for="vendors">Tujuan</label>
+                                                        <label for="place">Tujuan</label>
                                                         <select class="form-control custom-select @error('title') is-invalid @enderror" id="place" name="place" required data-parsley-trigger="keyup" data-parsley-required-message="Tujuan Belum di Pilih">
-                                                            <option selected disabled >Pilih</option>
+                                                            <option selected disabled>Pilih</option>
                                                             @foreach ($places as $place)
                                                                 <option value="{{$place->id}}" name="{{$place->name}}">{{ Str::ucfirst($place->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('title')
-                                                        <div class="alert alert-danger">{{ $message }}</div>
+                                                            <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -74,12 +74,15 @@
                                                                     <tr class="text-center">
                                                                         <td class="sNo">1</td>
                                                                         <td>
-                                                                            <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
-                                                                                <option selected>Pilih Bahan</option>
+                                                                            <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required @error('material') is-invalid @enderror>
+                                                                                <option selected disabled>Pilih</option>
                                                                                 @foreach($data as $material)
                                                                                     <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                                                                                 @endforeach
                                                                             </select>
+                                                                            @error('material')
+                                                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                                            @enderror
                                                                         </td>
                                                                         <td>
                                                                             <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off">
@@ -87,7 +90,7 @@
                                                                         <td>
                                                                             <input type="hidden" value="" name="satuan[]" id="satuan1">
                                                                             <select class='form-control' name='unit[]' id='unit1' required disabled>
-                                                                                <option selected>Pilih</option>
+                                                                                <option selected disabled>Pilih</option>
                                                                                 @foreach($units as $unit)
                                                                                     <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
                                                                                 @endforeach
@@ -118,6 +121,12 @@
                                                                                 </span>
                                                                                 <span class="text text-white">Tambah</span>
                                                                             </a>
+                                                                            <a class="btn btn-warning btn-icon-split btn-sm" id="checkData" onclick="cekData()">
+                                                                                <span class="icon text-white-50">
+                                                                                  <i class="fas fa-search"></i>
+                                                                                </span>
+                                                                                <span class="text text-white">Cek</span>
+                                                                            </a>
                                                                         </td>
                                                                         <td>
                                                                             <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
@@ -126,7 +135,7 @@
                                                                                 </span>
                                                                                 <span class="text">Batal</span>
                                                                             </a>
-                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" name="submit">
+                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" name="submit" disabled>
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
@@ -167,12 +176,86 @@
                 data: null,
                 success: function(msg) {
                     unitID = 'unit' + angka;
+                    satuanId = 'satuan' + angka;
                     var unit = document.getElementById(unitID).value = msg;
+                    const satuan = document.getElementById(satuanId).value = msg;
                 },
                 error: function(msg) {
                     console.log('error');
                 }
             });
+        }
+
+        function cekData()
+        {
+
+            let counter=0;
+            $('#pTable tr').each(function() {
+                $(this).find(".sNo").html(counter);
+                counter++;
+            });
+            counter = counter-1;
+            var counterCek = 0;
+            const simpan = document.getElementById('submit');
+
+            for(i=0; i < counter; i++)
+            {
+                let id = 'material' + (i+1);
+                let jumlahID = 'jumlah' + (i+1);
+                const material = document.getElementById(id).value;
+                const jumlah = document.getElementById(jumlahID).value;
+
+                var selection = document.getElementById(id);
+                var name = selection.options[selection.selectedIndex].getAttribute('name');
+                var result;
+
+                $.ajax({
+                    url: "/admin/pengeluaran/" + material + '/' + 'kalkulasi',
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    global: false,
+                    data: { 'request': "", 'target': 'arrange_url', 'method': 'method_target' },
+                    success: function(data) {
+                        result = data;
+                        if (jumlah > data){
+                            swal({
+                                type: 'error',
+                                icon: 'error',
+                                text: 'Stok ' + name + ' Tidak Tersedia',
+                                timer: 3000,
+                            });
+                            counterCek++;
+                        }
+                    },
+                    error: function(msg) {
+                        swal({
+                            type: 'warning',
+                            icon: 'warning',
+                            text: 'Bahan Tidak Tersedia di Stok'
+                        });
+                    }
+                });
+            }
+            console.log(counterCek);
+            if (counterCek > 0){
+                swal({
+                    type: 'error',
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Pengecekkan Stok Gagal'
+                });
+                simpan.disabled = true;
+            }
+            else {
+                swal({
+                    type: 'success',
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Pengecekkan Stok Berhasil'
+                });
+                simpan.disabled = false;
+            }
         }
 
         function cekBahan(counter){
@@ -187,7 +270,7 @@
                 dataType: 'json',
                 data: null,
                 success: function(msg) {
-                    console.log(msg);
+
                     if (jumlah > msg){
                         swal({
                             type: 'error',
@@ -245,7 +328,7 @@
                 <td><input onchange="cekBahan(${nos})" type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
                     <input type="hidden" value="" name="satuan[]" id="satuan${sno}">
-                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                    <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
                             <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>

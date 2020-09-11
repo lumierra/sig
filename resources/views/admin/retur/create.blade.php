@@ -36,19 +36,19 @@
                                     <form action="{{ route('admin.retur.store') }}" method="POST" name="formPendaftaran">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-md-10">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <label for="demand">Pengeluaran</label>
-                                                        <select onchange="myCheck()" class="form-control custom-select" id="spend" name="spend" required>
-                                                            <option selected disabled >Pilih</option>
-                                                            @foreach ($spends as $spend)
-                                                                <option value="{{$spend->id}}" name="{{$spend->name}}">{{ $spend->code }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-md-10">--}}
+{{--                                                <div class="row">--}}
+{{--                                                    <div class="col-md-5">--}}
+{{--                                                        <label for="demand">Pengeluaran</label>--}}
+{{--                                                        <select onchange="myCheck()" class="form-control custom-select" id="spend" name="spend" required>--}}
+{{--                                                            <option selected disabled >Pilih</option>--}}
+{{--                                                            @foreach ($spends as $spend)--}}
+{{--                                                                <option value="{{$spend->id}}" name="{{$spend->name}}">{{ $spend->code }}</option>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        </select>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
                                         <br>
                                         <div class="row">
@@ -56,8 +56,8 @@
                                                 <div class="row">
                                                     <div class="col-md-5">
                                                         <label for="places">Dari</label>
-                                                        <select class="form-control custom-select" id="places" name="places" required>
-                                                            <option selected disabled >Pilih</option>
+                                                        <select class="form-control custom-select" id="place" name="place" required>
+                                                            <option selected disabled value="">Pilih</option>
                                                             @foreach ($places as $place)
                                                                 <option value="{{$place->id}}" name="{{$place->name}}">{{ Str::ucfirst($place->name) }}</option>
                                                             @endforeach
@@ -84,6 +84,37 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody id="addBody">
+                                                                    <tr class="text-center">
+                                                                        <td class="sNo">1</td>
+                                                                        <td>
+                                                                            <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required >
+                                                                                <option value="" selected disabled>Pilih</option>
+                                                                                @foreach($materials as $material)
+                                                                                    <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input onkeyup="cekBahan('1')" type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="hidden" value="" name="satuan[]" id="satuan1">
+                                                                            <select class='form-control' name='unit[]' id='unit1' required disabled>
+                                                                                <option value="" selected disabled>Pilih</option>
+                                                                                @foreach($units as $unit)
+                                                                                    <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type='text' class='form-control' name='keterangan[]' id='keterangan1' autocomplete="off" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                                                                <i class='fas fa-trash'></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -102,7 +133,7 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="{{ route('admin.permintaan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                        <a href="{{ route('admin.retur.index') }}" class="btn btn-danger btn-icon-split btn-sm">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-times-circle"></i>
                                                                                 </span>
@@ -148,7 +179,9 @@
                 data: null,
                 success: function(msg) {
                     unitID = 'unit' + angka;
+                    satuanId = 'satuan' + angka;
                     var unit = document.getElementById(unitID).value = msg;
+                    const satuan = document.getElementById(satuanId).value = msg;
                 },
                 error: function(msg) {
                     console.log('error');
@@ -178,23 +211,24 @@
                                     <td class='sNo'>${i+1}</td>
                                     <td>
                                         <select class='form-control' name='material[]' id='material${no}' required>
-                                            <option selected disabled>Pilih Bahan</option>
+                                            <option selected disabled value="">Pilih Bahan</option>
                                             @foreach($materials as $material)
                         <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                                             @endforeach
                         </select>
                     </td>
-                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)"></td>
+                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)" required></td>
                                     <td>
-                                        <select class='form-control' name='unit[]' id='unit${no}' required>
-                                            <option selected>Pilih</option>
+                                    <input type="hidden" value="" name="satuan[]" id="satuan${no}">
+                                        <select class='form-control' name='unit[]' id='unit${no}' required disabled>
+                                            <option selected disabled value="">Pilih</option>
                                             @foreach($units as $unit)
                         <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
                                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}'>
+                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}' required>
                                     </td>
                                     <td>
                                         <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
@@ -286,7 +320,8 @@
             </td>
             <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
                 <td>
-                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                <input type="hidden" value="" name="satuan[]" id="satuan${sno}">
+                    <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
                         <option selected>Pilih</option>
                         @foreach($units as $unit)
                 <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>

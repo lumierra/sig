@@ -12,7 +12,7 @@ class Restore extends Model
 
     public function detail()
     {
-        return $this->hasMany(Two::class);
+        return $this->hasMany(RestoreDetail::class);
     }
 
     public function place()

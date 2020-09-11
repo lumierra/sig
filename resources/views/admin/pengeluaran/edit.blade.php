@@ -117,6 +117,12 @@
                                                                                 </span>
                                                                             <span class="text text-white">Tambah</span>
                                                                         </a>
+                                                                        <a class="btn btn-warning btn-icon-split btn-sm" id="checkData" onclick="cekData()">
+                                                                                <span class="icon text-white-50">
+                                                                                  <i class="fas fa-search"></i>
+                                                                                </span>
+                                                                            <span class="text text-white">Cek</span>
+                                                                        </a>
                                                                     </td>
                                                                     <td>
                                                                         <a href="{{ route('admin.pengeluaran.index') }}" class="btn btn-danger btn-icon-split btn-sm">
@@ -125,7 +131,7 @@
                                                                                 </span>
                                                                             <span class="text">Batal</span>
                                                                         </a>
-                                                                        <button class="btn btn-success btn-sm btn-icon-split">
+                                                                        <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" disabled>
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
@@ -169,6 +175,109 @@
                 },
                 error: function(msg) {
                     console.log('error');
+                }
+            });
+        }
+
+        function cekData()
+        {
+
+            let counter=0;
+            $('#pTable tr').each(function() {
+                $(this).find(".sNo").html(counter);
+                counter++;
+            });
+            counter = counter-1;
+            var counterCek = 0;
+            const simpan = document.getElementById('submit');
+
+            for(i=0; i < counter; i++)
+            {
+                let id = 'material' + (i+1);
+                let jumlahID = 'jumlah' + (i+1);
+                const material = document.getElementById(id).value;
+                const jumlah = document.getElementById(jumlahID).value;
+
+                var selection = document.getElementById(id);
+                var name = selection.options[selection.selectedIndex].getAttribute('name');
+                var result;
+
+                $.ajax({
+                    url: "/admin/pengeluaran/" + material + '/' + 'kalkulasi',
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    global: false,
+                    data: { 'request': "", 'target': 'arrange_url', 'method': 'method_target' },
+                    success: function(data) {
+                        result = data;
+                        if (jumlah > data){
+                            swal({
+                                type: 'error',
+                                icon: 'error',
+                                text: 'Stok ' + name + ' Tidak Tersedia',
+                                timer: 3000,
+                            });
+                            counterCek++;
+                        }
+                    },
+                    error: function(msg) {
+                        swal({
+                            type: 'warning',
+                            icon: 'warning',
+                            text: 'Bahan Tidak Tersedia di Stok'
+                        });
+                    }
+                });
+            }
+            console.log(counterCek);
+            if (counterCek > 0){
+                swal({
+                    type: 'error',
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Pengecekkan Stok Gagal'
+                });
+                simpan.disabled = true;
+            }
+            else {
+                swal({
+                    type: 'success',
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Pengecekkan Stok Berhasil'
+                });
+                simpan.disabled = false;
+            }
+        }
+
+        function cekBahan(counter){
+            var material = $('#material' + counter + ' option:selected').val();
+            material = parseInt(material);
+            var jumlah = $('#jumlah' + counter).val();
+            jumlah = parseInt(jumlah);
+
+            $.ajax({
+                url: "/admin/pengeluaran/" + material + '/' + 'kalkulasi',
+                type: 'GET',
+                dataType: 'json',
+                data: null,
+                success: function(msg) {
+
+                    if (jumlah > msg){
+                        swal({
+                            type: 'error',
+                            icon: 'error',
+                            text: 'Jumlah Tidak Tersedia'
+                        });
+                    }
+                },
+                error: function(msg) {
+                    swal({
+                        type: 'warning',
+                        icon: 'warning',
+                        text: 'Bahan Tidak Tersedia di Stok'
+                    });
                 }
             });
         }

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\Retur;
 
 use Alert;
-use App\One;
 use App\Place;
-use App\Two;
+use App\RestoreDetail;
 use App\Head;
 use DateTime;
 use App\Unit;
@@ -14,6 +13,7 @@ use App\Vendor;
 use App\Restore;
 use App\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -25,11 +25,7 @@ class ReturController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -83,14 +79,30 @@ class ReturController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'place' => 'required',
+            'material.*' => 'required',
+            'jumlah.*' => 'required',
+            'unit.*' => 'required',
+            'satuan.*' => 'required',
+            'keterangan.*' => 'required'
+        ], [
+            'place.required' => 'Tujuan Belum di Pilih',
+            'material.*' => 'Bahan Belum di Pilih',
+            'jumlah.*.required' => 'Jumlah Belum di Input',
+            'unit.*.required' => 'Satuan Belum di Pilih',
+            'satuan.*.required' => 'Satuan Belum di Pilih',
+            'keterangan.*.required' => 'Keterangan Belum di Input'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.retur.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $counter = count($request->jumlah);
 
         $today = new DateTime();
@@ -100,20 +112,20 @@ class ReturController extends Controller
 
         $lastID = Restore::select('code')->orderBy('id', 'desc')->first();
         if (!$lastID){
-            $newID = 'Retur-RSGZ/000001/' . $month . '/' . $year;
+            $newID = 'Pengembalian-RSGZ/000001/' . $month . '/' . $year;
         }
         else{
             if ($year == $now){
-                $lastIncrement = substr($lastID->code, 11, 6);
-                $newIncrement = 'Retur-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                $lastIncrement = substr($lastID->code, 19, 6);
+                $newIncrement = 'Pengembalian-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }
             else {
                 if ($year != $now){
-                    $newID = 'Retur-RSGZ/000001/' . $month . '/' . $year;
+                    $newID = 'Pengembalian-RSGZ/000001/' . $month . '/' . $year;
                 } else {
                     $lastIncrement = substr($lastID->code, 11, 6);
-                    $newIncrement = 'Retur-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                    $newIncrement = 'Pengembalian-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
                     $newID = $newIncrement . '/' . $month . '/' . $year;
                 }
             }
@@ -131,11 +143,12 @@ class ReturController extends Controller
 
         if ($counter > 1){
             for ($i=0; $i < $counter; $i++){
-                Two::create([
+                $restoreDetail = RestoreDetail::create([
+                    'date' => new DateTime(),
                     'restore_id' => $find->id,
                     'restore_code' => $find->code,
                     'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
+                    'unit_id' => $request->satuan[$i],
                     'user_id' => Auth::user()->id,
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
@@ -143,17 +156,18 @@ class ReturController extends Controller
             }
         }
         else {
-            Two::create([
+            $restoreDetail = RestoreDetail::create([
+                'date' => new DateTime(),
                 'restore_id' => $find->id,
                 'restore_code' => $find->code,
                 'material_id' => $request->material[0],
-                'unit_id' => $request->unit[0],
+                'unit_id' => $request->satuan[0],
                 'user_id' => Auth::user()->id,
                 'jumlah' => (int)$request->jumlah[0],
                 'keterangan' => $request->keterangan[0],
             ]);
         }
-        if (!$retur){
+        if (!$restoreDetail){
             Alert::error('Gagal', 'Data Gagal Di Tambah');
         } else {
             Alert::success('Berhasil', 'Data Berhasil Di Tambah');
@@ -162,12 +176,6 @@ class ReturController extends Controller
         return redirect()->route('admin.retur.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //

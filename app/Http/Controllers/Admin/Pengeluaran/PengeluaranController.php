@@ -7,6 +7,7 @@ use App\One;
 use App\Head;
 use App\Receipt;
 use App\ReceiptDetail;
+use App\RestoreDetail;
 use App\SpendDetail;
 use App\Tail;
 use DateTime;
@@ -98,10 +99,23 @@ class PengeluaranController extends Controller
     {
         $counter = count($request->jumlah);
 
+        $today = new DateTime();
+        $month = $today->format('m');
+        $year = $today->format('Y');
+        $now = '2020';
+
         $validator = Validator::make($request->all(), [
             'place' => 'required',
+            'material.*' => 'required',
+            'jumlah.*' => 'required',
+            'unit.*' => 'required',
+            'keterangan.*' => 'required'
         ], [
             'place.required' => 'Tujuan Belum di Pilih',
+            'material.*' => 'Bahan Belum di Pilih',
+            'jumlah.*.required' => 'Jumlah Belum di Input',
+            'unit.*.required' => 'Satuan Belum di Pilih',
+            'keterangan.*.required' => 'Keterangan Belum di Input'
         ]);
 
         if ($validator->fails()) {
@@ -110,101 +124,106 @@ class PengeluaranController extends Controller
                 ->withInput();
         }
 
-        if ($counter > 1){
-            for($i=0; $i < $counter; $i++){
-                if ($request->jumlah[$i] > $this->kalkulasi($request->material[$i])){
-
-                    Alert::success('Berhasil', 'berhasill');
-                    return redirect()->route('admin.pengeluaran.index');
+        $lastID = Spend::select('code')->orderBy('id', 'desc')->first();
+        if (!$lastID){
+            $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
+        }
+        else{
+            if ($year == $now){
+                $lastIncrement = substr($lastID->code, 17, 6);
+                $newIncrement = 'Pengeluaran-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                $newID = $newIncrement . '/' . $month . '/' . $year;
+            }
+            else {
+                if ($year != $now){
+                    $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
                 } else {
-                    Alert::error('Erorr', 'gagal');
-                    return redirect()->back();
+                    $lastIncrement = substr($lastID->code, 17, 6);
+                    $newIncrement = 'Pengeluaran-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
+                    $newID = $newIncrement . '/' . $month . '/' . $year;
                 }
             }
         }
-        else {
-            if ($request->jumlah[0] > $this->kalkulasi($request->material[0])){
-                Alert::success('Berhasil', 'berhasill');
-                return redirect()->route('admin.pengeluaran.index');
+
+        if ($counter > 1)
+        {
+            $spend = Spend::create([
+                'code' => $newID,
+                'date' => new DateTime(),
+                'place_id' => $request->place,
+                'user_id' => Auth::user()->id,
+                'name' => $newID,
+            ]);
+
+            $find = Spend::where('code', $newID)->first();
+
+            for($i=0; $i < $counter; $i++)
+            {
+                if ($this->hitung($request->material[$i]) > (int)$request->jumlah[$i])
+                {
+                    $spendDetail = SpendDetail::create([
+                        'date' => new DateTime(),
+                        'spend_id' => $find->id,
+                        'spend_code' => $find->code,
+                        'material_id' => $request->material[$i],
+                        'unit_id' => $request->satuan[$i],
+                        'user_id' => Auth::user()->id,
+                        'jumlah' => (int)$request->jumlah[$i],
+                        'keterangan' => $request->keterangan[$i],
+                    ]);
+                }
+                else {
+                    $temp = Material::findOrFail($request->material[$i])->first();
+                    Alert::error('Error', 'Stok ' . $temp->name . ' Tidak Mencukupi');
+                    return redirect()->back();
+                }
+            }
+            if (!$spendDetail){
+                Alert::error('Gagal', 'Data Gagal Di Tambah');
             } else {
-                Alert::error('Erorr', 'gagal');
-                return redirect()->back();
+                Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+            }
+
+            return redirect()->route('admin.pengeluaran.index');
+        }
+        else {
+            if ($this->hitung($request->material[0] > (int)$request->jumlah[0]))
+            {
+                $spend = Spend::create([
+                    'code' => $newID,
+                    'date' => new DateTime(),
+                    'place_id' => $request->place,
+                    'user_id' => Auth::user()->id,
+                    'name' => $newID,
+                ]);
+
+                $find = Spend::where('code', $newID)->first();
+
+                $spendDetail = SpendDetail::create([
+                    'date' => new DateTime(),
+                    'spend_id' => $find->id,
+                    'spend_code' => $find->code,
+                    'material_id' => $request->material[0],
+                    'unit_id' => $request->satuan[0],
+                    'user_id' => Auth::user()->id,
+                    'jumlah' => (int)$request->jumlah[0],
+                    'keterangan' => $request->keterangan[0],
+                ]);
+
+                if (!$spendDetail) {
+                    Alert::error('Gagal', 'Data Gagal Di Tambah');
+                } else {
+                    Alert::success('Berhasil', 'Data Berhasil Di Tambah');
+                }
+
+                return redirect()->route('admin.pengeluaran.index');
+            }
+            else {
+                $bahan = Material::find($request->material[0])->first();
+                Alert::error('Error', 'Stok ' . $bahan->name . ' Tidak Mencukupi');
+                return redirect()->route('admin.pengeluaran.create');
             }
         }
-
-
-
-//
-//        $today = new DateTime();
-//        $month = $today->format('m');
-//        $year = $today->format('Y');
-//        $now = '2020';
-//
-//        $lastID = Spend::select('code')->orderBy('id', 'desc')->first();
-//        if (!$lastID){
-//            $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
-//        }
-//        else{
-//            if ($year == $now){
-//                $lastIncrement = substr($lastID->code, 17, 6);
-//                $newIncrement = 'Pengeluaran-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
-//                $newID = $newIncrement . '/' . $month . '/' . $year;
-//            }
-//            else {
-//                if ($year != $now){
-//                    $newID = 'Pengeluaran-RSGZ/000001/' . $month . '/' . $year;
-//                } else {
-//                    $lastIncrement = substr($lastID->code, 17, 6);
-//                    $newIncrement = 'Pengeluaran-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
-//                    $newID = $newIncrement . '/' . $month . '/' . $year;
-//                }
-//            }
-//        }
-//
-//        $spend = Spend::create([
-//            'code' => $newID,
-//            'date' => new DateTime(),
-//            'place_id' => $request->place,
-//            'user_id' => Auth::user()->id,
-//            'name' => $newID,
-//        ]);
-//
-//        $find = Spend::where('code', $newID)->first();
-//
-//        if ($counter > 1){
-//            for ($i=0; $i < $counter; $i++){
-//                SpendDetail::create([
-//                    'date' => new DateTime(),
-//                    'spend_id' => $find->id,
-//                    'spend_code' => $find->code,
-//                    'material_id' => $request->material[$i],
-//                    'unit_id' => $request->unit[$i],
-//                    'user_id' => Auth::user()->id,
-//                    'jumlah' => (int)$request->jumlah[$i],
-//                    'keterangan' => $request->keterangan[$i],
-//                ]);
-//            }
-//        }
-//        else {
-//            SpendDetail::create([
-//                'date' => new DateTime(),
-//                'spend_id' => $find->id,
-//                'spend_code' => $find->code,
-//                'material_id' => $request->material[0],
-//                'unit_id' => $request->unit[0],
-//                'user_id' => Auth::user()->id,
-//                'jumlah' => (int)$request->jumlah[0],
-//                'keterangan' => $request->keterangan[0],
-//            ]);
-//        }
-//
-//        if (!$spend){
-//            Alert::error('Gagal', 'Data Gagal Di Tambah');
-//        } else {
-//            Alert::success('Berhasil', 'Data Berhasil Di Tambah');
-//        }
-
-//        return redirect()->route('admin.pengeluaran.index');
     }
 
     public function show($id)
@@ -342,21 +361,61 @@ class PengeluaranController extends Controller
         $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
 
         $masuk = ReceiptDetail::where([
-            ['material_id', $material],
-            ['date', '>=', $tgl_pertama],
-            ['date', '<=', $tgl_terakhir],
-        ])
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
+            ->get()->sum('jumlah');
+
+        $retur = RestoreDetail::where([
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
             ->get()->sum('jumlah');
 
         $keluar = SpendDetail::where([
-            ['material_id', $material],
-            ['date', '>=', $tgl_pertama],
-            ['date', '<=', $tgl_terakhir],
-        ])
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
             ->get()->sum('jumlah');
 
-        $data = $masuk - $keluar;
+        $data = ($masuk + $retur) - $keluar;
 
         return response()->json($data);
+    }
+
+    public function hitung($material)
+    {
+        $hari_ini = date("Y-m-d");
+        $tgl_pertama = date('Y-m-01', strtotime($hari_ini));
+        $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
+
+        $masuk = ReceiptDetail::where([
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
+            ->get()->sum('jumlah');
+
+        $retur = RestoreDetail::where([
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
+            ->get()->sum('jumlah');
+
+        $keluar = SpendDetail::where([
+                ['material_id', $material],
+                ['date', '>=', $tgl_pertama],
+                ['date', '<=', $tgl_terakhir],
+            ])
+            ->get()->sum('jumlah');
+
+        $data = ($masuk + $retur) - $keluar;
+        $data = (int)$data;
+
+        return $data;
     }
 }
