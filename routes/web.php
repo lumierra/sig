@@ -72,6 +72,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show
     Route::get('pengeluaran/{material}/cekStok', 'Pengeluaran\PengeluaranController@cekStok');
     Route::get('pengeluaran/{material}/cekPengeluaran', 'Pengeluaran\PengeluaranController@cekPengeluaran');
     Route::get('pengeluaran/{material}/kalkulasi', 'Pengeluaran\PengeluaranController@kalkulasi');
+    Route::get('retur/{id}/delete', 'Retur\ReturController@delete');
 
     Route::resource('products', 'ProductController');
 

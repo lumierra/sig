@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" data-keyboard="false" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,7 +55,7 @@
                 <input type="hidden" name="product_id" id="product_id">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -91,7 +91,7 @@
                         sort: 'timestamp'
                     }
                 },
-                {data: 'dari', name: 'dari'},
+                {data: 'place', name: 'place'},
                 {
                     data: null,
                     render: function (data){
@@ -135,27 +135,26 @@
             var product_id = $(this).data("id");
             swal({
                 title: "Apakah Anda Yakin ?",
-                // text: "",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("Data Pengeluaran Berhasil di Hapus", {
+                    swal("Data Berhasil di Hapus", {
                         icon: "success",
                     });
                     $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('admin.pengeluaran.index') }}" + '/' + product_id + '/delete',
+                        type: "GET",
+                        url: "retur/" + product_id + '/delete',
                         success: function (data) {
                             table.draw();
+                            console.log(data);
                         },
                         error: function (data) {
                             console.log('Error:', data);
                         }
                     });
-                    location.load();
                 }
             });
         });

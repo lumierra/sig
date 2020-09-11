@@ -217,7 +217,7 @@
                                             @endforeach
                         </select>
                     </td>
-                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)" required></td>
+                    <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${no}' onkeypress="return hanyaAngka(event)" required autocomplete="off"></td>
                                     <td>
                                     <input type="hidden" value="" name="satuan[]" id="satuan${no}">
                                         <select class='form-control' name='unit[]' id='unit${no}' required disabled>
@@ -228,7 +228,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}' required>
+                        <input type='text' class='form-control' name='keterangan[]' id='keterangan${no}' required autocomplete="off">
                                     </td>
                                     <td>
                                         <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
@@ -318,7 +318,7 @@
                         @endforeach
                 </select>
             </td>
-            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)"></td>
+            <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
                 <td>
                 <input type="hidden" value="" name="satuan[]" id="satuan${sno}">
                     <select class='form-control' name='unit[]' id='unit${sno}' required disabled>
@@ -329,7 +329,7 @@
                 </select>
             </td>
             <td>
-                <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}'>
+                <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}' autocomplete="off">
                 </td>
                 <td>
                     <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>

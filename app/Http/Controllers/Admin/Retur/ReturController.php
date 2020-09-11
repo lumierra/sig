@@ -32,6 +32,9 @@ class ReturController extends Controller
             $data = Restore::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('place', function (Restore $retur) {
+                    return $retur->place->name;
+                })
                 ->addColumn('action', function($row){
                     $route = 'retur/' . $row->id . '/' . 'edit';
                     $btn = '';
@@ -136,6 +139,7 @@ class ReturController extends Controller
             'date' => new DateTime(),
             'dari' => $request->dari,
             'user_id' => Auth::user()->id,
+            'place_id' => $request->place,
             'name' => $newID,
         ]);
 
@@ -199,12 +203,14 @@ class ReturController extends Controller
         $materials = Material::all();
         $units = Unit::all();
         $spends = Spend::all();
+        $places = Place::all();
 
         return view('admin.retur.edit')->with([
             'retur' => $retur,
             'materials' => $materials,
             'units' => $units,
             'spends' => $spends,
+            'places' => $places,
         ]);
     }
 
@@ -222,20 +228,21 @@ class ReturController extends Controller
         $counterDetail = count($retur->detail);
 
         $retur->update([
-            'dari' => $request->dari,
+            'place_id' => $request->place,
             'user_id' => Auth::user()->id,
         ]);
 
         if ($counter > $counterDetail){
             foreach ($retur->detail as $i => $detail){
-                Two::destroy($detail->id);
+                RestoreDetail::destroy($detail->id);
             }
             for($i=0; $i < $counter; $i++){
-                Two::create([
+                $returDetail = RestoreDetail::create([
+                    'date' => new DateTime(),
                     'restore_id' => $retur->id,
                     'restore_code' => $retur->code,
                     'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
+                    'unit_id' => $request->satuan[$i],
                     'user_id' => Auth::user()->id,
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
@@ -244,10 +251,10 @@ class ReturController extends Controller
         }
         else {
             foreach ($retur->detail as $i => $detail){
-                $item = Two::find($detail->id);
+                $item = RestoreDetail::find($detail->id);
                 $item->update([
                     'material_id' => $request->material[$i],
-                    'unit_id' => $request->unit[$i],
+                    'unit_id' => $request->satuan[$i],
                     'user_id' => Auth::user()->id,
                     'jumlah' => (int)$request->jumlah[$i],
                     'keterangan' => $request->keterangan[$i],
@@ -273,5 +280,16 @@ class ReturController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id)
+    {
+        $retur = Restore::find($id);
+        foreach ($retur->detail as $detail){
+            $detail->delete();
+        }
+        $retur->delete();
+
+        return response()->json(['success'=>'Permintaan deleted successfully.']);
     }
 }
