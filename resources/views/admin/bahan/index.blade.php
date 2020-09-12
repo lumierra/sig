@@ -2,8 +2,6 @@
 
 @section('title', 'Bahan Makanan')
 
-{{--@section('subtitle', 'Bahan Makanan')--}}
-
 @section('content')
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
@@ -18,22 +16,32 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-sm btn-add float-right btn-icon-split">
-                    <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
+                <button id="createNewProduct"
+                        name="btn_add"
+                        type="button"
+                        class="btn btn-success btn-sm btn-add float-right btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-circle"></i>
+                    </span>
                     <span class="text">Tambah Bahan Makanan</span>
                 </button>
             </div>
+
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
+                    <table
+                        class="table table-bordered yajra-datatable"
+                        id="dataTable"
+                        width="100%"
+                        cellspacing="0">
                         <thead>
-                        <tr class="text-success">
-                            <th>No</th>
-                            <th>Kategori</th>
-                            <th>Nama Bahan Makanan</th>
-                            <th>Satuan</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr class="text-success">
+                                <th>No</th>
+                                <th>Kategori</th>
+                                <th>Nama Bahan Makanan</th>
+                                <th>Satuan</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -51,7 +59,6 @@
                 </div>
                 <div class="modal-body" id="test">
                     <form id="productForm" name="productForm" class="form-horizontal">
-
                         <input type="hidden" name="product_id" id="product_id">
                         <div class="form-group">
                             <label for="name" class="col-sm-5 control-label">Kategori</label>
@@ -68,7 +75,16 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-5 control-label">Nama Bahan Makanan</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Ayam, Ikan, Beras" value="" maxlength="50" required="" autocomplete="off">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Ayam, Ikan, Beras"
+                                    value=""
+                                    maxlength="50"
+                                    required=""
+                                    autocomplete="off">
                             </div>
                         </div>
 
@@ -96,7 +112,6 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -119,7 +134,6 @@
                     {data: 'category', name: 'category'},
                     {data: 'name', name: 'name'},
                     {data: 'unit', name: 'unit'},
-
                     {
                         data: 'action',
                         name: 'action',
@@ -173,7 +187,6 @@
 
                     },
                     error: function (data) {
-                        // console.log('Error:', data);
                         swal({
                             type: 'error',
                             title: 'Data Belum Lengkap'
@@ -188,7 +201,6 @@
                 var product_id = $(this).data("id");
                 swal({
                     title: "Apakah Anda Yakin ?",
-                    // text: "",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,

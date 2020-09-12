@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+//Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -23,63 +26,63 @@ Route::get('/home', function () {
     return redirect()->route('admin.dashboard.index');
 });
 
-Auth::routes();
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->name('admin.')
+    ->middleware('can:show-admin')
+    ->group(function (){
 
-//Route::get('/home', 'HomeController@index')->name('home');
+        Route::resource('users', 'Users\UserController');
+        Route::resource('management-user', 'Management\ManagementController');
+        Route::resource('dashboard', 'Dashboard\DashboardController')->only('index');
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:show-admin')->group(function (){
-    Route::resource('dashboard', 'Dashboard\DashboardController')->only('index');
-    Route::resource('users', 'Users\UserController');
-    Route::resource('management-user', 'Management\ManagementController');
-
-    Route::resource('kepala-gizi', 'Head\HeadController');
+        Route::resource('kepala-gizi', 'Head\HeadController');
 //    Route::get('users/data', 'Users\UserController@getUser')->name('user.data');
 
-    Route::resource('dashboard-makanan', 'Dashboard\DashboardMakanan')->only('index');
-    Route::resource('makanan', 'Makanan\MakananController');
-    Route::resource('bahan-makanan', 'Bahan\BahanController');
-    Route::resource('jenis-makanan', 'Jenis\JenisController');
-    Route::resource('satuan-makanan', 'Satuan\SatuanController');
-    Route::resource('detail-makanan', 'Detail\DetailBahanMakananController');
-    Route::resource('kategori', 'Kategori\KategoriController');
-    Route::get('detail-makanan/{id}/show', 'Detail\DetailBahanMakananController@show');
-    Route::delete('detail-makanan/{id}/destroy', 'Detail\DetailBahanMakananController@destroy');
-    Route::get('detail-makanan/{id}/create2', 'Detail\DetailBahanMakananController@create2');
-    Route::get('bahan-makanan/{id}/show', 'Bahan\BahanController@show');
-    Route::get('bahan-makanan/{id}/updateData', 'Bahan\BahanController@updateData')->name('bahan.update');
+        Route::resource('makanan', 'Makanan\MakananController');
+        Route::resource('bahan-makanan', 'Bahan\BahanController');
+        Route::resource('jenis-makanan', 'Jenis\JenisController');
+        Route::resource('kategori', 'Kategori\KategoriController');
+        Route::resource('satuan-makanan', 'Satuan\SatuanController');
+        Route::get('bahan-makanan/{id}/show', 'Bahan\BahanController@show');
+        Route::resource('detail-makanan', 'Detail\DetailBahanMakananController');
+        Route::get('detail-makanan/{id}/show', 'Detail\DetailBahanMakananController@show');
+        Route::get('detail-makanan/{id}/create2', 'Detail\DetailBahanMakananController@create2');
+        Route::delete('detail-makanan/{id}/destroy', 'Detail\DetailBahanMakananController@destroy');
+        Route::resource('dashboard-makanan', 'Dashboard\DashboardMakanan')->only('index');
 
 
-    Route::resource('dashboard-pengadaan', 'Dashboard\DashboardPengadaan')->only('index');
-    Route::resource('vendor', 'Vendor\VendorController');
-    Route::resource('permintaan', 'Permintaan\PermintaanController');
-    Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
-    Route::get('penerimaan/{id}/showReceipt', 'Penerimaan\PenerimaanController@showReceipt')->name('penerimaan.showReceipt');
-    Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
-    Route::get('penerimaan/{id}/create2', 'Permintaan\PermintaanController@create2')->name('penerimaan.create2');
-    Route::get('permintaan/{material}/cekBahan', 'Permintaan\PermintaanController@cekBahan')->name('permintaan.cekBahan');
-    Route::get('permintaan/{id}/delete', 'Permintaan\PermintaanController@delete')->name('permintaan.delete');
-    Route::get('penerimaan/{id}/findDemand', 'Penerimaan\PenerimaanController@findDemand')->name('penerimmaan.findDemand');
-    Route::get('penerimaan/{id}/delete', 'Penerimaan\PenerimaanController@delete')->name('penerimaan.delete');
+        Route::resource('vendor', 'Vendor\VendorController');
+        Route::resource('permintaan', 'Permintaan\PermintaanController');
+        Route::resource('penerimaan', 'Penerimaan\PenerimaanController');
+        Route::resource('dashboard-pengadaan', 'Dashboard\DashboardPengadaan')->only('index');
+        Route::get('permintaan/{id}/delete', 'Permintaan\PermintaanController@delete')->name('permintaan.delete');
+        Route::get('penerimaan/{id}/delete', 'Penerimaan\PenerimaanController@delete')->name('penerimaan.delete');
+        Route::get('penerimaan/{id}/create2', 'Permintaan\PermintaanController@create2')->name('penerimaan.create2');
+        Route::get('permintaan/{material}/cekBahan', 'Permintaan\PermintaanController@cekBahan')->name('permintaan.cekBahan');
+        Route::get('permintaan/{id}/showDemand', 'Permintaan\PermintaanController@showDemand')->name('permintaan.showDemand');
+        Route::get('penerimaan/{id}/findDemand', 'Penerimaan\PenerimaanController@findDemand')->name('penerimmaan.findDemand');
+        Route::get('penerimaan/{id}/showReceipt', 'Penerimaan\PenerimaanController@showReceipt')->name('penerimaan.showReceipt');
 
-    Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
-    Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');
-    Route::resource('retur', 'Retur\ReturController');
-    Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
-    Route::get('retur/{id}/showRetur', 'Retur\ReturController@showRetur')->name('retur.showRetur');
-    Route::get('pengeluaran/{material}/cekBahan', 'Pengeluaran\PengeluaranController@cekBahan');
-    Route::resource('stok-bahan', 'Stok\StokController');
-    Route::get('retur/{id}/findSpend', 'Retur\ReturController@findSpend')->name('retur.findDemand');
-    Route::get('pengeluaran/{material}/cekStok', 'Pengeluaran\PengeluaranController@cekStok');
-    Route::get('pengeluaran/{material}/cekPengeluaran', 'Pengeluaran\PengeluaranController@cekPengeluaran');
-    Route::get('pengeluaran/{material}/kalkulasi', 'Pengeluaran\PengeluaranController@kalkulasi');
-    Route::get('retur/{id}/delete', 'Retur\ReturController@delete');
+        Route::resource('retur', 'Retur\ReturController');
+        Route::resource('stok-bahan', 'Stok\StokController');
+        Route::get('retur/{id}/delete', 'Retur\ReturController@delete');
+        Route::resource('pengeluaran', 'Pengeluaran\PengeluaranController');
+        Route::get('pengeluaran/{material}/cekStok', 'Pengeluaran\PengeluaranController@cekStok');
+        Route::get('pengeluaran/{material}/cekBahan', 'Pengeluaran\PengeluaranController@cekBahan');
+        Route::get('pengeluaran/{material}/kalkulasi', 'Pengeluaran\PengeluaranController@kalkulasi');
+        Route::get('retur/{id}/showRetur', 'Retur\ReturController@showRetur')->name('retur.showRetur');
+        Route::get('retur/{id}/findSpend', 'Retur\ReturController@findSpend')->name('retur.findDemand');
+        Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
+        Route::get('pengeluaran/{material}/cekPengeluaran', 'Pengeluaran\PengeluaranController@cekPengeluaran');
+        Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
 
-    Route::resource('products', 'ProductController');
 
+        Route::resource('products', 'ProductController');
+        Route::get('/asd', function (){
+            return view('admin.permintaan.test');
+        });
 //    Route::get('/test', 'Makanan\MakananController@test');
-    Route::get('/asd', function (){
-       return view('admin.permintaan.test');
-    });
 });
 
 //Route::resource('products', 'ProductController');

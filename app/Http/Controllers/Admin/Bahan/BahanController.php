@@ -19,12 +19,6 @@ class BahanController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function
 
     public function index(Request $request)
     {
@@ -40,7 +34,6 @@ class BahanController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $btn = '';
-//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Test" class="edit btn btn-info btn-circle btn-sm testProduct"><i class="fas fa-user"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-target="#exampleModal" data-toggle="modal"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
 
@@ -49,126 +42,78 @@ class BahanController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        $categories = Category::all();
+
         $units = Unit::all();
+        $categories = Category::all();
 
         return view('admin.bahan.index')->with([
+            'units' => $units,
             'categories' => $categories,
-            'units' => $units
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        Material::updateOrCreate(['id' => $request->product_id],
+        Material::updateOrCreate(
+            ['id' => $request->product_id],
             [
                 'name' => $request->name,
+                'unit_id' => $request->unit,
                 'user_id' => Auth::user()->id,
                 'category_id' => $request->category,
-                'unit_id' => $request->unit,
             ]);
 
-        return response()->json(['success'=>'Material saved successfully.']);
+        return response()->json(['success'=>'Bahan Makanan Berhasil di Simpan']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $material = Material::find($id);
-        $category = $material->category->name;
         $unit = $material->unit->name;
+        $category = $material->category->name;
 
         return response()->json([
+            'unit' => $unit,
             'data' => $material,
             'category' => $category,
-            'unit' => $unit
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $material = Material::find($id);
-        $category = $material->category->name;
         $unit = $material->unit->name;
+        $category = $material->category->name;
 
         return response()->json([
+            'unit' => $unit,
             'data' => $material,
             'category' => $category,
-            'unit' => $unit
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $material = Material::find($request->product_id);
         $material->update([
             'name' => $request->name,
-            'category_id' => $request->category,
             'unit_id' => $request->unit,
             'user_id' => Auth::user()->id,
+            'category_id' => $request->category,
         ]);
 
-        return response()->json(['success'=>'Material updated successfully.']);
+        return response()->json(['success'=>'Bahan Makanan Berhasil di Simpan']);
     }
 
-    public function updateData(Request $request, $id)
-    {
-        $material = Material::find($request->product_id);
-        dd($request->product_id);
-//        $material->update([
-//            'name' => $request->name,
-//            'category_id' => $request->category,
-//            'unit_id' => $request->unit,
-//            'user_id' => Auth::user()->id,
-//        ]);
-
-        return response()->json(['success'=>'Material updated successfully.']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Material::find($id)->delete();
 
-        return response()->json(['success'=>'Material deleted successfully.']);
+        return response()->json(['success'=>'Bahan Makanan Berhasil di Hapus']);
     }
 }
