@@ -6,15 +6,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-lg font-weight-bold" width="150px">Dari</td>
+                        <td class="text-lg font-weight-bold" width="100px">Dari</td>
                         <td width="10px">:</td>
-                        <td class="font-weight-bold">{{ ucfirst($retur->dari) }}</td>
+                        <td class="font-weight-bold">{{ ucfirst($retur->place->name) }}</td>
                     </tr>
                 </tbody>
             </table>
             <table class="table table-hover">
                 <thead>
-                <tr>
+                <tr class="text-success">
                     <th scope="col">#</th>
                     <th scope="col">Bahan Makanan</th>
                     <th scope="col">Jumlah</th>

@@ -19,7 +19,7 @@
             </table>
             <table class="table table-hover">
                 <thead>
-                <tr>
+                <tr class="text-success">
                     <th scope="col">#</th>
                     <th scope="col">Bahan Makanan</th>
                     <th scope="col">Jumlah</th>

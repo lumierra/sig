@@ -132,23 +132,6 @@
             });
         });
 
-        {{--$('body').on('click', '.deleteProduct', function () {--}}
-
-        {{--    var product_id = $(this).data("id");--}}
-        {{--    confirm("Are You sure want to delete !");--}}
-
-        {{--    $.ajax({--}}
-        {{--        type: "DELETE",--}}
-        {{--        url: "{{ route('admin.permintaan.store') }}"+'/'+product_id,--}}
-        {{--        success: function (data) {--}}
-        {{--            table.draw();--}}
-        {{--        },--}}
-        {{--        error: function (data) {--}}
-        {{--            console.log('Error:', data);--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--});--}}
-
         $('body').on('click', '.deleteProduct', function () {
 
             var product_id = $(this).data("id");

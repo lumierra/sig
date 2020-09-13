@@ -114,11 +114,11 @@
         <div id="collapseFour" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Transaksi</h6>
-                <a class="collapse-item {{ Request::path() === 'admin/permintaan' ? 'active' : '' }}" href="{{ route('admin.permintaan.index') }}">Permintaan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/penerimaan' ? 'active' : '' }}" href="{{ route('admin.penerimaan.index') }}">Penerimaan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/pengeluaran' ? 'active' : '' }}" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
-                <a class="collapse-item {{ Request::path() === 'admin/retur' ? 'active' : '' }}" href="{{ route('admin.retur.index') }}">Pengembalian</a>
-                <a class="collapse-item {{ Request::path() === 'admin/stok-bahan' ? 'active' : '' }}" href="{{ route('admin.stok-bahan.index') }}">Stok Bahan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/permintaan' ? 'active text-success' : '' }}" href="{{ route('admin.permintaan.index') }}">Permintaan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/penerimaan' ? 'active text-success' : '' }}" href="{{ route('admin.penerimaan.index') }}">Penerimaan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/pengeluaran' ? 'active text-success' : '' }}" href="{{ route('admin.pengeluaran.index') }}">Pengeluaran</a>
+                <a class="collapse-item {{ Request::path() === 'admin/retur' ? 'active text-success' : '' }}" href="{{ route('admin.retur.index') }}">Pengembalian</a>
+                <a class="collapse-item {{ Request::path() === 'admin/stok-bahan' ? 'active text-success' : '' }}" href="{{ route('admin.stok-bahan.index') }}">Stok Bahan</a>
             </div>
         </div>
     </li>
@@ -140,17 +140,17 @@
         </a>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::path() === 'admin/management-user' ? 'active' : '' }}" href="{{ route('admin.management-user.index') }}">Pengguna</a>
-                <a class="collapse-item {{ Request::path() === 'admin/kepala-gizi' ? 'active' : '' }}" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
+                <a class="collapse-item {{ Request::path() === 'admin/management-user' ? 'active text-success' : '' }}" href="{{ route('admin.management-user.index') }}">Pengguna</a>
+                <a class="collapse-item {{ Request::path() === 'admin/kepala-gizi' ? 'active text-success' : '' }}" href="{{ route('admin.kepala-gizi.index') }}">Penanggung Jawab</a>
                 <hr class="divider">
-                <a class="collapse-item {{ Request::path() === 'admin/kategori' ? 'active' : '' }}" href="{{ route('admin.kategori.index') }}">Kategori Bhn Mkn</a>
-                <a class="collapse-item {{ Request::path() === 'admin/bahan-makanan' ? 'active' : '' }}"  href="{{ route('admin.bahan-makanan.index') }}">Bahan Makanan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/jenis-makanan' ? 'active' : '' }}" href="{{ route('admin.jenis-makanan.index') }}">Jenis Makanan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/makanan' ? 'active' : '' }}" href="{{ route('admin.makanan.index') }}">Menu Makanan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/detail-makanan' ? 'active' : '' }}" href="{{ route('admin.detail-makanan.index') }}">Detail Bahan Makanan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/kategori' ? 'active text-success' : '' }}" href="{{ route('admin.kategori.index') }}">Kategori Bhn Mkn</a>
+                <a class="collapse-item {{ Request::path() === 'admin/bahan-makanan' ? 'active text-success' : '' }}"  href="{{ route('admin.bahan-makanan.index') }}">Bahan Makanan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/jenis-makanan' ? 'active text-success' : '' }}" href="{{ route('admin.jenis-makanan.index') }}">Jenis Makanan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/makanan' ? 'active text-success' : '' }}" href="{{ route('admin.makanan.index') }}">Menu Makanan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/detail-makanan' ? 'active text-success' : '' }}" href="{{ route('admin.detail-makanan.index') }}">Detail Bahan Makanan</a>
                 <hr class="divider">
-                <a class="collapse-item {{ Request::path() === 'admin/satuan-makanan' ? 'active' : '' }}" href="{{ route('admin.satuan-makanan.index') }}">Satuan Makanan</a>
-                <a class="collapse-item {{ Request::path() === 'admin/vendor' ? 'active' : '' }}" href="{{ route('admin.vendor.index') }}">Vendor</a>
+                <a class="collapse-item {{ Request::path() === 'admin/satuan-makanan' ? 'active text-success' : '' }}" href="{{ route('admin.satuan-makanan.index') }}">Satuan Makanan</a>
+                <a class="collapse-item {{ Request::path() === 'admin/vendor' ? 'active text-success' : '' }}" href="{{ route('admin.vendor.index') }}">Vendor</a>
             </div>
         </div>
     </li>
