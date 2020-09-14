@@ -40,13 +40,13 @@
                                                 <div class="row">
                                                     <div class="col-md-5">
                                                         <label for="place">Tujuan</label>
-                                                        <select class="form-control custom-select @error('title') is-invalid @enderror" id="place" name="place" required data-parsley-trigger="keyup" data-parsley-required-message="Tujuan Belum di Pilih">
-                                                            <option selected disabled>Pilih</option>
+                                                        <select class="form-control custom-select @error('place') is-invalid @enderror" id="place" name="place" required>
+                                                            <option selected disabled value="">Pilih</option>
                                                             @foreach ($places as $place)
                                                                 <option value="{{$place->id}}" name="{{$place->name}}">{{ Str::ucfirst($place->name) }}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('title')
+                                                        @error('place')
                                                             <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -74,8 +74,8 @@
                                                                     <tr class="text-center">
                                                                         <td class="sNo">1</td>
                                                                         <td>
-                                                                            <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required @error('material') is-invalid @enderror>
-                                                                                <option selected disabled>Pilih</option>
+                                                                            <select onchange="myFunction(1)" class='form-control @error('material') is-invalid @enderror' name='material[]' id='material1' required >
+                                                                                <option selected disabled value="">Pilih</option>
                                                                                 @foreach($data as $material)
                                                                                     <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
                                                                                 @endforeach
@@ -90,7 +90,7 @@
                                                                         <td>
                                                                             <input type="hidden" value="" name="satuan[]" id="satuan1">
                                                                             <select class='form-control' name='unit[]' id='unit1' required disabled>
-                                                                                <option selected disabled>Pilih</option>
+                                                                                <option selected disabled value="">Pilih</option>
                                                                                 @foreach($units as $unit)
                                                                                     <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
                                                                                 @endforeach
@@ -135,7 +135,7 @@
                                                                                 </span>
                                                                                 <span class="text">Batal</span>
                                                                             </a>
-                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="button" id="submit" name="submit" onclick="return mySubmit(event)">
+                                                                            <button class="btn btn-success btn-sm btn-icon-split" type="submit" id="submit" name="submit" onclick="return mySubmit(event)">
                                                                                 <span class="icon text-white-50">
                                                                                   <i class="fas fa-save"></i>
                                                                                 </span>
@@ -175,6 +175,14 @@
             counter = counter-1;
             var counterCek = 0;
             const simpan = document.getElementById('submit');
+            const place = $('#place').val();
+            const bahan = $('#material1').val();
+            const jlh = $('#jumlah1').val();
+            const ket = $('#keterangan1').val();
+            // console.log('jumlah ' + jlh);
+            if (jlh == "" || place == null || bahan == null || ket == ""){
+                counterCek++;
+            }
 
             for(i=0; i < counter; i++)
             {
@@ -215,31 +223,23 @@
                     }
                 });
             }
-            if (counterCek > 0){
+            console.log(counterCek);
+            if (counterCek >= 1){
                 swal({
                     type: 'error',
                     icon: 'error',
-                    title: 'Gagal',
-                    text: 'Data Gagal di Simpan'
-                });
-                event.preventDefault();
-            }
-            else if(counterCek == 0){
-                swal({
-                    type: 'error',
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Data Belum di isi'
+                    title: 'Gagal Simpan',
+                    text: 'Cek Kembali Jumlah Bahan Yang Di Keluarkan'
                 });
                 event.preventDefault();
             }
             else {
-                swal({
-                    type: 'success',
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: 'Pengecekkan Stok Berhasil'
-                });
+                // swal({
+                //     type: 'success',
+                //     icon: 'success',
+                //     title: 'Berhasil',
+                //     text: 'Pengecekkan Stok Berhasil'
+                // });
                 $("myForm").submit();
             }
         }

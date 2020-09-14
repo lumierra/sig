@@ -119,7 +119,7 @@ class ReturController extends Controller
         }
         else{
             if ($year == $now){
-                $lastIncrement = substr($lastID->code, 19, 6);
+                $lastIncrement = substr($lastID->code, 18, 6);
                 $newIncrement = 'Pengembalian-RSGZ/' . str_pad($lastIncrement + 1, 6, 0, STR_PAD_LEFT);
                 $newID = $newIncrement . '/' . $month . '/' . $year;
             }

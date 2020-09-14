@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/guest', 'HomeController@index')->name('guest');
 Auth::routes();
 
 Route::get('/', function () {
@@ -75,8 +75,16 @@ Route::namespace('Admin')
         Route::get('retur/{id}/findSpend', 'Retur\ReturController@findSpend')->name('retur.findDemand');
         Route::resource('dashboard-operasional', 'Dashboard\DashboardOperasional')->only('index');
         Route::get('pengeluaran/{material}/cekPengeluaran', 'Pengeluaran\PengeluaranController@cekPengeluaran');
+        Route::get('pengeluaran/{id}/delete', 'Pengeluaran\PengeluaranController@delete')->name('pengeluaran.delete');
         Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
 
+        Route::resource('ahli-gizi', 'AhliGizi\AhliGiziController');
+        Route::get('ahli-gizi/ruangan', 'AhliGizi\AhliGiziController@ruangan')->name('ahli-gizi.ruangan');
+
+        Route::resource('room', 'Room\RoomController');
+        Route::get('management-user/create2', 'Management\ManagementController@create2')->name('management-user.create2');
+        Route::get('managament/{id}/showRoom', 'Management\ManagementController@showRoom')->name('management.showRoom');
+        Route::post('management/updateRoom', 'Management\ManagementController@updateRoom')->name('management.updateRoom');
 
         Route::resource('products', 'ProductController');
         Route::get('/asd', function (){

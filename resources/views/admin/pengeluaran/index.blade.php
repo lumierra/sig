@@ -135,27 +135,26 @@
             var product_id = $(this).data("id");
             swal({
                 title: "Apakah Anda Yakin ?",
-                // text: "",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("Data Pengeluaran Berhasil di Hapus", {
+                    swal("Data Berhasil di Hapus", {
                         icon: "success",
                     });
                     $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('admin.pengeluaran.index') }}" + '/' + product_id + '/delete',
+                        type: "GET",
+                        url: "pengeluaran/" + product_id + '/delete',
                         success: function (data) {
                             table.draw();
+                            console.log(data);
                         },
                         error: function (data) {
                             console.log('Error:', data);
                         }
                     });
-                    location.load();
                 }
             });
         });

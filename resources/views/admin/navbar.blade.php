@@ -8,6 +8,15 @@
         <span>Dashboard</span></a>
 </li>
 
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item {{ Request::path() === 'admin/ahli-gizi' ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('admin.ahli-gizi.index') }}">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Ahli Gizi</span></a>
+</li>
+
 
 <!-- Nav Item - Pages Collapse Menu -->
 @if(Request::path() == 'admin/dashboard')

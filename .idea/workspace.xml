@@ -20,19 +20,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AhliGizi/AhliGiziController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Room/RoomController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Room.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_14_100520_create_rooms_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_14_100648_create_room_user_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/flexbox.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/ahliGizi/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/ahliGizi/ruangan.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/management/room.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/room/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Detail/DetailBahanMakananController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/ext/css/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/ext/css/sb-admin-2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Management/ManagementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Management/ManagementController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Pengeluaran/PengeluaranController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Retur/ReturController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Retur/ReturController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Stok/StokController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Stok/StokController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/jenis/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/management/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/management/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/navbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/penerimaan/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/penerimaan/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/pengeluaran/create2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pengeluaran/create2.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/pengeluaran/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pengeluaran/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/pengeluaran/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pengeluaran/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/permintaan/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/permintaan/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/retur/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/stok/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/stok/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +68,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/resources/views/admin/ahliGizi/index.blade.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/Dashboard/DashboardMakanan.php" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/resources/views/admin/bahan/index.blade.php" root0="SKIP_INSPECTION" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/resources/views/admin/detailBahan/edit.blade.php" root0="SKIP_INSPECTION" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -224,17 +239,17 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/stok" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/room" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\room" />
+      <recent name="C:\xampp\htdocs\sig\resources\views\admin\ahliGizi" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\stok" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\pengeluaran" />
       <recent name="C:\xampp\htdocs\sig\resources\views\admin\permintaan" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\penerimaan" />
-      <recent name="C:\xampp\htdocs\sig\resources\views\admin\bahan" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\sig\database" />
@@ -269,7 +284,8 @@
       <workItem from="1599701364800" duration="26140000" />
       <workItem from="1599790757864" duration="18077000" />
       <workItem from="1599913206852" duration="4362000" />
-      <workItem from="1599959993490" duration="1034000" />
+      <workItem from="1599959993490" duration="16166000" />
+      <workItem from="1600047099498" duration="13738000" />
     </task>
     <servers />
   </component>
@@ -296,10 +312,16 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="137" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738@0.0.1366.738" timestamp="1598842879711" />
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599811068595">
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600053931443">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1599811068595" />
+    <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1600053931443" />
+    <state x="580" y="175" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599987800559" />
+    <state x="813" y="1276" key="FileChooserDialogImpl" timestamp="1599998947609">
+      <screen x="287" y="1080" width="1366" height="738" />
+    </state>
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599998206276" />
+    <state x="813" y="1276" key="FileChooserDialogImpl/287.1080.1366.738/0.0.1920.1050@287.1080.1366.738" timestamp="1599998947609" />
     <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599107624111">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -308,15 +330,16 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="0" y="0" width="1082" height="560" key="dock-window-1/0.0.1366.738@0.0.1366.738" timestamp="1599401436491" />
-    <state x="339" y="165" key="run.anything.popup" timestamp="1599731322846">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1599731322846" />
-    <state x="486" y="84" width="945" height="965" key="search.everywhere.popup" timestamp="1599960559743">
+    <state x="476" y="235" key="run.anything.popup" timestamp="1599981994344">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1599812977097" />
-    <state x="486" y="84" width="945" height="965" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1599960559743" />
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1599731322846" />
+    <state x="476" y="235" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1599981994344" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1600070947795">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1600070947795" />
+    <state x="486" y="84" width="945" height="965" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1599998241648" />
     <state x="324" y="55" width="672" height="634" key="search.everywhere.popup/2.720.1366.738/0.0.1280.690@0.0.1280.690" timestamp="1599914300627" />
   </component>
   <component name="XDebuggerManager">

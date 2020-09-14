@@ -59,8 +59,7 @@
 
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan
-                            </button>
+                            <button type="submit" class="btn btn-success" id="saveBtn" value="create">Simpan</button>
                         </div>
                     </form>
                 </div>

@@ -187,7 +187,7 @@ class PengeluaranController extends Controller
             return redirect()->route('admin.pengeluaran.index');
         }
         else {
-            if ($this->hitung($request->material[0] > (int)$request->jumlah[0]))
+            if ($this->hitung($request->material[0]) > (int)$request->jumlah[0])
             {
                 $spend = Spend::create([
                     'code' => $newID,
@@ -312,6 +312,17 @@ class PengeluaranController extends Controller
         }
 
         return response()->json(['success'=>'Pengeluaran Berhasil Di Hapus']);
+    }
+
+    public function delete($id)
+    {
+        $spend = Spend::find($id);
+        foreach ($spend->detail as $detail){
+            $detail->delete();
+        }
+        $spend->delete();
+
+        return response()->json(['success'=>'Pengeluaran deleted successfully.']);
     }
 
     public function cekBahan($material)

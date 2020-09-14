@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Material;
 use App\Receipt;
 use App\ReceiptDetail;
+use App\RestoreDetail;
 use App\SpendDetail;
 use App\Stock;
 use Illuminate\Http\Request;
@@ -34,7 +35,9 @@ class StokController extends Controller
         if ($request->ajax()) {
             return Datatables::of($data)
                 ->addIndexColumn()
-//                ->addColumn('test', $this->kalkulasi())
+                ->addColumn('stok', function ($row){
+                    return $this->kalkulasi($row->id);
+                })
 //                ->addColumn('material', function (Stock $stock) {
 //                    return $stock->material->name;
 //                })
@@ -131,6 +134,13 @@ class StokController extends Controller
         ])
             ->get()->sum('jumlah');
 
+        $retur = RestoreDetail::where([
+            ['material_id', $material],
+            ['date', '>=', $tgl_pertama],
+            ['date', '<=', $tgl_terakhir],
+        ])
+            ->get()->sum('jumlah');
+
         $keluar = SpendDetail::where([
             ['material_id', $material],
             ['date', '>=', $tgl_pertama],
@@ -138,7 +148,7 @@ class StokController extends Controller
         ])
             ->get()->sum('jumlah');
 
-        $data = $masuk - $keluar;
+        $data = ($masuk + $retur) - $keluar;
 
         return $data;
     }

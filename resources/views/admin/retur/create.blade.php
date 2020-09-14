@@ -1,6 +1,6 @@
 @extends('admin.layouts')
 
-@section('title', 'Pengembalian')
+@section('title', 'Tambah Pengembalian')
 
 @section('subtitle', 'Pengembalian')
 
@@ -35,7 +35,7 @@
                                 <div class="col-lg-12">
                                     <form action="{{ route('admin.retur.store') }}" method="POST" name="formPendaftaran">
                                         @csrf
-                                        <div class="row">
+{{--                                        <div class="row">--}}
 {{--                                            <div class="col-md-10">--}}
 {{--                                                <div class="row">--}}
 {{--                                                    <div class="col-md-5">--}}
@@ -49,8 +49,8 @@
 {{--                                                    </div>--}}
 {{--                                                </div>--}}
 {{--                                            </div>--}}
-                                        </div>
-                                        <br>
+{{--                                        </div>--}}
+{{--                                        <br>--}}
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <div class="row">

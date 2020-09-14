@@ -18,7 +18,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button id="createNewProduct" name="btn_add" type="button" class="btn btn-success btn-add float-right btn-icon-split">
+                <button id="createNewProduct" name="btn_add" type="button" class="btn btn-sm btn-success btn-add float-right btn-icon-split">
                     <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
                     <span class="text">Tambah User</span>
                 </button>
@@ -53,15 +53,15 @@
                     <form id="productForm" name="productForm" class="form-horizontal">
                         <input type="hidden" name="product_id" id="product_id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Jenis Makanan</label>
+                            <label for="role" class="col-sm-5 control-label">Role</label>
                             <div class="col-sm-12">
-                                <select class="form-control @error('types') is-invalid @enderror" name="types" id="types" required>
-                                    <option selected>Pilih Jenis</option>
-{{--                                    @foreach($types as $type)--}}
-{{--                                        <option value="{{$type->id}}" name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>--}}
-{{--                                    @endforeach--}}
+                                <select class="form-control @error('role') is-invalid @enderror" name="role" id="role" required>
+                                    <option selected disabled value="">Pilih</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}" name="{{$role->name}}">{{ Str::ucfirst($role->name) }}</option>
+                                    @endforeach
                                 </select>
-                                @error('types')
+                                @error('role')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -69,11 +69,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Nama Makanan</label>
+                            <label for="name" class="col-sm-5 control-label">Nama Lengkap</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
                             </div>
                             @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Email</label>
+                            <div class="col-sm-12">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="" maxlength="50" required="" autocomplete="off">
+                            </div>
+                            @error('email')
                             <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -92,9 +103,46 @@
         </div>
     </div>
 
+<div class="modal fade" id="exampleModal" data-keyboard="false" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Tambah Ruangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="test">
+                <form id="formRoom" name="formRoom" class="form-horizontal">
+                    <input type="hidden" name="product_id" id="product_id">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Nama Lengkap</label>
+                        <div class="col-sm-6">
+                            <input disabled value="{{ $user->name }}" type="text" class="form-control" id="name" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-5 control-label">Role</label>
+                        <div class="col-sm-12">
+                            @foreach($rooms as $room)
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="{{ $room->id }}" name="{{ $room->name }}" value="{{ $room->id }}">
+                                    <label class="custom-control-label" for="{{ $room->id }}">{{ $room->name }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-success" id="simpanRoom" value="room">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -116,6 +164,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
+                    {data: 'role', name: 'role'},
                     {
                         data: 'action',
                         name: 'action',
@@ -129,37 +178,38 @@
                 $('#saveBtn').val("create-product");
                 $('#product_id').val('');
                 $('#productForm').trigger("reset");
-                $('#modelHeading').html("Form Makanan");
+                $('#modelHeading').html("Form Tambah Pengguna");
                 $('#ajaxModel').modal('show');
             });
 
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.get("{{ route('admin.makanan.index') }}" +'/' + product_id +'/edit', function (data) {
-                    $('#modelHeading').html("Edit Makanan");
+                $.get("{{ route('admin.management-user.index') }}" +'/' + product_id + '/edit', function (data) {
+                    $('#modelHeading').html("Edit Pengguna");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
-                    $('#product_id').val(data.id);
-                    $('#name').val(data.name);
+                    $('#product_id').val(data.user.id);
+                    $('#name').val(data.user.name);
+                    $('#role').val(data.role);
+                    $('#email').val(data.user.email);
                 })
             });
 
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
-                $(this).html('Sending..');
+                $(this).html('Simpan');
 
                 $.ajax({
                     data: $('#productForm').serialize(),
-                    url: "{{ route('admin.makanan.store') }}",
+                    url: "{{ route('admin.management-user.store') }}",
                     type: "POST",
                     dataType: 'json',
-
                     success: function (data) {
                         swal({
                             type: 'success',
                             icon: 'success',
-                            title: 'Tambah Makanan',
-                            text: 'Anda Berhasil Menambah Makanan'
+                            title: 'Berhasil',
+                            text: 'Berhasil Tambah Pengguna'
                         })
                         $('#productForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
@@ -167,15 +217,14 @@
 
                     },
                     error: function (data) {
-                        // console.log('Error:', data);
                         swal({
                             type: 'error',
                             title: 'Data Belum Lengkap'
                         })
-                        $('#saveBtn').html('Save Changes');
+                        $('#saveBtn').html('Simpan');
                     }
                 });
-            });
+            })
 
             $('body').on('click', '.deleteProduct', function () {
 
@@ -195,7 +244,7 @@
                         });
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('admin.makanan.store') }}"+'/'+product_id,
+                            url: "{{ route('admin.management-user.store') }}"+'/'+product_id,
                             success: function (data) {
                                 table.draw();
                             },

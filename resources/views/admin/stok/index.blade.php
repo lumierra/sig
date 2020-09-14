@@ -91,8 +91,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    // {data: 'test', name: 'test'},
-                    // {data: 'material', name: 'material'},
+                    {data: 'stok', name: 'stok'},
                     {
                         data: 'action',
                         name: 'action',
