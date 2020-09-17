@@ -21,10 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7b6786f3-7266-4030-a562-1186eb1659bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_01_110649_create_tails_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/2020_09_01_110649_create_tails_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_03_111235_create_ones_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/2020_09_03_111235_create_ones_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_03_111255_create_twos_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/2020_09_03_111255_create_twos_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +213,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/room" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bm2" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -264,7 +260,7 @@
       <workItem from="1599913206852" duration="4362000" />
       <workItem from="1599959993490" duration="16166000" />
       <workItem from="1600047099498" duration="14116000" />
-      <workItem from="1600220951629" duration="3326000" />
+      <workItem from="1600220951629" duration="6185000" />
     </task>
     <servers />
   </component>
@@ -296,9 +292,10 @@
     </state>
     <state x="413" y="123" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1600053931443" />
     <state x="580" y="175" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599987800559" />
-    <state x="813" y="1276" key="FileChooserDialogImpl" timestamp="1599998947609">
-      <screen x="287" y="1080" width="1366" height="738" />
+    <state x="526" y="196" key="FileChooserDialogImpl" timestamp="1600247282499">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
+    <state x="526" y="196" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1600247282499" />
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599998206276" />
     <state x="813" y="1276" key="FileChooserDialogImpl/287.1080.1366.738/0.0.1920.1050@287.1080.1366.738" timestamp="1599998947609" />
     <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599107624111">
