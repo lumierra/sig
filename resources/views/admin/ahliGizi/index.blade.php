@@ -40,6 +40,9 @@
             position: absolute;
             right: 10px;
         }
+        .brd{
+            border-bottom: 1px solid #000;
+        }
     </style>
 
     @section('button')
@@ -53,11 +56,32 @@
             <div class="col-lg-12">
                 <div class="row">
                     @foreach($users->rooms as $room)
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <div class="box box-4">
                                 <div class="box-content">
-                                    <a href="{{ route('admin.ahli-gizi.create') }}" class="text-success h4">{{ ucfirst($room->name) }}</a>
-                                    <p>Content</p>
+                                    <table class="myTables">
+                                        <tbody>
+                                            <tr>
+                                                <th colspan="2" class="text-center border-bottom border-dark">
+                                                    <a href="{{ route('admin.ahli-gizi.create') }}" class="text-success">R. Perawatan Kelas I</a>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center border-right border-dark px-2">18 Jumlah Kamar</th>
+                                                <th class="text-center">18 Tempat Tidur</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center border-right border-dark px-2">
+                                                    0 Tersedia<br>0 Penuh<br>18 Pemeliharaan
+                                                </td>
+                                                <td class="text-center px-2">
+                                                    0 Tersedia<br>0 Digunakan<br>18 Pemeliharaan
+                                                </td>
+                                            </tr>
+                                      </tbody>
+                                    </table>
+                                    {{-- <a href="{{ route('admin.ahli-gizi.create') }}" class="text-success h6">{{ ucfirst($room->name) }}</a>
+                                    <p>Content</p> --}}
                                 </div>
                             </div>
                         </div>
