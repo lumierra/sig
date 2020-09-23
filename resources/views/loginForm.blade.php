@@ -1,65 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login Gizi</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/ext/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/ext/css/util.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/ext/css/main.css') }}">
-    <!--===============================================================================================-->
-</head>
-<body>
-
-<div class="limiter">
-    <div class="container-login100" style="background-image: url('{{ asset('images/buah.jpg') }}');">
-        <div class="wrap-login100 p-t-30 p-b-50">
-				<span class="login100-form-title p-b-41">
-					Sistem Informasi Gizi
-				</span>
-            <form method="POST" action="{{ route('login') }}" class="login100-form validate-form p-b-33 p-t-5">
-                @csrf
-
-                <div class="wrap-input100 validate-input" data-validate = "Enter Email">
-                    <input class="input100 @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email">
-                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
-                    <span class="focus-input100 " data-placeholder="&#xe80f;"></span>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="container-login100-form-btn m-t-32">
-                    <button class="login100-form-btn" type="submit">
-                        Login
-                    </button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div id="dropDownSelect1"></div>
-
-<script src="{{ asset('css/ext/js/main.js') }}"></script>
-
-</body>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Login SIG</title>
+		<meta name="description"> <meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="{{ asset('css/masuk/css/vendor.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/masuk/css/main.css') }}">
+	</head>
+	<body ng-app="yapp" class="ng-scope">
+		<div>
+			<div ui-view="" class="ng-scope">
+				<div class="ui-base ng-scope">
+					<div ui-view="" class="ng-scope">
+						<div class="login-page ng-scope">
+							<div class="img-container">
+								<div class="text-center pull-right photo">
+									<img src="{{ asset('css/masuk/asset/logo.png') }}" class="user-avatar img-circle img-responsive">
+									<h1>RSUD LANGSA<br>
+									<span>Gizi</span>
+									<small><a class="link" href="http://e-rsud.langsakota.go.id">www.e-rsud.langsakota.go.id</a></small>
+									</h1>
+								</div>
+							</div>
+							<div class="form-content">
+								<form role="form" class="bottom-75 ng-pristine ng-valid" name="login" action="{{ route('login') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="popup" value="true" />
+									<div class="table-form">
+										<div class="form-groups">
+											<div class="form-group">
+												<input type="email" class="form-control input-lg" name="email" autocomplete="on" placeholder="ID. PEG / EMAIL">
+											</div>
+											<div class="form-group">
+												<input type="password" class="form-control input-lg" name="password" placeholder="PASSWORD">
+											</div>
+										</div>
+										<div class="button-container">
+											<button type="submit" class="btn btn-default login">
+											<img src="{{ asset('css/masuk/asset/arrow.png') }}"></button>
+										</div>
+									</div>
+										<div class="remember">
+										<label class="checkbox1" for="Option">
+											<input id="Option" type="checkbox"> <span></span> </label>
+											Simpan password <span class="pass">Lupa password?</span>
+									</div><br>
+									<center><span>Support by Team IT RSUD Langsa</span></center>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+ 	</body>
 </html>

@@ -91,6 +91,18 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'sqlsrv_2' => [
+            'driver' => 'sqlsrv',
+            'host' => '192.168.99.2',
+            'port' => '1433',
+            'database' => 'SIMKEU_TEST',
+            'username' => 'sa',
+            'password' => '1Tlangsa',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
     ],
 
     /*

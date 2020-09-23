@@ -223,7 +223,7 @@
                                 Profil {{ ucfirst(Auth::user()->name) }}
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal1"
                                onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"
                             >

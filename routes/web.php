@@ -90,7 +90,7 @@ Route::namespace('Admin')
         Route::get('/asd', function (){
             return view('admin.permintaan.test');
         });
-//    Route::get('/test', 'Makanan\MakananController@test');
+   Route::get('/test', 'Vendor\VendorController@test');
 });
 
 //Route::resource('products', 'ProductController');

@@ -7,6 +7,9 @@
 @section('content')
 
     <style>
+        .asd{
+            padding : 1000px;
+        }
     </style>
 
     @if ($errors->any())
@@ -29,7 +32,7 @@
 
                 <!-- Content Row -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h5 class="m-0 font-weight-bold text-success text-center">Data Pasien Di Ruang Perawatan Kebidanan</h5>
@@ -40,7 +43,7 @@
                                         <div class="box-body">
                                             <small><b>Catatatn: Jika pasien sudah ada diruangan tetapi data pasien belum tersedia di sistem, silakan menghubungi operator ruangan masing-masing.</b></small>
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-striped">
+                                                <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center align-middle" rowspan="2">No</th>
@@ -77,15 +80,15 @@
                                                             <tr>
                                                                 <td class="text-center align-middle">1</td>
                                                                 <td class="text-center align-middle">
-                                                                    <a class="btn btn-circle btn-danger" href="http://localhost/hais/input/MC02Ny0yMS01MQ=="
+                                                                    <a class="btn btn-circle btn-danger" href="{{ route('admin.ahli-gizi.show', 1) }}"
                                                                     data-toggle="tooltip" data-placement="top" title="Isi Formulir"
                                                                     >
                                                                         <i class="fas fa-location-arrow"></i>
                                                                     </a>
                                                                 </td>
-                                                                <td>
+                                                                <td width="10000px">
                                                                     0-67-21-51<br>
-                                                                    <label style="font-weight:bold;">SYAMSIDAR</label> ; Wanita ; 58 Thn.<br>Tgl. Masuk : 15-09-2020<br>DPJP : dr. Erik A. Rahman, Sp.OG
+                                                                    <label class="font-weight-bold">SYAMSIDAR</label> ; Wanita ; 58 Thn.<br>Tgl. Masuk : 15-09-2020<br>DPJP : dr. Erik A. Rahman, Sp.OG
                                                                 </td>
                                                                 <td class="text-left align-middle">C56 - Malignant neoplasm of ovary</td>
                                                                 <td class="text-center align-middle">0</td>
@@ -113,10 +116,10 @@
                                     </div>
                                 </div>
                             </div>
-                          </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 

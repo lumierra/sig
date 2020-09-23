@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Vendor;
 
 use App\Vendor;
+use App\Test;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class VendorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Vendor::latest()->get();
+            $data = Vendor::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -109,5 +110,12 @@ class VendorController extends Controller
         Vendor::find($id)->delete();
 
         return response()->json(['success'=>'Vendor deleted successfully.']);
+    }
+
+    public function test()
+    {
+        $tests = Test::all();
+
+        return response()->json($tests);
     }
 }

@@ -31,7 +31,7 @@ class PermintaanController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('vendor', function (Demand $demand) {
-                    return $demand->vendor->name;
+                    return $demand->vendor->nama_vendor;
                 })
                 ->addColumn('head', function (Demand $demand) {
                     return $demand->head->name;

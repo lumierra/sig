@@ -95,8 +95,8 @@
                 ajax: "{{ route('admin.vendor.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
-                    {data: 'description', name: 'description'},
+                    {data: 'nama_vendor', name: 'nama_vendor'},
+                    {data: 'bentuk_perusahaan', name: 'bentuk_perusahaan'},
                     {
                         data: 'action',
                         name: 'action',

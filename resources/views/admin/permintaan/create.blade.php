@@ -41,16 +41,16 @@
                                                     <div class="col-md-5">
                                                         <label for="vendors">Vendor</label>
                                                         <select class="form-control custom-select" id="vendors" name="vendors" required>
-                                                            <option selected disabled >Pilih Vendor</option>
+                                                            <option selected disabled value="">Pilih Vendor</option>
                                                             @foreach ($vendors as $vendor)
-                                                                <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                                                                <option value="{{$vendor->kd_vendor}}" name="{{$vendor->nama_vendor}}">{{ Str::ucfirst($vendor->nama_vendor) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="heads">Penanggung Jawab</label>
                                                         <select class="form-control custom-select" id="heads" name="heads" required>
-                                                            <option selected disabled>Pilih</option>
+                                                            <option selected disabled value="">Pilih</option>
                                                             @foreach ($heads as $head)
                                                                 <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
                                                             @endforeach
