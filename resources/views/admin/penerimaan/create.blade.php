@@ -113,7 +113,7 @@
                                                                 <select class="form-control custom-select" id="vendors" name="vendors" required>
                                                                     <option selected disabled >Pilih Vendor</option>
                                                                     @foreach ($vendors as $vendor)
-                    <option value="{{$vendor->id}}" name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                    <option value="{{$vendor->kd_vendor}}" name="{{$vendor->nama_vendor}}">{{ Str::ucfirst($vendor->nama_vendor) }}</option>
                                                                     @endforeach
                     </select>
                 </div>
@@ -236,7 +236,7 @@
                 dataType: 'json',
                 data: null,
                 success: function(msg) {
-                    var vendor = document.getElementById('vendors').value = msg.vendor.id;
+                    var vendor = document.getElementById('vendors').value = msg.vendor.kd_vendor;
                     var head = document.getElementById('heads').value = msg.head.id;
                     var counter = msg.details.length;
 

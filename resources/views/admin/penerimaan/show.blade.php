@@ -8,7 +8,7 @@
                 <tr>
                     <td class="text-lg font-weight-bold" width="150px">Nama Vendor</td>
                     <td width="10px">:</td>
-                    <td class="font-weight-bold">{{ ucfirst($receipt->vendor->name) }}</td>
+                    <td class="font-weight-bold">{{ ucfirst($receipt->vendor->nama_vendor) }}</td>
                 </tr>
                 <tr>
                     <td class="text-lg font-weight-bold" width="150px">Penanggung Jawab</td>

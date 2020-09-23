@@ -34,7 +34,7 @@ class PenerimaanController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('vendor', function (Receipt $receipt) {
-                    return $receipt->vendor->name;
+                    return $receipt->vendor->nama_vendor;
                 })
                 ->addColumn('head', function (Receipt $receipt) {
                     return $receipt->head->name;

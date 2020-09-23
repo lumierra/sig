@@ -57,9 +57,9 @@
                                                     <div class="col-md-5">
                                                         <label for="vendors">Vendor</label>
                                                         <select class="form-control custom-select" id="vendors" name="vendors" required>
-                                                            <option selected disabled >Pilih Vendor</option>
+                                                            <option selected disabled value="">Pilih Vendor</option>
                                                             @foreach ($vendors as $vendor)
-                                                                <option value="{{$vendor->id}}" {{ $data->vendor->id == $vendor->id ? 'selected' : '' }} name="{{$vendor->name}}">{{ Str::ucfirst($vendor->name) }}</option>
+                                                                <option value="{{$vendor->kd_vendor}}" {{ $data->vendor->kd_vendor == $vendor->kd_vendor ? 'selected' : '' }} name="{{$vendor->nama_vendor}}">{{ Str::ucfirst($vendor->nama_vendor) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

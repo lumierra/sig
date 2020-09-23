@@ -21,8 +21,8 @@ class Vendor extends Model
     //     return $this->hasOne(Head::class);
     // }
 
-    // public function receipt()
-    // {
-    //     return $this->hasOne(Receipt::class);
-    // }
+    public function receipt()
+    {
+        return $this->hasOne(Receipt::class, 'vendor_id', 'kd_vendor');
+    }
 }
