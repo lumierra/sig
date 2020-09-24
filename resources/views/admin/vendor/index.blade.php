@@ -51,15 +51,14 @@
                     <form id="productForm" name="productForm" class="form-horizontal">
                         <input type="hidden" name="product_id" id="product_id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Nama</label>
+                            <label for="name" class="col-sm-5 control-label">Vendor</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Keterangan</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="status" name="status" value="" maxlength="50" required="" autocomplete="off">
+                                <select class="form-control custom-select" id="vendors" name="vendors" required>
+                                    <option selected disabled value="">Pilih</option>
+                                    @foreach ($vendors as $vendor)
+                                        <option value="{{$vendor->kd_vendor}}" name="{{$vendor->nama_vendor}}">{{ Str::ucfirst($vendor->nama_vendor) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -95,8 +94,8 @@
                 ajax: "{{ route('admin.vendor.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'nama_vendor', name: 'nama_vendor'},
-                    {data: 'bentuk_perusahaan', name: 'bentuk_perusahaan'},
+                    {data: 'vendor', name: 'vendor'},
+                    {data: 'keterangan', name: 'keterangan'},
                     {
                         data: 'action',
                         name: 'action',

@@ -101,8 +101,8 @@ class MakananController extends Controller
      */
     public function edit($id)
     {
-        $unit = Food::find($id);
-        return response()->json($unit);
+        $food = Food::find($id);
+        return response()->json($food);
     }
 
     /**

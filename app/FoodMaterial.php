@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FoodMaterial extends Model
 {
-    protected $table = 'food_material';
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_DETAIL_MAKANAN';
 
     protected $fillable = [
         'food_id', 'material_id', 'type_id', 'unit_id', 'jumlah', 'keterangan'

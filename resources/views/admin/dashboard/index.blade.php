@@ -17,7 +17,7 @@
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 <a href="{{ route('admin.permintaan.index') }}" class="text-warning text-lg">Permintaan</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $demand }}</div>
+                            {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $demand }}</div> --}}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-upload fa-2x"></i>
@@ -37,7 +37,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 <a href="{{ route('admin.penerimaan.index') }}" class="text-success text-lg">Penerimaan</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $receipt }}</div>
+                            {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $receipt }}</div> --}}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-download fa-2x"></i>
@@ -56,7 +56,7 @@
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                 <a href="{{ route('admin.pengeluaran.index') }}" class="text-danger text-lg">Pengeluaran</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $spend }}</div>
+                            {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $spend }}</div> --}}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-sign-out-alt fa-2x"></i>
@@ -75,7 +75,7 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 <a href="{{ route('admin.retur.index') }}" class="text-info text-lg">Pengembalian</a>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $retur }}</div>
+                            {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $retur }}</div> --}}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-reply fa-2x"></i>

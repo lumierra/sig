@@ -20,6 +20,6 @@ class UsersTableSeeder extends Seeder
            'password' => \Illuminate\Support\Facades\Hash::make('asd'),
         ]);
 
-        $user->roles()->attach(1);
+        // $user->roles()->attach(1);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Vendor;
 
-use App\Vendor;
 use App\Test;
-use App\Http\Controllers\Controller;
+use App\Vendor;
+use App\Vendor2;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class VendorController extends Controller
 {
@@ -26,6 +28,12 @@ class VendorController extends Controller
             $data = Vendor::all();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('vendor', function (Vendor $vendor) {
+                    return $vendor->penyedia->nama_vendor;
+                })
+                ->addColumn('keterangan', function (Vendor $vendor) {
+                    return $vendor->penyedia->bentuk_perusahaan;
+                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -37,7 +45,11 @@ class VendorController extends Controller
                 ->make(true);
         }
 
-        return view('admin.vendor.index');
+        $vendors = DB::connection('sqlsrv_server')->table('vendor')->get();
+
+        return view('admin.vendor.index')->with([
+            'vendors' => $vendors,
+        ]);
     }
 
     /**
@@ -59,7 +71,7 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         Vendor::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'description' => $request->status, 'user_id' => Auth::user()->id]);
+            ['vendor_id' => $request->vendors, 'name' => $request->name]);
 
         return response()->json(['success'=>'Vendor saved successfully.']);
     }
@@ -114,8 +126,11 @@ class VendorController extends Controller
 
     public function test()
     {
-        $tests = Test::all();
 
-        return response()->json($tests);
+        // $query = DB::connection('sqlsrv_server')->table('vendor')->take(1)->get();
+        // $query = DB::connection('sqlsrv_server2')->table('GZ_VENDOR')
+        //     ->join('vendor', '');
+        $query = Vendor::with('penyedia')->get();
+        return response()->json($query);
     }
 }

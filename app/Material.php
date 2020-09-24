@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Material extends Model
 {
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_BAHAN';
+
     protected $fillable = ['name', 'user_id', 'category_id', 'unit_id'];
 
     public function detail()

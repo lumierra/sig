@@ -91,13 +91,49 @@ return [
             'prefix_indexes' => true,
         ],
 
-        'sqlsrv_2' => [
+        'sqlsrv_server' => [
             'driver' => 'sqlsrv',
             'host' => '192.168.99.2',
             'port' => '1433',
             'database' => 'SIMKEU_TEST',
             'username' => 'sa',
             'password' => '1Tlangsa',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
+        'sqlsrv_server2' => [
+            'driver' => 'sqlsrv',
+            'host' => '192.168.99.2',
+            'port' => '1433',
+            'database' => 'rslangsa_test',
+            'username' => 'sa',
+            'password' => '1Tlangsa',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
+        'sqlsrv_hrd' => [
+            'driver' => 'sqlsrv',
+            'host' => '192.168.99.2',
+            'port' => '1433',
+            'database' => 'HRD_TEST',
+            'username' => 'sa',
+            'password' => '1Tlangsa',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
+        'sqlsrv_local' => [
+            'driver' => 'sqlsrv',
+            'host' => 'localhost',
+            'port' => '1433',
+            'database' => 'giziapps',
+            'username' => 'sa',
+            'password' => '1234567',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

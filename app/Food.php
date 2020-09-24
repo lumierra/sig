@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Food extends Model
 {
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_MAKANAN';
+
     protected $fillable = ['name', 'user_id', 'type_id'];
 
     public function user()

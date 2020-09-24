@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detail extends Model
 {
+
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_DETAIL_PERMINTAAN';
+
     protected $fillable = ['demand_id', 'demand_code', 'material_id', 'unit_id', 'user_id', 'jumlah', 'keterangan'];
 
     public function demand()

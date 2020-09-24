@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_KATEGORI';
+
     protected $fillable = [
       'name', 'description',
     ];

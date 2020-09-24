@@ -51,9 +51,9 @@
                                                         <label for="heads">Penanggung Jawab</label>
                                                         <select class="form-control custom-select" id="heads" name="heads" required>
                                                             <option selected disabled value="">Pilih</option>
-                                                            @foreach ($heads as $head)
+                                                            {{-- @foreach ($heads as $head)
                                                                 <option value="{{$head->id}}" name="{{$head->name}}">{{ Str::ucfirst($head->name) }}</option>
-                                                            @endforeach
+                                                            @endforeach --}}
                                                         </select>
                                                     </div>
                                                 </div>

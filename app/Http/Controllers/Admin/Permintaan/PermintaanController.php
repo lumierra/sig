@@ -33,9 +33,9 @@ class PermintaanController extends Controller
                 ->addColumn('vendor', function (Demand $demand) {
                     return $demand->vendor->nama_vendor;
                 })
-                ->addColumn('head', function (Demand $demand) {
-                    return $demand->head->name;
-                })
+                // ->addColumn('head', function (Demand $demand) {
+                //     return '$demand->head->name';
+                // })
                 ->addColumn('action', function($row){
                     $route = 'permintaan/' . $row->id . '/' . 'edit';
                     $route2 = 'penerimaan/' . $row->id . '/' . 'create2';
@@ -58,10 +58,10 @@ class PermintaanController extends Controller
                 ->make(true);
         }
 
-        $heads = Head::all();
+        // $heads = Head::all();
         $vendors = Vendor::all();
         return view('admin.permintaan.index')->with([
-            'heads' => $heads,
+            // 'heads' => $heads,
             'vendors' => $vendors,
         ]);
     }

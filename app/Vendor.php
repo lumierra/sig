@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vendor extends Model
 {
-    protected $connection = 'sqlsrv_2';
-    protected $table = 'vendor';
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_VENDOR';
 
-    // protected $fillable = ['name', 'description', 'user_id'];
+    protected $fillable = ['vendor_id', 'name'];
 
     public function demand()
     {
@@ -24,5 +24,10 @@ class Vendor extends Model
     public function receipt()
     {
         return $this->hasOne(Receipt::class, 'vendor_id', 'kd_vendor');
+    }
+
+    public function penyedia()
+    {
+        return $this->hasOne(Vendor2::class, 'kd_vendor', 'vendor_id');
     }
 }

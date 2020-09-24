@@ -19,17 +19,19 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $spend = Spend::count();
-        $demand = Demand::count();
-        $retur = Restore::count();
-        $receipt = Receipt::count();
+        // $spend = Spend::count();
+        // $demand = Demand::count();
+        // $retur = Restore::count();
+        // $receipt = Receipt::count();
+        $asd = 'asd';
 
 
         return view('admin.dashboard.index')->with([
-            'retur' => $retur,
-            'spend' => $spend,
-            'demand' => $demand,
-            'receipt' => $receipt,
+            'asd' => $asd,
+            // 'retur' => $retur,
+            // 'spend' => $spend,
+            // 'demand' => $demand,
+            // 'receipt' => $receipt,
         ]);
     }
 

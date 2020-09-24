@@ -10,6 +10,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_USERS';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,7 +42,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'GZ_ROLE_USER');
     }
 
     public function hasAnyRoles($roles)

@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
-        DB::table('role_user')->truncate();
+        // DB::connection('sqlsrv_server2')->table('GZ_ROLE_USER')->truncate();
 
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(UnitsTableSeeder::class);
-        $this->call(MaterialTableSeeder::class);
-        $this->call(TypesTableSeeder::class);
-        $this->call(VendorsTableSeeder::class);
-        $this->call(HeadsTableSeeder::class);
+        // $this->call(UnitsTableSeeder::class);
+        // $this->call(MaterialTableSeeder::class);
+        // $this->call(TypesTableSeeder::class);
+        // $this->call(VendorsTableSeeder::class);
+        // $this->call(HeadsTableSeeder::class);
     }
 }
