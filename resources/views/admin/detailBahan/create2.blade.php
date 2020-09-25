@@ -2,9 +2,18 @@
 
 @section('title', 'Detail Bahan Makanan')
 
-@section('subtitle', 'Detail Bahan Makanan')
 
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -14,96 +23,128 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-            <!-- Content Row -->
+                <!-- Content Row -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-success">Form Detail Bahan Makanan</h6>
+                                <h6 class="m-0 font-weight-bold text-success">Form Detail Makanan</h6>
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-12">
-                                    <form action="{{ route('admin.detail-makanan.store') }}" method="POST" class="needs-validation" novalidate>
+                                    <form action="{{ route('admin.detail-makanan.store') }}" method="POST" name="formPendaftaran">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-md-7">
-                                                <div class="form-group">
-                                                    <label for="jenis">Jenis Makanan</label>
-                                                    <select class="form-control custom-select" id="type" name="type" required>
-                                                        <option selected>Pilih Jenis</option>
-                                                        @foreach ($types as $type)
-                                                            <option value="{{$type->id}}" {{$item->type->id == $type->id  ? 'selected' : ''}} name="{{$type->name}}">{{ Str::ucfirst($type->name) }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div class="form-group">
-                                                    <label for="makanan">Makanan</label>
-                                                    <select class="form-control custom-select" id="food" name="food" required>
-                                                        <option selected>Pilih Makanan</option>
-                                                        @foreach ($foods as $food)
-                                                            <option value="{{$food->id}}" {{$item->id == $food->id  ? 'selected' : ''}} name="{{$food->name}}">{{ Str::ucfirst($food->name) }}</option>
-                                                        @endforeach
-                                                    </select>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <label for="vendors">Jenis Makanan</label>
+                                                        <select class="form-control custom-select" id="type" name="type" required>
+                                                            <option selected disabled value="">Pilih</option>
+                                                            @foreach ($types as $type)
+                                                                <option value="{{$type->id}}" name="{{$type->name}}">{{ $type->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="heads">Nama Makanan</label>
+                                                        <select class="form-control custom-select" id="food" name="food" required>
+                                                            <option selected disabled value="">Pilih</option>
+                                                            @foreach ($foods as $food)
+                                                                <option value="{{$food->id}}" name="{{$food->name}}">{{ Str::ucfirst($food->name) }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="inputFormRow">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label for="material">Bahan</label>
-                                                                <select class="form-control custom-select" id="material[]" name="material[]" required>
-                                                                    <option selected>Pilih Bahan</option>
-                                                                    @foreach ($materials as $material)
-                                                                        <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
+                                        <br>
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered table-striped" id="pTable">
+                                                                <thead>
+                                                                <tr class="text-center">
+                                                                    <th width="5%">No</th>
+                                                                    <th width="25%">Nama Bahan</th>
+                                                                    <th width="7%">Jumlah</th>
+                                                                    <th>Nama Satuan</th>
+                                                                    <th>Keterangan</th>
+                                                                    <th width="7%">Aksi</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="text-center">
+                                                                        <td class="sNo">1</td>
+                                                                        <td>
+                                                                            <select onchange="myFunction(1)" class='form-control' name='material[]' id='material1' required>
+                                                                                <option selected>Pilih Bahan</option>
+                                                                                @foreach($materials as $material)
+                                                                                    <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type='text' class='form-control' name='jumlah[]' id='jumlah1' onkeypress="return hanyaAngka(event)" autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <select class='form-control' name='unit[]' id='unit1' required>
+                                                                                <option selected>Pilih</option>
+                                                                                @foreach($units as $unit)
+                                                                                    <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type='text' class='form-control' name='keterangan[]' id='keterangan1' autocomplete="off">
+                                                                        </td>
+                                                                        <td>
+                                                                            <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                                                                                <i class='fas fa-trash'></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                        <div class="col-md-1">
-                                                            <div class="form-group">
-                                                                <label for="unit">Jumlah</label>
-                                                                <input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <div class="form-group">
-                                                                <label for="unit">Nama Satuan</label>
-                                                                <select class="form-control custom-select" name="unit[]" id="unit[]">
-                                                                    <option selected>Pilih Satuan</option>
-                                                                    @foreach ($units as $unit)
-                                                                        <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="deskripsi">Keterangan</label>
-                                                                <input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <label for="deskripsi">Action</label>
-                                                            <button id="removeRow" type="button" class="btn btn-danger rounded">
-                                                                <i class="fas fa-trash fa-sm"></i>
-                                                            </button>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-borderless">
+                                                                <thead>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td width="79%">
+                                                                            <a class="btn btn-primary btn-icon-split btn-sm" id="addRow">
+                                                                                <span class="icon text-white-50">
+                                                                                  <i class="fas fa-times-circle"></i>
+                                                                                </span>
+                                                                                <span class="text text-white">Tambah</span>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="{{ route('admin.detail-makanan.index') }}" class="btn btn-danger btn-icon-split btn-sm">
+                                                                                <span class="icon text-white-50">
+                                                                                  <i class="fas fa-times-circle"></i>
+                                                                                </span>
+                                                                                <span class="text">Batal</span>
+                                                                            </a>
+                                                                            <button class="btn btn-success btn-sm btn-icon-split" onclick="validateForm()">
+                                                                                <span class="icon text-white-50">
+                                                                                  <i class="fas fa-save"></i>
+                                                                                </span>
+                                                                                <span class="text">Simpan</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="newRow"></div>
-                                        <button id="addRow" type="button" class="btn btn-primary">
-                                            <i class="fa fa-plus-circle"></i>
-                                        </button><br><br>
-
-                                        <a href="{{ route('admin.makanan.index') }}" class="btn btn-danger">Batal</a>
-                                        <button type="submit" class="btn btn-success">Simpan</button>
                                     </form>
                                 </div>
                             </div>
@@ -115,148 +156,107 @@
     </div>
 
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript">
-        // add row
-        $("#addRow").click(function () {
-            var html = '';
-            html += '<div id="inputFormRow">';
-            html += '<div class="row">';
-            html += '<div class="col-md-12">';
-            html += '<div class="row">';
-            html += '<div class="col-md-3">';
-            html += '<div class="form-group">';
-            html += '<label for="material">Bahan</label>';
-            html += '<select class="form-control" id="material[]" name="material[]" required>';
-            html += '<option selected>Pilih Bahan</option>';
-            html += '@foreach ($materials as $material)';
-            html += '<option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>';
-            html += '@endforeach';
-            html += '</select>';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-md-1">';
-            html += '<div class="form-group">';
-            html += '<label for="unit">Jumlah</label>';
-            html += '<input type="text" class="form-control" id="jumlah[]" name="jumlah[]" autocomplete="off">';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-md-2">\n' +
-                '<div class="form-group">\n' +
-                '<label for="unit">Nama Satuan</label>\n' +
-                '<select class="form-control" name="unit[]" id="unit[]">\n' +
-                '<option selected>Pilih Satuan</option>\n' +
-                '@foreach ($units as $unit)\n' +
-                '<option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\n' +
-                '@endforeach\n' +
-                '</select>\n' +
-                '</div>\n' +
-                '</div>';
-            html += '<div class="col-md-4">\n' +
-                '<div class="form-group">\n' +
-                '<label for="deskripsi">Keterangan</label>\n' +
-                '<input type="text" class="form-control" id="keterangan[]" name="keterangan[]" autocomplete="off">\n' +
-                '</div>\n' +
-                '</div>\n' +
-                '<div class="col-md-1">\n' +
-                '<label for="action">Action</label>\n' +
-                '<button id="removeRow" type="button" class="btn btn-danger rounded">\n' +
-                '<i class="fas fa-trash fa-sm"></i>\n' +
-                '</button>\n' +
-                '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-
-            $('#newRow').append(html);
-        });
-
-        // remove row
-        $(document).on('click', '#removeRow', function () {
-            $(this).closest('#inputFormRow').remove();
-        });
-    </script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <script>
+        function myFunction(angka) {
+            id = 'material' + parseInt(angka);
+            var material = document.getElementById(id).value;
+
+            $.ajax({
+                url: "/admin/permintaan/" + material + '/' + 'cekBahan',
+                type: 'GET',
+                dataType: 'html',
+                data: null,
+                success: function(msg) {
+                    unitID = 'unit' + angka;
+                    var unit = document.getElementById(unitID).value = msg;
+                },
+                error: function(msg) {
+                    console.log('error');
+                }
+            });
+        }
+
+    </script>
     <script>
 
-        $("#satuan").on('keyup', function(){
-            var n = parseInt($(this).val().replace(/\D/g,''),10);
-            $(this).val(n.toLocaleString());
-        });
+        var jumlah = document.getElementById('jumlah');
 
-        $(document).ready(function(){
-            var i=1;
-            $('#add').click(function(){
-                i++;
-                $('#dynamic_field').append('\
-              <tr >\
-                <td>\
-                    <div class="row" id="row'+i+'">\
-                        <div class="col-md-12">\
-                            <div class="row">\
-                                <div class="col-md-3">\
-                                    <div class="form-group">\
-                                        <label for="makanan">Bahan</label>\
-                                        <select class="form-control" id="bahan" name="bahan[]" required>\
-                                            <option selected>Pilih Bahan</option>\
-                                            @foreach ($materials as $material)\
-                                                <option value="{{$material->id}}" name="{{$material->name}}">{{ Str::ucfirst($material->name) }}</option>\
-                                            @endforeach\
-                                        </select>\
-                                    </div>\
-                                </div>\
-                                <div class="col-md-2">\
-                                    <div class="form-group">\
-                                        <label for="satuan">Satuan</label>\
-                                        <input type="number" class="form-control" id="satuan" name="satuan[]" autocomplete="off">\
-                                    </div>\
-                                </div>\
-                                <div class="col-md-3">\
-                                    <div class="form-group">\
-                                        <label for="nama_satuan">Nama Satuan</label>\
-                                        <select class="form-control" name="nama_satuan[]" id="">\
-                                            <option selected>Pilih Bahan</option>\
-                                            @foreach ($units as $unit)\
-                                                <option value="{{$unit->id}}" name="{{$unit->name}}">{{ Str::ucfirst($unit->name) }}</option>\
-                                            @endforeach\
-                                        </select>\
-                                    </div>\
-                                </div>\
-                                <div class="col">\
-                                    <div class="form-group">\
-                                        <label for="deskripsi">Keterangan</label>\
-                                        <input type="type" class="form-control" id="satuan" name="satuan[]" autocomplete="off">\
-                                    </div>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </div>\
-                </td>\
-                <td>\
-                    <button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button>\
-                </td>\
-            </tr>\
-            ');
-            });
-            $(document).on('click', '.btn_remove', function(){
-                var button_id = $(this).attr("id");
-                $('#row'+button_id+'').remove();
-            });
-            //  $('#submit').click(function(){
-            //       $.ajax({
-            //            url:"name.php",
-            //            method:"POST",
-            //            data:$('#add_name').serialize(),
-            //            success:function(data)
-            //            {
-            //                 alert(data);
-            //                 $('#add_name')[0].reset();
-            //            }
-            //       });
-            //  });
-        });
+        var	reverse = jumlah.toString().split('').reverse().join(''),
+            ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
+
+        // Cetak hasil
+        document.write(jumlah); // Hasil: 23.456.789
+
+        function hanyaAngka(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
     </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#addRow').click(function(){
+                var tot=2;
+                var totK=1;
+                var sno = $('#pTable tr').length;
+                var nos = eval(totK + 1);
+                trow = `<tr class="text-center">
+                <td class='sNo'>${sno}</td>
+                <td>
+                    <select onchange="myFunction(${sno})" class='form-control' name='material[]' id='material${sno}' required>
+                    <option selected>Pilih Bahan</option>
+                        @foreach($materials as $material)
+                            <option value="{{ $material->id }}" name="{{ $material->name }}">{{ ucfirst($material->name) }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><input type='text' class='form-control' name='jumlah[]' id='jumlah${nos}' onkeypress="return hanyaAngka(event)" autocomplete="off"></td>
+                <td>
+                    <select class='form-control' name='unit[]' id='unit${sno}' required>
+                        <option selected>Pilih</option>
+                        @foreach($units as $unit)
+                            <option value="{{ $unit->id }}" name="{{ $unit->name }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <input type='text' class='form-control' name='keterangan[]' id='keterangan${nos}' autocomplete="off">
+                </td>
+                <td>
+                    <button  type='button' class='rButton btn btn-sm btn-danger' data-tooltip='tooltip' data-placement='top' title='Hapus'>
+                        <i class='fas fa-trash'></i>
+                    </button>
+                </td>
+                </tr>`;
 
+                $('#pTable').append(trow);
+
+                tot=tot+1;
+                totK=totK+1;
+            });
+        });
+
+        $(document).on('click', 'button.rButton', function () {
+            $(this).closest('tr').remove();
+            arrangeSno();
+            var tot=tot-1;
+
+            if(tot==0){
+                $('#submit_list').prop('disabled',true);
+            }
+            return false;
+        });
+
+        function arrangeSno() {
+            var i=0;
+            $('#pTable tr').each(function() {
+                $(this).find(".sNo").html(i);
+                i++;
+            });
+        }
+    </script>
 @endsection
