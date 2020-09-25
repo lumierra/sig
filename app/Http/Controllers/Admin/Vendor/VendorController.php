@@ -7,6 +7,7 @@ use App\Vendor;
 use App\Vendor2;
 use App\Head;
 use App\Employee;
+use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -130,9 +131,10 @@ class VendorController extends Controller
     {
         $query = Head::all();
         $query = $query[0];
-        $asd = Employee::where('KD_KARYAWAN', sprintf("%06s", $query->head_id))->first();
-        $bilangan=1234; // Nilai Proses
-        $fzeropadded = sprintf("%0d", $bilangan);
-        return response()->json($asd);
+        // $asd = Employee::where('KD_KARYAWAN', '000662')->first();
+        $asd = User::with('employee')->where('employee_id', '000662')->first();
+        // $bilangan=1234; // Nilai Proses
+        // $fzeropadded = sprintf("%0d", $bilangan);
+        return response()->json($asd->employee->KD_KARYAWAN);
     }
 }

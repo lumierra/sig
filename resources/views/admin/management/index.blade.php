@@ -24,6 +24,7 @@
                 </button>
             </div>
             <div class="card-body">
+              <!-- {{ $employees[0]->GELAR_BELAKANG }} -->
                 <div class="table-responsive">
                     <table class="table table-bordered yajra-datatable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -79,17 +80,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="name" class="col-sm-5 control-label">Email</label>
-                            <div class="col-sm-12">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="" maxlength="50" required="" autocomplete="off">
-                            </div>
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div> -->
 
 
                         <div class="col-sm-offset-2 col-sm-10">
@@ -103,38 +93,6 @@
         </div>
     </div>
 
-<div class="modal fade" id="exampleModal" data-keyboard="false" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-success" id="exampleModalLabel">Tambah Ruangan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="test">
-                <form id="formRoom" name="formRoom" class="form-horizontal">
-                    <input type="hidden" name="product_id" id="product_id">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Nama Lengkap</label>
-                        <div class="col-sm-6">
-                            <!-- <input disabled value="{{ $user->name }}" type="text" class="form-control" id="name" name="name"> -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Role</label>
-                        <div class="col-sm-12">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success" id="simpanRoom" value="room">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -156,8 +114,8 @@
                 ajax: "{{ route('admin.management-user.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
+                    {data: 'nama', name: 'nama'},
+                    {data: 'emailK', name: 'emailK'},
                     {data: 'role', name: 'role'},
                     {
                         data: 'action',
@@ -183,9 +141,8 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.user.id);
-                    // $('#name').val(data.user.name);
-                    // $('#role').val(data.role);
-                    // $('#email').val(data.user.email);
+                    $('#employee').val(data.user.employee_id);
+                    $('#role').val(data.role);
                 })
             });
 

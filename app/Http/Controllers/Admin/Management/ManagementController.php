@@ -34,6 +34,16 @@ class ManagementController extends Controller
                     $result = implode(', ', $user->roles()->get()->pluck('name')->toArray());
                     return ucfirst($result);
                 })
+                ->addColumn('nama', function (User $user) {
+                    $name = $user->employee->GELAR_DEPAN . $user->employee->NAMA . $user->employee->GELAR_BELAKANG;
+                    return $name;
+                })
+                ->addColumn('emailK', function (User $user) {
+                    return $user->employee->EMAIL;
+                })
+                ->addColumn('kode', function (User $user) {
+                    return $user->employee->KD_KARYAWAN;
+                })
                 ->addColumn('action', function($row){
                     $route = 'managament/' . $row->id . '/' . 'showRoom';
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';

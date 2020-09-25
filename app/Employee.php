@@ -13,4 +13,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Head::class, 'GZ_PENANGGUNG_JAWAB', 'head_id', 'KD_KARYAWAN');
     }
+
+    public function user()
+    {
+      return $this->belongsTo(User::class, 'GZ_USERS', 'employee_id', 'KD_KARYAWAN');
+    }
 }

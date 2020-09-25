@@ -29,7 +29,7 @@
 									<div class="table-form">
 										<div class="form-groups">
 											<div class="form-group">
-												<input type="email" class="form-control input-lg" name="email" autocomplete="on" placeholder="ID. PEG / EMAIL">
+												<input type="text" class="form-control input-lg" name="employee_id" autocomplete="on" placeholder="ID. PEG / EMAIL">
 											</div>
 											<div class="form-group">
 												<input type="password" class="form-control input-lg" name="password" placeholder="PASSWORD">
