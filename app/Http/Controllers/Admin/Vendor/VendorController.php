@@ -8,6 +8,7 @@ use App\Vendor2;
 use App\Head;
 use App\Employee;
 use App\User;
+use App\Food;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -135,6 +136,7 @@ class VendorController extends Controller
         $asd = User::with('employee')->where('employee_id', '000662')->first();
         // $bilangan=1234; // Nilai Proses
         // $fzeropadded = sprintf("%0d", $bilangan);
-        return response()->json($asd->employee->KD_KARYAWAN);
+        $food = Food::all();
+        return response()->json($food[0]->name);
     }
 }

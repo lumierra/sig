@@ -7,9 +7,9 @@ use App\Room;
 use App\User;
 use App\Employee;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 
 class ManagementController extends Controller
@@ -47,9 +47,9 @@ class ManagementController extends Controller
                 ->addColumn('action', function($row){
                     $route = 'managament/' . $row->id . '/' . 'showRoom';
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
-                    $btn = $btn.' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm roomUser"><i class="fas fa-plus-circle"></i></a>';
+                    $btn = $btn . ' <a href="' . $route . '" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Show" class="btn btn-success btn-circle btn-sm roomUser"><i class="fas fa-plus-circle"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Password" class="btn btn-warning btn-circle btn-sm changePassword"><i class="fas fa-key"></i></a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-circle btn-sm deleteProduct"><i class="fas fa-trash"></i></a>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -196,5 +196,32 @@ class ManagementController extends Controller
 //        $user->roles()->detach();
 
         return response()->json(['success'=>'Bahan Makanan Berhasil di Hapus']);
+    }
+
+    public function changePassword(Request $request)
+    {
+      $user = User::find($request->product_id);
+
+      if ($user->id == Auth::user()->id){
+        $user->update([
+          'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('admin.management-user.index');
+      }
+      else {
+        $user->update([
+          'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json(['success' => 'Sukses ganti password']);
+      }
+    }
+
+    public function keluar()
+    {
+      Auth::logout();
+
+      return redirect()->route('login');
     }
 }

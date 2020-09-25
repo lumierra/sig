@@ -93,6 +93,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="ajaxModel2" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelHeading2"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm2" name="productForm" class="form-horizontal">
+                        <input type="hidden" name="product_id" id="product_id2">
+                        <div class="form-group">
+                            <label for="role" class="col-sm-5 control-label">Nama Lengkap</label>
+                            <div class="col-sm-12">
+                                <input class="form-control" disabled id="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-5 control-label">Password</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" name="password" id="password" type="password"/>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success" id="saveBtn2" value="create">Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -146,6 +181,17 @@
                 })
             });
 
+            $('body').on('click', '.changePassword', function () {
+                var product_id = $(this).data('id');
+                $.get("{{ route('admin.management-user.index') }}" +'/' + product_id + '/edit', function (data) {
+                    $('#modelHeading2').html("Ubah Password");
+                    $('#saveBtn2').val("edit-user");
+                    $('#ajaxModel2').modal('show');
+                    $('#product_id2').val(data.user.id);
+                    $('#name').val(data.user.name);
+                })
+            });
+
             $('#saveBtn').click(function (e) {
                 e.preventDefault();
                 $(this).html('Simpan');
@@ -177,10 +223,55 @@
                 });
             })
 
+            $('#saveBtn2').click(function (e) {
+                e.preventDefault();
+                $(this).html('Simpan');
+
+                $.ajax({
+                    data: $('#productForm2').serialize(),
+                    url: "{{ route('admin.management-user.change-password') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+
+                        const idUser = $('#product_id2').val()
+                        const idLogin = {{ Auth::user()->id }}
+                        if (idUser == idLogin){
+                          swal({
+                              type: 'success',
+                              icon: 'success',
+                              title: 'Berhasil',
+                              text: 'Berhasil Ubah Password'
+                          })
+
+                          window.location = "http://localhost:8000/admin/keluar";
+                        }
+                        else {
+                          swal({
+                              type: 'success',
+                              icon: 'success',
+                              title: 'Berhasil',
+                              text: 'Berhasil Ubah Password'
+                          })
+                          $('#productForm2').trigger("reset");
+                          $('#ajaxModel2').modal('hide');
+                          table.draw();
+                        }
+                    },
+                    error: function (data) {
+                        swal({
+                            type: 'error',
+                            title: 'Data Belum Lengkap'
+                        })
+                        $('#saveBtn2').html('Simpan');
+                    }
+                });
+            })
+
             $('body').on('click', '.deleteProduct', function () {
 
                 var product_id = $(this).data("id");
-                // confirm("Are You sure want to delete !");
+
                 swal({
                     title: "Apakah Anda Yakin ?",
                     // text: "",

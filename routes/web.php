@@ -35,6 +35,8 @@ Route::namespace('Admin')
         Route::resource('users', 'Users\UserController');
         Route::resource('management-user', 'Management\ManagementController');
         Route::resource('dashboard', 'Dashboard\DashboardController')->only('index');
+        Route::post('change-password', 'Management\ManagementController@changePassword')->name('management-user.change-password');
+        Route::get('keluar', 'Management\ManagementController@keluar')->name('keluar');
 
         Route::resource('kepala-gizi', 'Head\HeadController');
 //    Route::get('users/data', 'Users\UserController@getUser')->name('user.data');
@@ -94,4 +96,3 @@ Route::namespace('Admin')
 });
 
 //Route::resource('products', 'ProductController');
-
