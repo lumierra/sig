@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Vendor;
 use App\Test;
 use App\Vendor;
 use App\Vendor2;
+use App\Head;
+use App\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -126,11 +128,11 @@ class VendorController extends Controller
 
     public function test()
     {
-
-        // $query = DB::connection('sqlsrv_server')->table('vendor')->take(1)->get();
-        // $query = DB::connection('sqlsrv_server2')->table('GZ_VENDOR')
-        //     ->join('vendor', '');
-        $query = Vendor::with('penyedia')->get();
-        return response()->json($query);
+        $query = Head::all();
+        $query = $query[0];
+        $asd = Employee::where('KD_KARYAWAN', sprintf("%06s", $query->head_id))->first();
+        $bilangan=1234; // Nilai Proses
+        $fzeropadded = sprintf("%0d", $bilangan);
+        return response()->json($asd);
     }
 }

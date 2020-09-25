@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
 
         $user = User::create([
            'name' => 'admin',
+           'employee_id' => 1,
            'email' => 'admin@mail.com',
            'password' => \Illuminate\Support\Facades\Hash::make('asd'),
         ]);

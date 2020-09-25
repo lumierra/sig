@@ -55,9 +55,9 @@
                             <div class="col-sm-12">
                                 <select class="form-control custom-select" id="name" name="name" required>
                                     <option selected disabled value="">Pilih</option>
-                                    {{-- @foreach ($vendors as $vendor)
-                                        <option value="{{$vendor->kd_vendor}}" name="{{$vendor->nama_vendor}}">{{ Str::ucfirst($vendor->nama_vendor) }}</option>
-                                    @endforeach --}}
+                                    @foreach ($employees as $employee)
+                                        <option value="{{ $employee->KD_KARYAWAN }}" name="{{$employee->NAMA}}">{{ $employee->GELAR_DEPAN }} {{ $employee->NAMA }} {{ $employee->GELAR_BELAKANG }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -74,7 +74,6 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -91,11 +90,11 @@
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.vendor.index') }}",
+                ajax: "{{ route('admin.kepala-gizi.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'vendor', name: 'vendor'},
-                    {data: 'keterangan', name: 'keterangan'},
+                    {data: 'pj', name: 'pj'},
+                    {data: 'status', name: 'status'},
                     {
                         data: 'action',
                         name: 'action',
@@ -115,13 +114,13 @@
 
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.get("{{ route('admin.vendor.index') }}" +'/' + product_id +'/edit', function (data) {
+                $.get("{{ route('admin.kepala-gizi.index') }}" +'/' + product_id +'/edit', function (data) {
                     $('#modelHeading').html("Edit Data");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.id);
                     $('#name').val(data.name);
-                    $('#status').val(data.description);
+                    console.log($('#name').val(data.name));
                 })
             });
 
@@ -131,15 +130,15 @@
 
                 $.ajax({
                     data: $('#productForm').serialize(),
-                    url: "{{ route('admin.vendor.store') }}",
+                    url: "{{ route('admin.kepala-gizi.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         swal({
                             type: 'success',
                             icon: 'success',
-                            title: 'Tambah Vendor',
-                            text: 'Anda Berhasil Menambah Vendor'
+                            title: 'Tambah Data',
+                            text: 'Anda Berhasil Menambah Data'
                         })
                         $('#productForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
@@ -168,12 +167,12 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        swal("Data Vendor Berhasil di Hapus", {
+                        swal("Data Berhasil di Hapus", {
                             icon: "success",
                         });
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('admin.vendor.store') }}"+'/'+product_id,
+                            url: "{{ route('admin.kepala-gizi.store') }}"+'/'+product_id,
                             success: function (data) {
                                 table.draw();
                             },

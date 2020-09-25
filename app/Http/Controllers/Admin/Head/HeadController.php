@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Head;
 
-use App\Http\Controllers\Controller;
+use App\Head;
+use App\Employee;
 use App\Material;
 use Illuminate\Http\Request;
-use App\Head;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class HeadController extends Controller
 {
@@ -27,6 +28,11 @@ class HeadController extends Controller
             $data = Head::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('pj', function (Head $head) {
+                    $name = $head->employee->GELAR_DEPAN . $head->employee->NAMA . $head->employee->GELAR_BELAKANG;
+                    return $name;
+                })
+                ->addColumn('status', 'PJ')
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 
@@ -38,7 +44,13 @@ class HeadController extends Controller
                 ->make(true);
         }
 
-        return view('admin.head.index');
+        $employees = Employee::all();
+        // $asd = Head::find(1);
+
+        return view('admin.head.index')->with([
+            'employees' => $employees,
+            // 'asd' => $asd->employee,
+        ]);
     }
 
     /**
@@ -59,8 +71,11 @@ class HeadController extends Controller
      */
     public function store(Request $request)
     {
+        $employee = Employee::where('KD_KARYAWAN', $request->name)->first();
+        $name = $employee->GELAR_DEPAN . $employee->NAMA . $employee->GELAR_BELAKANG;
+
         Head::updateOrCreate(['id' => $request->product_id],
-            ['name' => $request->name, 'status' => $request->status, 'user_id' => Auth::user()->id]);
+            ['name' => $name, 'head_id' => $request->name]);
 
         return response()->json(['success'=>'Head saved successfully.']);
     }

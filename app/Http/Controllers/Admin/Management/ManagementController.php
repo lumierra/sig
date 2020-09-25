@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Management;
 use App\Role;
 use App\Room;
 use App\User;
+use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,11 +47,13 @@ class ManagementController extends Controller
         }
 
         $roles = Role::all();
-        $rooms = Room::all();
+        $employees = Employee::all();
+        // $rooms = Room::all();
         $user = User::find(Auth::user()->id);
         return view('admin.management.index')->with([
             'roles' => $roles,
-            'rooms' => $rooms,
+            'employees' => $employees,
+            // 'rooms' => $rooms,
             'user' => $user,
         ]);
     }
@@ -73,16 +76,22 @@ class ManagementController extends Controller
      */
     public function store(Request $request)
     {
+      $employee = Employee::where('KD_KARYAWAN', $request->employee)->first();
+      $name = $employee->GELAR_DEPAN . $employee->NAMA . $employee->GELAR_BELAKANG;
+      $email = $employee->EMAIL;
+
         $user = User::updateOrCreate(
             ['id' => $request->product_id],
             [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make('asd')
+              'employee_id' => $request->employee,
+              'name' => $name,
+              'email' => $email,
+              'password' => Hash::make('asd')
             ]);
+
         $user->roles()->sync($request->role);
 
-        return response()->json(['success'=>'Bahan Makanan Berhasil di Simpan']);
+        return response()->json(['success'=>'User Berhasil Di Simpan']);
     }
 
     public function store2(Request $request)

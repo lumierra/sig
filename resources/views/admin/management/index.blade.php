@@ -1,8 +1,8 @@
 @extends('admin.layouts')
 
-@section('title', 'Management User')
+@section('title', 'Management Pengguna')
 
-@section('subtitle', 'Management User')
+@section('subtitle', 'Management Pengguna')
 
 @section('content')
     <link href="{{ asset('ext/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
             <div class="card-header py-3">
                 <button id="createNewProduct" name="btn_add" type="button" class="btn btn-sm btn-success btn-add float-right btn-icon-split">
                     <span class="icon text-white-50"> <i class="fas fa-plus-circle"></i></span>
-                    <span class="text">Tambah User</span>
+                    <span class="text">Tambah Pengguna</span>
                 </button>
             </div>
             <div class="card-body">
@@ -58,7 +58,7 @@
                                 <select class="form-control @error('role') is-invalid @enderror" name="role" id="role" required>
                                     <option selected disabled value="">Pilih</option>
                                     @foreach($roles as $role)
-                                        <option value="{{$role->id}}" name="{{$role->name}}">{{ Str::ucfirst($role->name) }}</option>
+                                      <option value="{{ $role->id }}"> {{ ucfirst($role->name) }}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -71,15 +71,15 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-5 control-label">Nama Lengkap</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="" maxlength="50" required="" autocomplete="off">
+                                <select class="form-control " name="employee" id="employee" required>
+                                    <option selected disabled value="">Pilih</option>
+                                    @foreach($employees as $employee)
+                                      <option value="{{ $employee->KD_KARYAWAN }}" name="{{ $employee->NAMA }}">{{ $employee->GELAR_DEPAN}} {{ $employee->NAMA }} {{ $employee->GELAR_BELAKANG}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="name" class="col-sm-5 control-label">Email</label>
                             <div class="col-sm-12">
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="" maxlength="50" required="" autocomplete="off">
@@ -89,7 +89,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+                        </div> -->
 
 
                         <div class="col-sm-offset-2 col-sm-10">
@@ -118,18 +118,12 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Nama Lengkap</label>
                         <div class="col-sm-6">
-                            <input disabled value="{{ $user->name }}" type="text" class="form-control" id="name" name="name">
+                            <!-- <input disabled value="{{ $user->name }}" type="text" class="form-control" id="name" name="name"> -->
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-5 control-label">Role</label>
                         <div class="col-sm-12">
-                            @foreach($rooms as $room)
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="{{ $room->id }}" name="{{ $room->name }}" value="{{ $room->id }}">
-                                    <label class="custom-control-label" for="{{ $room->id }}">{{ $room->name }}</label>
-                                </div>
-                            @endforeach
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -189,9 +183,9 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.user.id);
-                    $('#name').val(data.user.name);
-                    $('#role').val(data.role);
-                    $('#email').val(data.user.email);
+                    // $('#name').val(data.user.name);
+                    // $('#role').val(data.role);
+                    // $('#email').val(data.user.email);
                 })
             });
 

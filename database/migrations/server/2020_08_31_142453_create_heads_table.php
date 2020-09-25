@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateHeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('sqlsrv_server2')->create('GZ_USERS', function (Blueprint $table) {
+        Schema::connection('sqlsrv_server2')->create('GZ_PENANGGUNG_JAWAB', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('employee_id')->unique();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('head_id');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlsrv_server2')->drop('GZ_USERS');
+        Schema::dropIfExists('heads');
     }
 }

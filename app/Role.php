@@ -10,6 +10,6 @@ class Role extends Model
     protected $table = 'GZ_ROLES';
 
     protected $fillable = [
-        'name',
+        'name'
     ];
 }
