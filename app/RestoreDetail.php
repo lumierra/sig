@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RestoreDetail extends Model
 {
-    protected $table = 'restore_details';
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_DETAIL_PENGEMBALIAN';
 
     protected $fillable = [
         'date', 'restore_id', 'restore_code', 'material_id', 'unit_id', 'user_id', 'jumlah', 'keterangan',

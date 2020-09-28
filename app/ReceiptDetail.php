@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReceiptDetail extends Model
 {
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_DETAIL_PENERIMAAN';
+
     protected $fillable = [
         'date', 'receipt_id', 'receipt_code', 'material_id', 'unit_id', 'user_id', 'jumlah', 'keterangan'
     ];

@@ -13,13 +13,13 @@ class Demand extends Model
 
     public function vendor()
     {
-        return $this->belongsTo(Vendor::class, 'vendor_id', 'kd_vendor');
+        return $this->belongsTo(Vendor::class, 'vendor_id', 'vendor_id');
     }
 
-    // public function head()
-    // {
-    //     return $this->belongsTo(Head::class);
-    // }
+    public function head()
+    {
+        return $this->belongsTo(Head::class);
+    }
 
     public function detail()
     {

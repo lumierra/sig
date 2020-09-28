@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Spend extends Model
 {
+    protected $connection = 'sqlsrv_server2';
+    protected $table = 'GZ_PENGELUARAN';
+
     protected $fillable = [
       'code', 'date', 'tujuan', 'name', 'status', 'user_id', 'place_id',
     ];

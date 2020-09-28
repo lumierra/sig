@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receipt extends Model
 {
+  protected $connection = 'sqlsrv_server2';
+  protected $table = 'GZ_PENERIMAAN';
+
     protected $fillable = [
         'code', 'date', 'vendor_id', 'head_id', 'user_id', 'name', 'status'
     ];
 
     public function vendor()
     {
-        return $this->belongsTo(Vendor::class, 'vendor_id', 'kd_vendor');
+        return $this->belongsTo(Vendor::class, 'vendor_id', 'vendor_id');
     }
 
     public function head()

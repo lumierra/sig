@@ -15,4 +15,14 @@ class Head extends Model
     {
         return $this->hasOne(Employee::class, 'KD_KARYAWAN', 'head_id');
     }
+
+    public function demand()
+    {
+        return $this->hasOne(Demand::class, 'head_id', 'head_id');
+    }
+
+    public function receipt()
+    {
+        return $this->hasOne(Receipt::class, 'head_id', 'head_id');
+    }
 }

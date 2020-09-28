@@ -38,9 +38,7 @@ class StokController extends Controller
                 ->addColumn('stok', function ($row){
                     return $this->kalkulasi($row->id);
                 })
-//                ->addColumn('material', function (Stock $stock) {
-//                    return $stock->material->name;
-//                })
+
                 ->addColumn('action', function($row){
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-circle btn-sm editProduct"><i class="fas fa-edit"></i></a>';
 

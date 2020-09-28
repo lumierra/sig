@@ -92,7 +92,7 @@
                     }
                 },
                 {data: 'vendor', name: 'vendor'},
-                // {data: 'head', name: 'head'},
+                {data: 'head', name: 'head'},
                 {
                     data: null,
                     render: function (data){
