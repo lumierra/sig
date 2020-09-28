@@ -1,0 +1,14 @@
+<!-- @foreach($rooms as $room)
+    <div class="custom-control custom-checkbox">
+        <input
+            type="checkbox"
+            class="custom-control-input"
+            id="{{ $room->id }}"
+            name="rooms[]"
+            value="{{ $room->id }}"
+            @if($user->rooms->pluck('id')->contains($room->id)) checked @endif
+        >
+
+        <label class="custom-control-label" for="{{ $room->id }}">{{ $room->name }}</label>
+    </div>
+@endforeach -->

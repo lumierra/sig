@@ -54,20 +54,19 @@
                                                     <div class="form-group">
                                                         <label for="name" class="col-sm-12 control-label">Pilih Ruangan</label>
                                                         <div class="col-sm-12">
-                                                            @foreach($rooms as $room)
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        class="custom-control-input"
-                                                                        id="{{ $room->id }}"
-                                                                        name="rooms[]"
-                                                                        value="{{ $room->id }}"
-                                                                        @if($user->rooms->pluck('id')->contains($room->id)) checked @endif
-                                                                    >
+                                                          @foreach($rooms as $room)
+                                                              <div class="custom-control custom-checkbox">
+                                                                  <input
+                                                                      type="checkbox"
+                                                                      class="custom-control-input"
+                                                                      id="{{ $room->KD_RUANG }}"
+                                                                      name="rooms[]"
+                                                                      value="{{ $room->KD_RUANG }}"
+                                                                  >
 
-                                                                    <label class="custom-control-label" for="{{ $room->id }}">{{ $room->name }}</label>
-                                                                </div>
-                                                            @endforeach
+                                                                  <label class="custom-control-label" for="{{ $room->ALIAS }}">{{ $room->ALIAS }}</label>
+                                                              </div>
+                                                          @endforeach
                                                         </div>
                                                     </div>
                                                 </div>

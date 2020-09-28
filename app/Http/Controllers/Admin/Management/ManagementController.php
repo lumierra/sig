@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Management;
 
 use App\Role;
-use App\Room;
+use App\Bed;
 use App\User;
 use App\Employee;
 use Illuminate\Http\Request;
@@ -58,12 +58,12 @@ class ManagementController extends Controller
 
         $roles = Role::all();
         $employees = Employee::all();
-        // $rooms = Room::all();
+        $rooms = Bed::all();
         $user = User::find(Auth::user()->id);
         return view('admin.management.index')->with([
             'roles' => $roles,
             'employees' => $employees,
-            // 'rooms' => $rooms,
+            'rooms' => $rooms,
             'user' => $user,
         ]);
     }
@@ -121,7 +121,7 @@ class ManagementController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $rooms = Room::all();
+        $rooms = Bed::all();
 
         return view('admin.management.room')->with([
            'user' => $user,
@@ -132,7 +132,7 @@ class ManagementController extends Controller
     public function showRoom($id)
     {
         $user = User::find($id);
-        $rooms = Room::all();
+        $rooms = Bed::all();
 
         return view('admin.management.room')->with([
             'user' => $user,

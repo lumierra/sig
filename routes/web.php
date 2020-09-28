@@ -81,12 +81,14 @@ Route::namespace('Admin')
         Route::get('pengeluaran/{id}/showSpend', 'Pengeluaran\PengeluaranController@showSpend')->name('pengeluaran.showSpend');
 
         Route::resource('ahli-gizi', 'AhliGizi\AhliGiziController');
-        Route::get('ahli-gizi/ruangan', 'AhliGizi\AhliGiziController@ruangan')->name('ahli-gizi.ruangan');
+        Route::get('ahli-gizi/{id}/ruangan', 'AhliGizi\AhliGiziController@ruangan')->name('ahli-gizi.ruangan');
+
 
         Route::resource('room', 'Room\RoomController');
         Route::get('management-user/create2', 'Management\ManagementController@create2')->name('management-user.create2');
         Route::get('managament/{id}/showRoom', 'Management\ManagementController@showRoom')->name('management.showRoom');
         Route::post('management/updateRoom', 'Management\ManagementController@updateRoom')->name('management.updateRoom');
+
 
         Route::resource('products', 'ProductController');
         Route::get('/asd', function (){

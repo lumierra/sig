@@ -16,7 +16,8 @@
         }
 
         .box-4 {
-            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); */
+            box-shadow: 0 0 5px rgba(28, 200, 138, 1);
             position: relative;
             /*width: 30%;*/
             /*margin: 20px 0px 0px 40px;*/
@@ -33,7 +34,8 @@
         .box-4:after {
             border-radius: 0 0 50% 50% / 0 0 20px 20px;
             bottom: 0;
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 10px rgba(28,200,138,1);
+            /* box-shadow: : 0 10px 10px rgba(0,0,0,0.5); */
             content: "";
             height: 20px;
             left: 10px;
@@ -55,7 +57,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    @foreach($users->rooms as $room)
+                    @foreach($beds as $bed)
                         <div class="col-md-5">
                             <div class="box box-4">
                                 <div class="box-content">
@@ -63,19 +65,19 @@
                                         <tbody>
                                             <tr>
                                                 <th colspan="2" class="text-center border-bottom border-dark">
-                                                    <a href="{{ route('admin.ahli-gizi.create') }}" class="text-success">R. Perawatan Kelas I</a>
+                                                    <a href="{{ route('admin.ahli-gizi.ruangan', $bed->KD_RUANG) }}" class="text-success">{{ $bed->ALIAS }}</a>
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th class="text-center border-right border-dark px-2">18 Jumlah Kamar</th>
-                                                <th class="text-center">18 Tempat Tidur</th>
+                                                <th class="text-center border-right border-dark px-2">{{ $bed->JUMLAH_KAMAR }} Jumlah Kamar</th>
+                                                <th class="text-center">{{ $bed->JUMLAH_BED }} Tempat Tidur</th>
                                             </tr>
                                             <tr>
                                                 <td class="text-center border-right border-dark px-2">
-                                                    0 Tersedia<br>0 Penuh<br>18 Pemeliharaan
+                                                    {{ ($bed->KAMAR_TERSEDIA - $bed->DIGUNAKAN ) }} Tersedia<br>{{ $bed->DIGUNAKAN }} Penuh<br>{{ $bed->KAMAR_PEMELIHARAAN }} Pemeliharaan
                                                 </td>
                                                 <td class="text-center px-2">
-                                                    0 Tersedia<br>0 Digunakan<br>18 Pemeliharaan
+                                                    {{ $bed->TERSEDIA }} Tersedia<br>{{ $bed->DIGUNAKAN }} Digunakan<br>{{ $bed->PEMELIHARAAN }} Pemeliharaan
                                                 </td>
                                             </tr>
                                       </tbody>

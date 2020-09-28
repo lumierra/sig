@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin\AhliGizi;
 
-use App\Room;
+// use App\Room;
+use App\Bed;
 use App\Type;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,16 +20,21 @@ class AhliGiziController extends Controller
     public function index()
     {
         $users = User::find(Auth::user()->id);
-
+        $beds = Bed::all();
 
         return view('admin.ahliGizi.index')->with([
             'users' => $users,
+            'beds' => $beds,
         ]);
     }
 
-    public function ruangan()
+    public function ruangan($id)
     {
-        return view('admin.ahliGizi.ruangan');
+        $bed = Bed::find($id);
+
+        return view('admin.ahliGizi.ruangan')->with([
+          'bed' => $bed,
+        ]);
     }
 
     public function create()
@@ -53,7 +59,11 @@ class AhliGiziController extends Controller
      */
     public function show($id)
     {
-        return view('admin.ahliGizi.detail');
+        $bed = Bed::find($id);
+
+        return view('admin.ahliGizi.detail')->with([
+          'bed' => $bed,
+        ]);
     }
 
     /**

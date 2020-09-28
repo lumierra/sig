@@ -9,6 +9,7 @@ use App\Head;
 use App\Employee;
 use App\User;
 use App\Food;
+use App\Bed;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -130,13 +131,15 @@ class VendorController extends Controller
 
     public function test()
     {
-        $query = Head::all();
-        $query = $query[0];
+        // $query = Head::all();
+        // $query = $query[0];
         // $asd = Employee::where('KD_KARYAWAN', '000662')->first();
-        $asd = User::with('employee')->where('employee_id', '000662')->first();
+        // $asd = User::with('employee')->where('employee_id', '000662')->first();
         // $bilangan=1234; // Nilai Proses
         // $fzeropadded = sprintf("%0d", $bilangan);
-        $food = Food::all();
-        return response()->json($food[0]->name);
+        // $food = Food::all();
+        $bed = Bed::all();
+
+        return response()->json($bed);
     }
 }
