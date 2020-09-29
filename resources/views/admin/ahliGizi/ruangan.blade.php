@@ -68,9 +68,59 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {{-- @foreach ($collection asdasd asd asd as $item)
+                                                        @foreach ($rooms as $room)
+                                                            <tr>
+                                                                <td colspan="53" class="font-weight-bold text-white bg-success">{{ $room->NAMA_KAMAR }}</td>
+                                                            </tr>
+                                                            @foreach ($patients as $patient)
+                                                                @if ($room->NAMA_KAMAR == $patient->NAMA_KAMAR)
+                                                                    <tr>
+                                                                        <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                                                                        <td class="text-center align-middle">
+                                                                            <a class="btn btn-circle btn-danger" href="{{ route('admin.ahli-gizi.show', $patient->KD_PASIEN) }}"
+                                                                            data-toggle="tooltip" data-placement="top" title="Isi Formulir"
+                                                                            >
+                                                                                <i class="fas fa-location-arrow"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td width="10000px">
+                                                                            {{ $patient->KD_PASIEN }}
+                                                                            {{-- <br> --}}
+                                                                            <label class="font-weight-bold">
+                                                                                {{ $patient->NAMA }}</label>
+                                                                                {{ $patient->JENIS }}  58 Thn. <br>
+                                                                                Tgl. Masuk : {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}
+                                                                                <br>DPJP : {{ $patient->getDokter($patient->KD_PASIEN) }}
+                                                                        </td>
+                                                                        <td class="text-left align-middle">
+                                                                            {{ $patient->getDiagnosa($patient->KD_PASIEN) }}
+                                                                            {{-- @foreach ($patient->getDiagnosa($patient->KD_PASIEN) as $item)
+                                                                                {{ $item }}
+                                                                            @endforeach --}}
+                                                                        </td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                        <td class="text-center align-middle">0</td>
+                                                                    </tr>
+                                                                {{-- @else
+                                                                    <tr>
+                                                                        <td class="text-center" colspan="15">Tidak Ada Pasien</td>
+                                                                    </tr> --}}
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
 
-                                                        @endforeach --}}
+                                                        {{-- @foreach ($patients as $patient)
+
+
                                                             <tr>
                                                                 <td colspan="53" class="font-weight-bold text-white bg-success">RK-01 KLS I</td>
                                                             </tr>
@@ -81,7 +131,7 @@
                                                                 <td colspan="53" class="font-weight-bold text-white bg-success">RK-02 KLS I</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-center align-middle">1</td>
+                                                                <td class="text-center align-middle">{{ $loop->iteration }}</td>
                                                                 <td class="text-center align-middle">
                                                                     <a class="btn btn-circle btn-danger" href="{{ route('admin.ahli-gizi.show', 1) }}"
                                                                     data-toggle="tooltip" data-placement="top" title="Isi Formulir"
@@ -90,8 +140,13 @@
                                                                     </a>
                                                                 </td>
                                                                 <td width="10000px">
-                                                                    0-67-21-51<br>
-                                                                    <label class="font-weight-bold">SYAMSIDAR</label> ; Wanita ; 58 Thn.<br>Tgl. Masuk : 15-09-2020<br>DPJP : dr. Erik A. Rahman, Sp.OG
+                                                                    {{ $patient->KD_PASIEN }}
+                                                                    <br>
+                                                                    <label class="font-weight-bold">
+                                                                        {{ $patient->NAMA }}</label> ;
+                                                                        {{ $patient->JENIS }} ; 58 Thn. <br>
+                                                                        Tgl. Masuk : {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}
+                                                                        <br>DPJP : dr. Erik A. Rahman, Sp.OG
                                                                 </td>
                                                                 <td class="text-left align-middle">C56 - Malignant neoplasm of ovary</td>
                                                                 <td class="text-center align-middle">0</td>
@@ -112,6 +167,7 @@
                                                             <tr>
                                                                 <td class="text-center" colspan="15">Tidak Ada Pasien</td>
                                                             </tr>
+                                                        @endforeach --}}
                                                     </tbody>
                                                 </table>
                                             </div>

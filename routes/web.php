@@ -25,11 +25,11 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect()->route('admin.dashboard.index');
 });
-
+// ->middleware('can:show-admin')
 Route::namespace('Admin')
     ->prefix('admin')
     ->name('admin.')
-    ->middleware('can:show-admin')
+
     ->group(function (){
 
         Route::resource('users', 'Users\UserController');

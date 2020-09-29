@@ -45,11 +45,11 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">No. RM</th>
-                                                <td>: 0-48-17-83</td>
+                                                <td>: {{ $patient->KD_PASIEN }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row" width="130px">Nama Pasien</th>
-                                                <td>: FARIDAH MAHMUD</td>
+                                                <td>: {{ $patient->NAMA }}  </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Umur</th>
@@ -57,7 +57,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Tgl. Masuk</th>
-                                                <td>: 08-09-2020</td>
+                                                <td>: {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">DPJP</th>
@@ -65,7 +65,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Unit</th>
-                                                <td>: R P Kelas Utama B (KUB)</td>
+                                                <td>: {{ $patient->NAMA_UNIT }}</td>
                                             </tr>
                                         </tbody>
                                       </table>
@@ -85,8 +85,8 @@
                                           <tr>
                                             <th scope="row">1</th>
                                             <td>J90 - Pleural effusion, not elsewhere classified</td>
-                                            <td>R P Kelas Utama B (KUB)
-                                                Tgl. 08-09-2020</td>
+                                            <td>{{ $patient->NAMA_UNIT }} -
+                                                Tgl. {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}</td>
                                           </tr>
                                         </tbody>
                                       </table>

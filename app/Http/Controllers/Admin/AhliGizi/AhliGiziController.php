@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin\AhliGizi;
 
 // use App\Room;
 use App\Bed;
+use App\BmPasien;
 use App\Type;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Room;
 use Illuminate\Support\Facades\Auth;
 
 class AhliGiziController extends Controller
@@ -32,8 +34,13 @@ class AhliGiziController extends Controller
     {
         $bed = Bed::find($id);
 
+        $patients = BmPasien::where('KD_UNIT', $bed->unit[0]->KD_UNIT)->get();
+        $rooms = Room::where('KD_UNIT', $bed->unit[0]->KD_UNIT)->orderBy('NAMA_KAMAR', 'asc')->get();
+
         return view('admin.ahliGizi.ruangan')->with([
           'bed' => $bed,
+          'patients' => $patients,
+          'rooms' => $rooms,
         ]);
     }
 
@@ -59,10 +66,13 @@ class AhliGiziController extends Controller
      */
     public function show($id)
     {
-        $bed = Bed::find($id);
+        // $bed = Bed::find($id);
+        $patient = BmPasien::where('KD_PASIEN', $id)->first();
+        // dd($patient);
 
         return view('admin.ahliGizi.detail')->with([
-          'bed' => $bed,
+        //   'bed' => $bed,
+          'patient' => $patient,
         ]);
     }
 
