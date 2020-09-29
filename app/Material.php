@@ -16,34 +16,14 @@ class Material extends Model
         return $this->hasOne(FoodMaterial::class);
     }
 
-    public function det()
-    {
-        return $this->hasOne(Detail::class);
-    }
-
-    public function tail()
-    {
-        return $this->hasOne(Tail::class);
-    }
-
     public function receiptDetail()
     {
         return $this->hasOne(ReceiptDetail::class);
     }
 
-    public function one()
-    {
-        return $this->hasOne(One::class);
-    }
-
     public function spendDetail()
     {
         return $this->hasOne(SpendDetail::class);
-    }
-
-    public function two()
-    {
-        return $this->hasOne(Two::class);
     }
 
     public function category()

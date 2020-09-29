@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Login SIG</title>
+		<title>Login SIAZI</title>
 		<meta name="description"> <meta name="viewport" content="width=device-width">
 		<link rel="stylesheet" href="{{ asset('css/masuk/css/vendor.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/masuk/css/main.css') }}">
@@ -17,7 +17,7 @@
 								<div class="text-center pull-right photo">
 									<img src="{{ asset('css/masuk/asset/logo.png') }}" class="user-avatar img-circle img-responsive">
 									<h1>RSUD LANGSA<br>
-									<span>Gizi</span>
+									<span>SIAZI</span>
 									<small><a class="link" href="http://e-rsud.langsakota.go.id">www.e-rsud.langsakota.go.id</a></small>
 									</h1>
 								</div>
@@ -42,8 +42,10 @@
 									</div>
 										<div class="remember">
 										<label class="checkbox1" for="Option">
-											<input id="Option" type="checkbox"> <span></span> </label>
-											Simpan password <span class="pass">Lupa password?</span>
+                                            <input id="Option" type="checkbox"> <span></span>
+                                        </label>
+                                            Simpan password
+                                            {{-- <span class="pass">Lupa password?</span> --}}
 									</div><br>
 									<center><span>Support by Team IT RSUD Langsa</span></center>
 								</form>
