@@ -189,8 +189,12 @@ class VendorController extends Controller
                 ['TRANSAKSI.TGL_DOK', '=', null]
 
             ])
-            // ->where('')
-            // ->where(DB::raw("PASIEN.KD_PASIEN = '$kdpasien' AND KUNJUNGAN.TGL_KELUAR IS NULL and TRANSAKSI.TGL_DOK is null AND (TRANSAKSI.KD_UNIT IN (SELECT KD_UNIT FROM UNIT WHERE Parent = '1001') OR PASIEN_INAP.KD_UNIT IN (SELECT KD_UNIT FROM UNIT WHERE Parent = '1001')"))
+            ->whereIn('TRANSAKSI.KD_UNIT', function ($query){
+                $query->select('KD_UNIT')->from('UNIT')->where('Parent', '=', '1001');
+            })
+            ->whereIn('PASIEN_INAP.KD_UNIT', function ($query){
+                $query->select('KD_UNIT')->from('UNIT')->where('Parent', '=', '1001');
+            })
             ->select('DOKTER.KD_DOKTER','DOKTER_NAMA.NAMA_LENGKAP')
             ->get();
 
@@ -211,6 +215,6 @@ class VendorController extends Controller
             ->select('MR_PENYAKIT.KD_PENYAKIT', 'PENYAKIT.PENYAKIT', 'MR_PENYAKIT.TGL_MASUK', 'UNIT.NAMA_UNIT')
             ->get();
 
-        return response()->json($query);
+        return response()->json($test);
     }
 }

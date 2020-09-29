@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin\AhliGizi;
 
 // use App\Room;
 use App\Bed;
-use App\BmPasien;
 use App\Type;
 use App\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Room;
+use App\BmPasien;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class AhliGiziController extends Controller
 {
@@ -42,6 +43,51 @@ class AhliGiziController extends Controller
           'patients' => $patients,
           'rooms' => $rooms,
         ]);
+    }
+
+    public function diagnosa($id)
+    {
+        $data = DB::connection('sqlsrv_server2')
+            ->table('MR_PENYAKIT')
+            ->join('PENYAKIT', 'MR_PENYAKIT.KD_PENYAKIT', '=', 'PENYAKIT.KD_PENYAKIT')
+            ->join('UNIT', 'MR_PENYAKIT.KD_UNIT', '=', 'UNIT.KD_UNIT')
+            ->where([
+                ['MR_PENYAKIT.KD_PASIEN', '=', $id],
+                ['MR_PENYAKIT.URUT_MASUK', '>', 0],
+                ['MR_PENYAKIT.TGL_MASUK', '>=', DB::raw("( SELECT TGL_MASUK FROM VIEW_BM_PASIEN_AKTIF WHERE KD_PASIEN = '$id' ) ")]
+
+            ])
+            ->select('MR_PENYAKIT.KD_PENYAKIT', 'PENYAKIT.PENYAKIT', 'MR_PENYAKIT.TGL_MASUK', 'UNIT.NAMA_UNIT')
+            ->get();
+
+        // $nama = $data[0]->PENYAKIT;
+        // $data = count($data);
+        $result = $data;
+
+
+        return view('admin.ahliGizi.diagnosa')->with('data', $result);
+    }
+
+    public function getNamaDiagnosa($id)
+    {
+        $id = '0-60-05-17';
+        $kdpasien = $id;
+        $data = DB::connection('sqlsrv_server2')
+            ->table('MR_PENYAKIT')
+            ->join('PENYAKIT', 'MR_PENYAKIT.KD_PENYAKIT', '=', 'PENYAKIT.KD_PENYAKIT')
+            ->join('UNIT', 'MR_PENYAKIT.KD_UNIT', '=', 'UNIT.KD_UNIT')
+            ->where([
+                ['MR_PENYAKIT.KD_PASIEN', '=', $kdpasien],
+                ['MR_PENYAKIT.URUT_MASUK', '>', 0],
+                ['MR_PENYAKIT.TGL_MASUK', '>=', DB::raw("( SELECT TGL_MASUK FROM VIEW_BM_PASIEN_AKTIF WHERE KD_PASIEN = '$kdpasien' ) ")]
+
+            ])
+            ->select('MR_PENYAKIT.KD_PENYAKIT', 'PENYAKIT.PENYAKIT', 'MR_PENYAKIT.TGL_MASUK', 'UNIT.NAMA_UNIT')
+            ->get();
+
+        $test = $data[0]->PENYAKIT;
+
+        return view('admin.ahliGizi.diagnosa')->with('diagnosa', $test);
     }
 
     public function create()

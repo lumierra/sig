@@ -93,10 +93,12 @@
                                                                                 <br>DPJP : {{ $patient->getDokter($patient->KD_PASIEN) }}
                                                                         </td>
                                                                         <td class="text-left align-middle">
-                                                                            {{ $patient->getDiagnosa($patient->KD_PASIEN) }}
-                                                                            {{-- @foreach ($patient->getDiagnosa($patient->KD_PASIEN) as $item)
-                                                                                {{ $item }}
-                                                                            @endforeach --}}
+                                                                            {{-- <span id="kdDiagnosa">Test</span> --}}
+                                                                            @foreach ($patient->getDiagnosa($patient->KD_PASIEN) as $item)
+                                                                                {{ $item->KD_PENYAKIT}} - {{ $item->PENYAKIT }}
+                                                                            @endforeach
+                                                                            {{-- <span id="namaDiagnosa"> {{ $patient->getDiagnosa($patient->KD_PASIEN) }}</span> --}}
+
                                                                         </td>
                                                                         <td class="text-center align-middle">0</td>
                                                                         <td class="text-center align-middle">0</td>
@@ -184,5 +186,34 @@
 
     <script src="{{ asset('ext/vendor/jquery/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // console.log({{ $rooms[0] }})
+    </script>
+    <script type="text/javascript">
+        $(function () {
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            const room = {{ $rooms }}
+            var asd = {{ $rooms }}
+            console.log({{ $rooms }});
+
+            // $.ajax({
+            //     url: "/admin/ahli-gizi/" + '0-60-05-17' + '/' + 'diagnosa',
+            //     type: 'GET',
+            //     dataType: 'html',
+            //     data: null,
+            //     success: function(msg) {
+            //         $('#namaDiagnosa').html(msg);
+            //     },
+            //     error: function(msg) {
+            //         alert('msg');
+            //     }
+            // });
+
+        });
+    </script>
 @endsection

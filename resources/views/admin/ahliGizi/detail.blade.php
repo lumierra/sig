@@ -61,7 +61,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">DPJP</th>
-                                                <td>: dr. Shira Nour Rizana, Sp.P, M.Ked</td>
+                                                <td>: {{ $patient->getDokter($patient->KD_PASIEN) }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Unit</th>
@@ -82,12 +82,15 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          <tr>
-                                            <th scope="row">1</th>
-                                            <td>J90 - Pleural effusion, not elsewhere classified</td>
-                                            <td>{{ $patient->NAMA_UNIT }} -
-                                                Tgl. {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}</td>
-                                          </tr>
+                                            @foreach ($patient->getDiagnosa($patient->KD_PASIEN) as $item)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $item->KD_PENYAKIT }} - {{ $item->PENYAKIT }}</td>
+                                                    <td>{{ $patient->NAMA_UNIT }} -
+                                                        Tgl. {{ \Carbon\Carbon::parse($patient->TGL_MASUK)->format('d-m-Y')}}</td>
+                                                </tr>
+                                            @endforeach
+
                                         </tbody>
                                       </table>
                                 </div>

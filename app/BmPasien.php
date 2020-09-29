@@ -56,7 +56,12 @@ class BmPasien extends Model
                 ['TRANSAKSI.TGL_DOK', '=', null]
 
             ])
-            // ->where(DB::raw("PASIEN.KD_PASIEN = '$kdpasien' AND KUNJUNGAN.TGL_KELUAR IS NULL and TRANSAKSI.TGL_DOK is null AND (TRANSAKSI.KD_UNIT IN (SELECT KD_UNIT FROM UNIT WHERE Parent = '1001') OR PASIEN_INAP.KD_UNIT IN (SELECT KD_UNIT FROM UNIT WHERE Parent = '1001')"))
+            ->whereIn('TRANSAKSI.KD_UNIT', function ($query){
+                $query->select('KD_UNIT')->from('UNIT')->where('Parent', '=', '1001');
+            })
+            ->whereIn('PASIEN_INAP.KD_UNIT', function ($query){
+                $query->select('KD_UNIT')->from('UNIT')->where('Parent', '=', '1001');
+            })
             ->select('DOKTER.KD_DOKTER','DOKTER_NAMA.NAMA_LENGKAP')
             ->get();
 
@@ -67,7 +72,7 @@ class BmPasien extends Model
 
     public function getDiagnosa($id)
     {
-        $query = DB::connection('sqlsrv_server2')
+        $data = DB::connection('sqlsrv_server2')
             ->table('MR_PENYAKIT')
             ->join('PENYAKIT', 'MR_PENYAKIT.KD_PENYAKIT', '=', 'PENYAKIT.KD_PENYAKIT')
             ->join('UNIT', 'MR_PENYAKIT.KD_UNIT', '=', 'UNIT.KD_UNIT')
@@ -80,8 +85,7 @@ class BmPasien extends Model
             ->select('MR_PENYAKIT.KD_PENYAKIT', 'PENYAKIT.PENYAKIT', 'MR_PENYAKIT.TGL_MASUK', 'UNIT.NAMA_UNIT')
             ->get();
 
-
-        $query = json_decode($query);
-        return $query;
+        return $data;
     }
+
 }

@@ -82,6 +82,7 @@ Route::namespace('Admin')
 
         Route::resource('ahli-gizi', 'AhliGizi\AhliGiziController');
         Route::get('ahli-gizi/{id}/ruangan', 'AhliGizi\AhliGiziController@ruangan')->name('ahli-gizi.ruangan');
+        Route::get('ahli-gizi/{id}/diagnosa', 'AhliGizi\AhliGiziController@diagnosa')->name('ahli-gizi.diagnosa');
 
 
         Route::resource('room', 'Room\RoomController');
